@@ -12,3 +12,4 @@ plan <- phipdrake::define_plan() # initialize pipeline. looks for mpath.txt and 
 drake::make(plan) # execute pipeline
 drake::vis_drake_graph(drake::drake_config(plan)) # visualize pipeline
 ```
+![dependency graph](https://raw.githubusercontent.com/brandonsie/brandonsie.github.io/master/docs/phipdrake_dependency_graph.PNG)
