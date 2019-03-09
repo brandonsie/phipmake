@@ -4,7 +4,7 @@ R package of Drake-based tools for the Larman Lab's PhIP-seq data analysis pipel
 
 ``` r  
 if(!requireNamespace("devtools")) install.packages("devtools")
-devtools::install_github("PhIPdbDrake")
+devtools::install_github("phipdrake")
 ```  
 
 ``` r
