@@ -10,6 +10,8 @@ devtools::install_github("brandonsie/phipdrake")
 ``` r
 plan <- phipdrake::define_plan() # initialize pipeline. looks for mpath.txt and ppath.txt in working directory
 drake::make(plan) # execute pipeline
-drake::vis_drake_graph(drake::drake_config(plan)) # visualize pipeline
+v <- drake::vis_drake_graph(drake::drake_config(plan)) # visualize pipeline dependencies
+v
+visNetwork::visSave(v, "dependency_graph.html") # save dependency graph
 ```
 ![dependency graph](https://raw.githubusercontent.com/brandonsie/brandonsie.github.io/master/docs/phipdrake_dependency_2.PNG)
