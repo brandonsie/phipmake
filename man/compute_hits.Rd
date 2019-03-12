@@ -4,7 +4,7 @@
 \alias{compute_hits}
 \title{compute_hits}
 \usage{
-compute_hits(data, threshold = 10)
+compute_hits(data, threshold = 5)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and

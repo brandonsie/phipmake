@@ -9,7 +9,7 @@
 #'
 #' @export
 
-compute_hits <- function(data, threshold = 10){
+compute_hits <- function(data, threshold = 5){
 
   # prep output data list
   output_data <- list()

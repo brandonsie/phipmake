@@ -1,17 +1,16 @@
-#' compute_polycl
+#' compute_prosum
 #'
-#' For multilibrary hits data, identify libraries, and call library_polycl
+#' For multilibrary data, identify libraries, and call library_prosum
 #' for each.
 #'
 #' @param data List with first element a character vector of library names and
 #' subsequent elements data frames of data for corresponding libraries.
 #' @param file_root Filename to write.
 #' @param md_path Metadata directory.
-#' @param pairs_path BLAST pairs directory.
 #'
 #' @export
 
-compute_polycl <- function(data, file_root, md_path, pairs_path){
+compute_prosum <- function(data, file_root, md_path){
   # prep output data list
   output_data <- list()
   output_data[[1]] <- data[[1]]
@@ -21,11 +20,10 @@ compute_polycl <- function(data, file_root, md_path, pairs_path){
     lib_name <- data[[1]][i-1] #get library basename from first list element of data
     print(lib_name)
     annot <- read_annot(lib_name, md_path)
-    pairs <- read_pairs(lib_name, pairs_path)
 
-    output_data[[i]] <- library_polycl(data[[i]], annot, pars)
+    output_data[[i]] <- library_prosum(data[[i]], annot)
 
-    output_path <- paste0(lib_name,"/", file_root, "_", lib_name,"_polycl.tsv")
+    output_path <- paste0(lib_name,"/", file_root, "_", lib_name,"_prosum.tsv")
     data.table::fwrite(output_data[[i]], output_path, sep = "\t")
   }
 

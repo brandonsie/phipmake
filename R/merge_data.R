@@ -18,7 +18,8 @@ merge_data <- function(data, file_root){
     output_data %<>% rbind(data[[i]])
   }
 
-  output_name <- paste0(file_root,".tsv")
+  # output_name <- paste0(file_root,".tsv")
+  output_name <- file_root
   data.table::fwrite(output_data, output_name, sep = "\t", na = "NA")
   return(output_data)
 
