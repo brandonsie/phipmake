@@ -11,14 +11,15 @@
 define_plan <- function(md_path, pairs_path){
   options(stringsAsFactors = FALSE)
 
+
   plan <- drake::drake_plan(
 
     # Settings
     strings_in_dots = FALSE,
-    params = data.table::fread(file_in("params.tsv")),
-    screen_name = params$valu[params$param == "screen_name"],
-    md_path = params$value[params$param == "md_path"],
-    pairs_path = params$value[params$param == "pairs_path"],
+    params = data.table::fread(file_in("drake_params.tsv")),
+    screen_name = params$value[params$param == "screen_name"],
+    mpath = params$value[params$param == "md_path"],
+    ppath = params$value[params$param == "pairs_path"],
     enrichment_threshold = params$value[params$param == "enrichment_threshold"],
 
     # Counts
@@ -35,7 +36,7 @@ define_plan <- function(md_path, pairs_path){
       annotate_data(counts_sublibrary_prosum, "prosum", md_path = mpath),
     counts_prosum = merge_data(counts_sublibrary_prosum, file_out("counts_prosum.tsv")),
     counts_prosum_annotated =
-      merge_data(counts_sublibrary_promax_annotated, file_out("counts_prosum.tsv")),
+      merge_data(counts_sublibrary_prosum_annotated, file_out("counts_prosum_annotated.tsv")),
 
     # Counts Promax (!) remove?
     counts_sublibrary_promax = compute_promax(counts_sublibrary, "promax", md_path = mpath),
@@ -43,7 +44,7 @@ define_plan <- function(md_path, pairs_path){
       annotate_data(counts_sublibrary_promax, "promax", md_path = mpath),
     counts_promax = merge_data(counts_sublibrary_promax, file_out("counts_promax.tsv")),
     counts_promax_annotated =
-      merge_data(counts_sublibrary_promax_annotated, file_out("counts_promax.tsv")),
+      merge_data(counts_sublibrary_promax_annotated, file_out("counts_promax_annotated.tsv")),
 
     #(!) add scaled counts?
 
@@ -64,7 +65,7 @@ define_plan <- function(md_path, pairs_path){
     enrichment_promax =
       merge_data(enrichment_sublibrary_promax, file_out("enrichment_promax.tsv")),
     enrichment_promax_annotated =
-      merge_data(enrichment_sublibrary_promax_annotated, file_out("enrichment_promax.tsv")),
+      merge_data(enrichment_sublibrary_promax_annotated, file_out("enrichment_promax_annotated.tsv")),
 
     # Hits
     enrichment_sublibrary_hits = compute_hits(enrichment_sublibrary, enrichment_threshold),

@@ -14,7 +14,7 @@ library_prosum <- function(data, annot){
   pro_ids <- annot$pro_id[match(data[,1], annot$u_pep_id)]  %>% na.omit
   proteins <- unique(pro_ids)
 
-  #setup promax table
+  #setup prosum table
   lib_prosum <- data.frame(matrix(nrow = length(proteins), ncol = ncol(data)))
   colnames(lib_prosum) <- c("pro_id", colnames(data)[-1])
   lib_prosum[,1] <- proteins
@@ -27,6 +27,6 @@ library_prosum <- function(data, annot){
       na.omit %>% protein_prosum
   }
 
-  return(lib_promax)
+  return(lib_prosum)
 
 }
