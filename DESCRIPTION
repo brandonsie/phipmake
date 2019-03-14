@@ -1,7 +1,7 @@
 Package: phipdrake
 Type: Package
 Title: PhIP-seq Data Analysis Pipeline
-Version: 0.1.5
+Version: 0.1.6
 Author: Brandon Sie
 Maintainer: Brandon Sie <brandonsie@gmail.com>
 Description: PhIP-seq Data Analysis Pipeline

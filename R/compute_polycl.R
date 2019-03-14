@@ -29,7 +29,7 @@ compute_polycl <- function(data, file_root, md_path, pairs_path){
     pairs <- read_pairs(lib_name, pairs_path)
     print("done reading pairs file")
 
-    output_data[[i]] <- library_polycl(data[[i]], annot, pars)
+    output_data[[i]] <- library_polycl(data[[i]], annot, pairs)
 
     output_path <- paste0(lib_name,"/", file_root, "_", lib_name,"_polycl.tsv")
     data.table::fwrite(output_data[[i]], output_path, sep = "\t")
