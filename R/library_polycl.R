@@ -1,7 +1,7 @@
 #' library_polycl
 #'
 #' For one peptide library, identify proteins from annotation file, and then
-#' call protein_prosum for each protein.
+#' call protein_polycl for each protein.
 #'
 #' @param data Data frame with one library's hits data
 #' @param annot Annotation file.
@@ -23,8 +23,11 @@ library_polycl <- function(data, annot, pairs){
   for(i in 1:length(proteins)){
     if(interactive()){setTxtProgressBar(pb, i)}
     lib_polycl[i, -1] <- data[c(1:length(pro_ids))[
-      pro_ids == proteins[i]], -1] %>% na.omit %>% protein_prosum
+      pro_ids == proteins[i]], -1] %>% na.omit %>% protein_polycl(pairs)
   }
 
   return(lib_polycl)
 }
+
+
+

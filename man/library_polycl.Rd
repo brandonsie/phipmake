@@ -15,5 +15,5 @@ library_polycl(data, annot, pairs)
 }
 \description{
 For one peptide library, identify proteins from annotation file, and then
-call protein_prosum for each protein.
+call protein_polycl for each protein.
 }
