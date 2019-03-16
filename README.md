@@ -4,7 +4,8 @@ R package of [Drake](https://github.com/ropensci/drake)-based tools for the Larm
 
 ``` r  
 if(!requireNamespace("devtools")) install.packages("devtools")
-devtools::install_github("brandonsie/phipdrake")
+devtools::install_github("ropensci/drake") # drake is on CRAN, but we use the more recently updated Github version.
+devtools::install_github("brandonsie/phipmake")
 ```  
 
 ``` r

@@ -4,15 +4,13 @@
 \alias{compute_promax}
 \title{compute_promax}
 \usage{
-compute_promax(data, file_root, md_path)
+compute_promax(data, annot)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
-\item{file_root}{Filename to write.}
-
-\item{md_path}{Metadata directory.}
+\item{annot}{Phiplist of annotation files.}
 }
 \description{
 For multilibrary hits data, identify libraries, and call library_promax

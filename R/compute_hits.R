@@ -13,25 +13,15 @@ compute_hits <- function(data, threshold = 5){
 
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- data[[1]]
+  output_data[[1]] <- libs <- data[[1]]
 
-  for(i in 2:length(data)){
-    lib_name <- data[[1]][i-1] #get library basename from first list element of data
-    lib_data <- data[[i]]
-
-    hits <- data.frame(matrix(nrow = nrow(lib_data), ncol = ncol(lib_data)))
-    names(hits) <- names(lib_data)
-    hits[,1] <- lib_data[,1]
-    hits[,-1] <- (lib_data[,-1] > threshold) %>% as.numeric
-    output_data[[i]] <- hits
-
-
-    output_path <- paste0(lib_name,"/", "hits", "_", lib_name,"_promax.tsv")
-    data.table::fwrite(output_data[[i]], output_path, sep = "\t")
-
+  for(i in 1:length(libs)){
+    sub.data <- data[[i + 1]]
+    hits <- data.frame(matrix(nrow = nrow(sub.data), ncol = ncol(sub.data)))
+    names(hits) <- names(sub.data)
+    hits[,1] <- sub.data[,1]
+    hits[,-1] <- (sub.data[,-1] > threshold) %>% as.numeric
+    output_data[[i+1]] <- hits
   }
-
-
   return(output_data)
-
 }

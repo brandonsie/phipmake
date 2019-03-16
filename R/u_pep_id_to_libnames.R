@@ -10,7 +10,7 @@
 u_pep_id_to_libnames <- function(upepid){
   # take ids of the form HumanLarma_000_<sequence> and returns unique libraries
 
-  lnames <- upepid %>% strsplit("_") %>% unlist %>% matrix(nrow = 3) %>% t
+  lnames <- upepid %>% as.matrix %>% as.character %>% strsplit("_") %>% unlist %>% matrix(nrow = 3) %>% t
   libs.base <- unique(lnames[,1])
   libs.vers <- unique(paste(lnames[,1], lnames[,2], sep = "_"))
 

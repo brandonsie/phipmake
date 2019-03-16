@@ -5,34 +5,37 @@
 #'
 #' @param data List with first element a character vector of library names and
 #' subsequent elements data frames of data for corresponding libraries.
-#' @param file_root Filename to write.
-#' @param md_path Metadata directory.
-#' @param pairs_path BLAST pairs directory.
+#' @param annot Phiplist of annotation files.
+#' @param pairs Phiplist of blast alignment pair files.
+#' @param verbose Logical whether or not to print progress.
 #'
 #' @export
 
-compute_polycl <- function(data, file_root, md_path, pairs_path){
+compute_polycl <- function(data, annot, pairs, verbose = TRUE){
+  # check for proper annotation order
+  if(!is.null(annot) & !is.null(pairs)){
+    if(mean(annot[[1]] == data[[1]]) < 1){
+      stop(paste("Error: annotate_data: annotation and data mismatch",
+                 annot[[1]], ";", data[[1]]))
+    } else if(mean(pairs[[1]] == data[[1]]) < 1){
+      stop(paste("Error: annotate_data: pairs and data mismatch",
+                 pairs[[1]], ";", data[[1]]))
+    }
+  }
+
   # prep output data list
-  print("Running compute_polycl")
-
   output_data <- list()
-  output_data[[1]] <- data[[1]]
+  output_data[[1]] <- libs <- data[[1]]
 
-  for(i in 2:length(data)){
-    lib_name <- data[[1]][i-1] #get library basename from first list element of data
-    print(paste("i:", i))
-    print(lib_name)
+  for(i in 1:length(libs)){
+    if(verbose) print(paste(libs[i],":",i,"of",length(libs)))
 
-    print("reading annotation file")
-    annot <- read_annot(lib_name, md_path)
-    print("reading pairs file")
-    pairs <- read_pairs(lib_name, pairs_path)
-    print("done reading pairs file")
+    sub.data <- data[[i+1]]
+    sub.annot <- annot[[i+1]]
+    sub.pairs <- annot[[i+1]]
 
-    output_data[[i]] <- library_polycl(data[[i]], annot, pairs)
+    output_data[[i+1]] <- library_polycl(sub.data, sub.annot, sub.pairs, verbose)
 
-    output_path <- paste0(lib_name,"/", file_root, "_", lib_name,"_polycl.tsv")
-    data.table::fwrite(output_data[[i]], output_path, sep = "\t")
   }
 
   return(output_data)

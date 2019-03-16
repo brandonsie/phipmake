@@ -20,13 +20,13 @@ library_promax <- function(data, annot){
   lib_promax[,1] <- proteins
 
   #loop through this library's proteins
-  pb <- pbar(0, length(proteins))
+  if(interactive()){pb <- pbar(0, length(proteins))}
   for(j in 1:length(proteins)){
     if(interactive()){setTxtProgressBar(pb, j)}
     lib_promax[j, -1] <- data[pro_ids == proteins[j], -1] %>%
       na.omit %>% protein_promax
   }
-
+  if(interactive()){cat("\n")}
   return(lib_promax)
 
 }

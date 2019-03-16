@@ -4,15 +4,13 @@
 \alias{compute_prosum}
 \title{compute_prosum}
 \usage{
-compute_prosum(data, file_root, md_path)
+compute_prosum(data, annot)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
-\item{file_root}{Filename to write.}
-
-\item{md_path}{Metadata directory.}
+\item{annot}{Phiplist of annotation files.}
 }
 \description{
 For multilibrary data, identify libraries, and call library_prosum

@@ -4,7 +4,7 @@
 \alias{library_polycl}
 \title{library_polycl}
 \usage{
-library_polycl(data, annot, pairs)
+library_polycl(data, annot, pairs, verbose = TRUE)
 }
 \arguments{
 \item{data}{Data frame with one library's hits data}
@@ -12,6 +12,8 @@ library_polycl(data, annot, pairs)
 \item{annot}{Annotation file.}
 
 \item{pairs}{Data frame of BLAST aligning pairs within each protein.}
+
+\item{verbose}{Logical whether or not to print progress.}
 }
 \description{
 For one peptide library, identify proteins from annotation file, and then

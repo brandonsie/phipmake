@@ -4,17 +4,17 @@
 \alias{compute_polycl}
 \title{compute_polycl}
 \usage{
-compute_polycl(data, file_root, md_path, pairs_path)
+compute_polycl(data, annot, pairs, verbose = TRUE)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
-\item{file_root}{Filename to write.}
+\item{annot}{Phiplist of annotation files.}
 
-\item{md_path}{Metadata directory.}
+\item{pairs}{Phiplist of blast alignment pair files.}
 
-\item{pairs_path}{BLAST pairs directory.}
+\item{verbose}{Logical whether or not to print progress.}
 }
 \description{
 For multilibrary hits data, identify libraries, and call library_polycl

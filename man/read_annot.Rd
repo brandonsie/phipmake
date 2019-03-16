@@ -4,12 +4,12 @@
 \alias{read_annot}
 \title{read_annot}
 \usage{
-read_annot(libname, md_path)
+read_annot(libname, metadata_path)
 }
 \arguments{
 \item{libname}{Library name.}
 
-\item{md_path}{Metadata directory.}
+\item{metadata_path}{Metadata directory.}
 }
 \description{
 Read annotation file based on md path and library name.

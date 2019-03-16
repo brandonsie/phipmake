@@ -4,18 +4,20 @@
 \alias{annotate_data}
 \title{annotate_data}
 \usage{
-annotate_data(data, file_root, fields = c("pep_id", "pos_start",
-  "pos_end", "UniProt_acc", "pep_aa", "taxon_species", "gene_symbol",
-  "product"), md_path)
+annotate_data(data, annotations = NULL, metadata_path = NULL,
+  fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",
+  "taxon_species", "gene_symbol", "product"))
 }
 \arguments{
-\item{data}{Un-annotated data.}
+\item{data}{Phiplist of unannotated edata.}
 
-\item{file_root}{Filename to write.}
+\item{annotations}{Phiplist of annotation files. Don't use with metadata_path param.}
+
+\item{metadata_path}{Metadata directory. Don't use with annotations param.}
 
 \item{fields}{What information to populate from annotation file.}
 
-\item{md_path}{Metadata directory.}
+\item{libname}{Library name contained in data.}
 }
 \description{
 Add peptide/protein annotation to data file.

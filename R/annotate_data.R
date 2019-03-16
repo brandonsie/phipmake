@@ -2,53 +2,64 @@
 #'
 #' Add peptide/protein annotation to data file.
 #'
-#' @param data Un-annotated data.
+#'@param libname Library name contained in data.
+#' @param data Phiplist of unannotated edata.
+#' @param annotations Phiplist of annotation files. Don't use with metadata_path param.
+#' @param metadata_path Metadata directory. Don't use with annotations param.
 #' @param fields What information to populate from annotation file.
-#' @param file_root Filename to write.
-#' @param md_path Metadata directory.
 #'
 #' @export
 
 annotate_data <- function(
-  data, file_root,
+  data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end",
              "UniProt_acc", "pep_aa", "taxon_species",
-             "gene_symbol", "product"),
-  md_path){
+             "gene_symbol", "product")
+  ){
+
+  # check for proper annotation order
+  if(!is.null(annotations)){
+    if(mean(annotations[[1]] == data[[1]]) < 1){
+      stop(paste("Error: annotate_data: annotation and data mismatch",
+                 annotations[[1]], ";", data[[1]]))
+    }
+  }
 
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- data[[1]]
-
+  output_data[[1]] <- libs <- data[[1]]
 
   # loop over libraries as specified in data[[1]]
-  for(i in 2:length(data)){
+  for(i in 1:length(libs)){
+
     # load annotation file
-    libname <- data[[1]][i-1] #get library basename from first list element of data
-    annot <- read_annot(libname, md_path)
+    libname <- libs[i] #get library basename from first list element of data
 
-    # specify sublibrary data
-    sublib_data <- data[[i]]
 
-    # identify reference column (usually u_pep_id or pro_id)
-    ref_col <- names(sublib_data)[1]
+    if(!is.null(annotations)){
+      annot <- annotations[[i+1]]
+    } else if(!is.null(metadata_path)){
+      annot <- read_annot(libname, metadata_path)
+    }
 
-    # if using pro_id, remove peptide-specific fields
-    # then get annotation file
+
+    # process sublibrary data
+    sub.data <- data[[i+1]]
+    ref_col <- names(sub.data)[1]
+
+    # if using pro_id, remove peptide-specific fields. Then annotate.
     if(ref_col == "pro_id"){
       pep_fields <- c("pep_id", "pos_start", "pos_end", "pep_aa")
       fields <- fields[!(fields %in% pep_fields)]
     }
-    annot_fields <- annot[match(sublib_data[,ref_col], annot[,ref_col]), fields]
+    annot_fields <- annot[match(sub.data[,ref_col], annot[,ref_col]), fields]
 
-    output_data[[i]] <- cbind(sublib_data[,1], annot_fields, sublib_data[,-1])
-    names(output_data[[i]])[1] <- ref_col
+    # combine annotation and original data, prepare output
+    sub.output <- cbind(sub.data[,1], annot_fields, sub.data[,-1])
+    names(sub.output)[1] <- names(sub.data)[1]
+    output_data[[i+1]] <- sub.output
 
-    sub_name <- paste0(libname,"/",file_root,"_",libname,"_annotated.tsv")
-    data.table::fwrite(output_data[[i]], sub_name, sep = "\t")
-
-
+    # data.table::fwrite(output_data, filename, sep = "\t", na = "NA")
   }
-
   return(output_data)
 }

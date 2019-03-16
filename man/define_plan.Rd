@@ -4,13 +4,8 @@
 \alias{define_plan}
 \title{define_plan}
 \usage{
-define_plan(md_path, pairs_path)
-}
-\arguments{
-\item{md_path}{Directory path to metadata peptide annotation files. Not implemented. need Drake wildcards.}
-
-\item{pairs_path}{Directory path to intraprotein BLAST pairs files. Not implemented. need Drake wildcards.}
+define_plan()
 }
 \description{
-Initialize and return drake_plan object
+Initialize and return drake_plan object. New for github drake 7.0+.
 }

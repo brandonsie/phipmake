@@ -4,13 +4,17 @@
 \alias{split_data}
 \title{split_data}
 \usage{
-split_data(data, file_root)
+split_data(data)
 }
 \arguments{
 \item{data}{Multilibrary data frame.}
-
-\item{file_root}{Filename to write.}
+}
+\value{
+List with n+1 elements for a data file with n sublibraries. The first
+element is a character vector of sublibrary names in order. The subsequent
+elements are data frames corresponding to the specified libraries, in
+corresponding order.
 }
 \description{
-Separate multilibrary peptide data into a a list of files for individual libraries.
+Separate multilibrary peptide data into a phipmake list.
 }

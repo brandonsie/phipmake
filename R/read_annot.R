@@ -3,18 +3,18 @@
 #' Read annotation file based on md path and library name.
 #'
 #' @param libname Library name.
-#' @param md_path Metadata directory.
+#' @param metadata_path Metadata directory.
 #'
 #' @export
 
-read_annot <- function(libname, md_path){
+read_annot <- function(libname, metadata_path){
 
   # prepare to load annotation file for specific library
-  annot_files <- list.files(md_path)
+  annot_files <- list.files(metadata_path)
 
   # specify annotation file path
   lib_annot_name <- annot_files[grep(libname,annot_files)] %>% min
-  lib_md_path <- paste(md_path, lib_annot_name, sep = "/")
+  lib_md_path <- paste(metadata_path, lib_annot_name, sep = "/")
 
   lib_annot_files <- list.files(lib_md_path)
   lib_annot_names <- lib_annot_files[intersect(

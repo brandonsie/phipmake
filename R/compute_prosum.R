@@ -5,26 +5,28 @@
 #'
 #' @param data List with first element a character vector of library names and
 #' subsequent elements data frames of data for corresponding libraries.
-#' @param file_root Filename to write.
-#' @param md_path Metadata directory.
+#' @param annot Phiplist of annotation files.
 #'
 #' @export
 
-compute_prosum <- function(data, file_root, md_path){
+compute_prosum <- function(data, annot){
+  # check for proper annotation order
+  if(!is.null(annot)){
+    if(mean(annot[[1]] == data[[1]]) < 1){
+      stop(paste("Error: annotate_data: annotation and data mismatch",
+                 annot[[1]], ";", data[[1]]))
+    }
+  }
+
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- data[[1]]
+  output_data[[1]] <- libs <- data[[1]]
 
-  for(i in 2:length(data)){
+  for(i in 1:length(libs)){
+    sub.data <- data[[i+1]]
+    sub.annot <- annot[[i+1]]
 
-    lib_name <- data[[1]][i-1] #get library basename from first list element of data
-    print(lib_name)
-    annot <- read_annot(lib_name, md_path)
-
-    output_data[[i]] <- library_prosum(data[[i]], annot)
-
-    output_path <- paste0(lib_name,"/", file_root, "_", lib_name,"_prosum.tsv")
-    data.table::fwrite(output_data[[i]], output_path, sep = "\t")
+    output_data[[i+1]] <- library_prosum(sub.data, sub.annot)
   }
 
   return(output_data)
