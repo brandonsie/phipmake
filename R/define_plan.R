@@ -95,7 +95,7 @@ define_plan <- function(){
   sn.polycl <- paste0(sn.enrichment, "_polyclonal")
   names.polycl.pan <- paste0(sn.polycl, sn.ext)
   names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
-  sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_polyclonal")
+  sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, enrichment_type, "_polyclonal")
   names.polycl.sub <- paste0(sn.polycl.sub, sn.ext)
   names.polycl.sub.annot <- paste0(sn.polycl.sub, sn.a.ext)
 
