@@ -6,10 +6,11 @@
 #' @param data List with first element a character vector of library names and
 #' subsequent elements data frames of data for corresponding libraries.
 #' @param annot Phiplist of annotation files.
+#' @param verbose Logical whether or not to print progress.
 #'
 #' @export
 
-compute_prosum <- function(data, annot){
+compute_prosum <- function(data, annot, verbose = TRUE){
   # check for proper annotation order
   if(!is.null(annot)){
     if(mean(annot[[1]] == data[[1]]) < 1){
@@ -23,10 +24,8 @@ compute_prosum <- function(data, annot){
   output_data[[1]] <- libs <- data[[1]]
 
   for(i in 1:length(libs)){
-    sub.data <- data[[i+1]]
-    sub.annot <- annot[[i+1]]
-
-    output_data[[i+1]] <- library_prosum(sub.data, sub.annot)
+    if(verbose) print(paste("Prosum:", libs[i],":",i,"of",length(libs)))
+    output_data[[i+1]] <- library_prosum(data[[i+1]], annot[[i+1]], verbose)
   }
 
   return(output_data)

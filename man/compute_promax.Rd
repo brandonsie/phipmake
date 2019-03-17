@@ -4,13 +4,15 @@
 \alias{compute_promax}
 \title{compute_promax}
 \usage{
-compute_promax(data, annot)
+compute_promax(data, annot, verbose = TRUE)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
 \item{annot}{Phiplist of annotation files.}
+
+\item{verbose}{Logical whether or not to print progress.}
 }
 \description{
 For multilibrary hits data, identify libraries, and call library_promax

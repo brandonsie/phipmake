@@ -28,13 +28,8 @@ compute_polycl <- function(data, annot, pairs, verbose = TRUE){
   output_data[[1]] <- libs <- data[[1]]
 
   for(i in 1:length(libs)){
-    if(verbose) print(paste(libs[i],":",i,"of",length(libs)))
-
-    sub.data <- data[[i+1]]
-    sub.annot <- annot[[i+1]]
-    sub.pairs <- annot[[i+1]]
-
-    output_data[[i+1]] <- library_polycl(sub.data, sub.annot, sub.pairs, verbose)
+    if(verbose) print(paste("Polyclonal:", libs[i],":",i,"of",length(libs)))
+    output_data[[i+1]] <- library_polycl(data[[i+1]],  annot[[i+1]], pairs[[i+1]], verbose)
 
   }
 

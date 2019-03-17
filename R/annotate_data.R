@@ -8,12 +8,14 @@
 #' @param metadata_path Metadata directory. Don't use with annotations param.
 #' @param fields What information to populate from annotation file.
 #'
+#' @return
+#'
 #' @export
 
 annotate_data <- function(
   data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end",
-             "UniProt_acc", "pep_aa", "taxon_species",
+             "UniProt_acc", "pep_aa", "taxon_genus", "taxon_species",
              "gene_symbol", "product")
   ){
 
@@ -33,15 +35,11 @@ annotate_data <- function(
   for(i in 1:length(libs)){
 
     # load annotation file
-    libname <- libs[i] #get library basename from first list element of data
-
-
     if(!is.null(annotations)){
       annot <- annotations[[i+1]]
     } else if(!is.null(metadata_path)){
-      annot <- read_annot(libname, metadata_path)
+      annot <- read_annot(libs[i], metadata_path)
     }
-
 
     # process sublibrary data
     sub.data <- data[[i+1]]
@@ -58,8 +56,6 @@ annotate_data <- function(
     sub.output <- cbind(sub.data[,1], annot_fields, sub.data[,-1])
     names(sub.output)[1] <- names(sub.data)[1]
     output_data[[i+1]] <- sub.output
-
-    # data.table::fwrite(output_data, filename, sep = "\t", na = "NA")
   }
   return(output_data)
 }

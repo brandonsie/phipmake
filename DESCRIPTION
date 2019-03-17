@@ -1,7 +1,7 @@
 Package: phipmake
 Type: Package
 Title: PhIP-seq Data Analysis Pipeline
-Version: 0.1.8
+Version: 0.1.9
 Author: Brandon Sie
 Maintainer: Brandon Sie <brandonsie@gmail.com>
 Description: PhIP-seq Data Analysis Pipeline
@@ -9,3 +9,8 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+Imports: 
+    data.table,
+    magrittr,
+	remotes,
+	dplyr

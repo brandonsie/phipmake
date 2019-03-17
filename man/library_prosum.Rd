@@ -4,12 +4,14 @@
 \alias{library_prosum}
 \title{library_prosum}
 \usage{
-library_prosum(data, annot)
+library_prosum(data, annot, verbose = TRUE)
 }
 \arguments{
 \item{data}{Data frame with one library's data.}
 
 \item{annot}{Annotation file.}
+
+\item{verbose}{Logical whether or not to print progress.}
 }
 \description{
 For one peptide library, identify proteins from annotation file, and then

@@ -4,13 +4,15 @@
 \alias{compute_prosum}
 \title{compute_prosum}
 \usage{
-compute_prosum(data, annot)
+compute_prosum(data, annot, verbose = TRUE)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
 \item{annot}{Phiplist of annotation files.}
+
+\item{verbose}{Logical whether or not to print progress.}
 }
 \description{
 For multilibrary data, identify libraries, and call library_prosum

@@ -6,7 +6,7 @@
 \usage{
 annotate_data(data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",
-  "taxon_species", "gene_symbol", "product"))
+  "taxon_genus", "taxon_species", "gene_symbol", "product"))
 }
 \arguments{
 \item{data}{Phiplist of unannotated edata.}
@@ -18,6 +18,9 @@ annotate_data(data, annotations = NULL, metadata_path = NULL,
 \item{fields}{What information to populate from annotation file.}
 
 \item{libname}{Library name contained in data.}
+}
+\value{
+
 }
 \description{
 Add peptide/protein annotation to data file.

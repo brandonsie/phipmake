@@ -1,4 +1,4 @@
-#' make_default_params
+#' write_drake_params
 #'
 #' write default values to drake_params.tsv for phipmake pipeline
 #'
@@ -13,7 +13,7 @@
 #' @param output_extension Extension for tab-separated output files.
 
 
-make_default_params <- function(dir,
+write_drake_params <- function(dir,
                                 screen_name,
                                 counts_filename,
                                 counts_type = "Counts",
