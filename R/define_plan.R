@@ -10,9 +10,6 @@
 define_plan <- function(){
   options(stringsAsFactors = FALSE)
 
-  library(remotes)
-  library(drake)
-  library(dplyr)
   #(!) load packages elsewhere
   #(!) setup defineparams function with defaults
 
@@ -30,14 +27,14 @@ define_plan <- function(){
   #                 "output_extension")
   # for(i in 1:use_params){assign(i, getparam(params, i))}
 
-  screen_name <- getparam(params, "screen_name")
-  counts_filename <- getparam(params, "counts_filename")
-  counts_type <- getparam(params, "counts_type")
-  enrichment_filename <- getparam(params, "enrichment_filename")
-  enrichment_type <- getparam(params, "enrichment_type")
-  enrichment_threshold <- getparam(params, "enrichment_threshold")
-  metadata_path <- getparam(params, "metadata_path")
-  output_extension <- getparam(params, "output_extension")
+  screen_name <- phipmake::getparam(params, "screen_name")
+  counts_filename <- phipmake::getparam(params, "counts_filename")
+  counts_type <- phipmake::getparam(params, "counts_type")
+  enrichment_filename <- phipmake::getparam(params, "enrichment_filename")
+  enrichment_type <- phipmake::getparam(params, "enrichment_type")
+  enrichment_threshold <- phipmake::getparam(params, "enrichment_threshold")
+  metadata_path <- phipmake::getparam(params, "metadata_path")
+  output_extension <- phipmake::getparam(params, "output_extension")
 
 
   # Establish sublibrary names
@@ -53,8 +50,8 @@ define_plan <- function(){
     stop(paste("Enrichment file is missing. Are you in the right working directory? Currently looking for an enrichment file named", enrichment_filename, "in directory:", getwd()))
   }
 
-  c.libs <- u_pep_id_to_libnames(temp.counts[,1])
-  e.libs <- u_pep_id_to_libnames(temp.enrich[,1])
+  c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
+  e.libs <- phipmake::u_pep_id_to_libnames(temp.enrich[,1])
 
   c.libnames <- c.libs[[4]]
   e.libnames <- e.libs[[4]]
@@ -95,7 +92,7 @@ define_plan <- function(){
   names.hits.sub <- paste0(sn.hits.sub, sn.ext)
   names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
-  sn.polycl <- paste0(screen_name, "_polyclonal")
+  sn.polycl <- paste0(sn.enrichment, "_polyclonal")
   names.polycl.pan <- paste0(sn.polycl, sn.ext)
   names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
   sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_polyclonal")
@@ -129,14 +126,14 @@ define_plan <- function(){
     # Load parameters in plan environment
     params = data.table::fread(file_in("drake_params.tsv")),
 
-    screen_name = getparam(params, "screen_name"),
-    counts_filename = getparam(params, "counts_filename"),
-    counts_type = getparam(params, "counts_type"),
-    enrichment_filename = getparam(params, "enrichment_filename"),
-    enrichment_type = getparam(params, "enrichment_type"),
-    enrichment_threshold = getparam(params, "enrichment_threshold"),
-    metadata_path = getparam(params, "metadata_path"),
-    output_extension = getparam(params, "output_extension"),
+    screen_name = phipmake::getparam(params, "screen_name"),
+    counts_filename = phipmake::getparam(params, "counts_filename"),
+    counts_type = phipmake::getparam(params, "counts_type"),
+    enrichment_filename = phipmake::getparam(params, "enrichment_filename"),
+    enrichment_type = phipmake::getparam(params, "enrichment_type"),
+    enrichment_threshold = phipmake::getparam(params, "enrichment_threshold"),
+    metadata_path = phipmake::getparam(params, "metadata_path"),
+    output_extension = phipmake::getparam(params, "output_extension"),
 
     # --------------------------------------------------------------------------
     # Enrichment
@@ -146,26 +143,26 @@ define_plan <- function(){
     ), #10
 
     write_enrichment = target(
-      write_data(enrichment, file_out(!!names.enrichment.pan))
+      phipmake::write_data(enrichment, file_out(!!names.enrichment.pan))
     ),
 
     enrichment_sub = target(
-      split_data(enrichment)
+      phipmake::split_data(enrichment)
     ),
 
     write_enrichment_sub = target(
-      write_data(enrichment_sub, file_out(!!names.enrichment.sub))
+      phipmake::write_data(enrichment_sub, file_out(!!names.enrichment.sub))
     ),
 
     enrichment_annotations = target(
-      read_annot_list(enrichment_sub[[1]], !!metadata_path)
+      phipmake::read_annot_list(enrichment_sub[[1]], !!metadata_path)
     ),
 
     enrichment_sub_annot = target(
-      annotate_data(enrichment_sub, enrichment_annotations)
+      phipmake::annotate_data(enrichment_sub, enrichment_annotations)
     ),
     write_enrichment_sub_annot = target(
-      write_data(enrichment_sub_annot, file_out(!!names.enrichment.sub.annot))
+      phipmake::write_data(enrichment_sub_annot, file_out(!!names.enrichment.sub.annot))
     ),
 
     enrichment_annot = target(
@@ -173,25 +170,25 @@ define_plan <- function(){
     ),
 
     write_enrichment_annot = target(
-      write_data(enrichment_annot, file_out(!!names.enrichment.pan.annot))
+      phipmake::write_data(enrichment_annot, file_out(!!names.enrichment.pan.annot))
     ), # 18
 
 
     # Enrichment Promax
     enrichment_sub_promax = target(
-      compute_promax(enrichment_sub, enrichment_annotations)
+      phipmake::compute_promax(enrichment_sub, enrichment_annotations)
     ),
 
     write_enrichment_sub_promax = target(
-      write_data(enrichment_sub_promax, file_out(!!names.enrichment.promax.sub))
+      phipmake::write_data(enrichment_sub_promax, file_out(!!names.enrichment.promax.sub))
     ),
 
     enrichment_sub_promax_annot = target(
-      annotate_data(enrichment_sub_promax, enrichment_annotations)
+      phipmake::annotate_data(enrichment_sub_promax, enrichment_annotations)
     ),
 
     write_enrichment_sub_promax_annot = target(
-      write_data(enrichment_sub_promax_annot, file_out(!!names.enrichment.promax.sub.annot))
+      phipmake::write_data(enrichment_sub_promax_annot, file_out(!!names.enrichment.promax.sub.annot))
     ),
 
     enrichment_promax = target(
@@ -199,7 +196,7 @@ define_plan <- function(){
     ),
 
     write_enrichment_promax = target(
-      write_data(enrichment_promax, file_out(!!names.enrichment.promax.pan))
+      phipmake::write_data(enrichment_promax, file_out(!!names.enrichment.promax.pan))
     ),
 
     enrichment_promax_annot = target(
@@ -207,24 +204,24 @@ define_plan <- function(){
     ),
 
     write_enrichment_promax_annot = target(
-      write_data(enrichment_promax_annot, file_out(!!names.enrichment.promax.pan.annot))
+      phipmake::write_data(enrichment_promax_annot, file_out(!!names.enrichment.promax.pan.annot))
     ), #26
 
     # Hits
     hits_sub = target(
-      compute_hits(enrichment_sub, enrichment_threshold)
+      phipmake::compute_hits(enrichment_sub, enrichment_threshold)
     ),
 
     write_hits_sub = target(
-      write_data(hits_sub, file_out(!!names.hits.sub))
+      phipmake::write_data(hits_sub, file_out(!!names.hits.sub))
     ),
 
     hits_sub_annot = target(
-      annotate_data(hits_sub, enrichment_annotations)
+      phipmake::annotate_data(hits_sub, enrichment_annotations)
     ),
 
     write_hits_sub_annot = target(
-      write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
+      phipmake::write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
     ),
 
     hits = target(
@@ -232,7 +229,7 @@ define_plan <- function(){
     ),
 
     write_hits = target(
-      write_data(hits, file_out(!!names.hits.pan))
+      phipmake::write_data(hits, file_out(!!names.hits.pan))
     ),
 
     hits_annot = target(
@@ -240,28 +237,28 @@ define_plan <- function(){
     ),
 
     write_hits_annot = target(
-      write_data(hits_annot, file_out(!!names.hits.pan.annot))
+      phipmake::write_data(hits_annot, file_out(!!names.hits.pan.annot))
     ), #34
 
     # Polyclonal
     blast_pairs = target(
-      read_pairs_list(enrichment_sub[[1]], !!metadata_path)
+      phipmake::read_pairs_list(enrichment_sub[[1]], !!metadata_path)
     ),
 
     polycl_sub = target(
-      compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
+      phipmake::compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
     ),
 
     write_polycl_sub = target(
-      write_data(polycl_sub, file_out(!!names.polycl.sub))
+      phipmake::write_data(polycl_sub, file_out(!!names.polycl.sub))
     ),
 
     polycl_sub_annot = target(
-      annotate_data(polycl_sub, enrichment_annotations)
+      phipmake::annotate_data(polycl_sub, enrichment_annotations)
     ),
 
     write_polycl_sub_annot = target(
-      write_data(polycl_sub_annot, file_out(!!names.polycl.sub.annot))
+      phipmake::write_data(polycl_sub_annot, file_out(!!names.polycl.sub.annot))
     ),
 
     polycl = target(
@@ -269,7 +266,7 @@ define_plan <- function(){
     ),
 
     write_polycl = target(
-      write_data(polycl, file_out(!!names.polycl.pan))
+      phipmake::write_data(polycl, file_out(!!names.polycl.pan))
     ),
 
     polycl_annot = target(
@@ -277,7 +274,7 @@ define_plan <- function(){
     ),
 
     write_polycl_annot = target(
-      write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
+      phipmake::write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
     ),
 
 
@@ -286,31 +283,31 @@ define_plan <- function(){
     counts = data.table::fread(file_in(!!counts_filename)),
 
     write_counts = target(
-      write_data(counts, file_out(!!names.counts.pan))
+      phipmake::write_data(counts, file_out(!!names.counts.pan))
     ),
 
     counts_sub = target(
-      split_data(counts)
+      phipmake::split_data(counts)
     ),
 
     write_counts_sub = target(
-      write_data(counts_sub, file_out(!!names.counts.sub))
+      phipmake::write_data(counts_sub, file_out(!!names.counts.sub))
     ),
 
     counts_annotations = target(
       if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
         enrichment_annotations
       } else{
-        read_annot_list(counts_sub[[1]], !!metadata_path)
+        phipmake::read_annot_list(counts_sub[[1]], !!metadata_path)
       }
     ),
 
     counts_sub_annot = target(
-      annotate_data(counts_sub, counts_annotations),
+      phipmake::annotate_data(counts_sub, counts_annotations),
     ),
 
     write_counts_sub_annot = target(
-      write_data(counts_sub_annot, file_out(!!names.counts.sub.annot))
+      phipmake::write_data(counts_sub_annot, file_out(!!names.counts.sub.annot))
     ),
 
     counts_annot = target(
@@ -318,24 +315,24 @@ define_plan <- function(){
     ),
 
     write_counts_annot = target(
-      write_data(counts_annot, file_out(!!names.counts.pan.annot))
+      phipmake::write_data(counts_annot, file_out(!!names.counts.pan.annot))
     ),
 
     # Counts Prosum
     counts_sub_prosum = target(
-      compute_prosum(counts_sub, counts_annotations)
+      phipmake::compute_prosum(counts_sub, counts_annotations)
     ),
 
     write_counts_sub_prosum = target(
-      write_data(counts_sub_prosum, file_out(!!names.counts.prosum.sub))
+      phipmake::write_data(counts_sub_prosum, file_out(!!names.counts.prosum.sub))
     ),
 
     counts_sub_prosum_annot = target(
-      annotate_data(counts_sub_prosum, counts_annotations)
+      phipmake::annotate_data(counts_sub_prosum, counts_annotations)
     ),
 
     write_counts_sub_prosum_annot = target(
-      write_data(counts_sub_prosum_annot, file_out(!!names.counts.prosum.sub.annot))
+      phipmake::write_data(counts_sub_prosum_annot, file_out(!!names.counts.prosum.sub.annot))
     ),
 
     counts_prosum = target(
@@ -343,7 +340,7 @@ define_plan <- function(){
     ),
 
     write_counts_prosum = target(
-      write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
+      phipmake::write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
     ),
 
     counts_prosum_annot = target(
@@ -351,7 +348,7 @@ define_plan <- function(){
     ),
 
     write_counts_prosum_annot = target(
-      write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
+      phipmake::write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
     )
 
 
