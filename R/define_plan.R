@@ -42,7 +42,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
 
 
   # Establish sublibrary names
-  if(!file.exists(counts_filename)){
+  if(file.exists(counts_filename)){
     temp.counts <- data.table::fread(counts_filename)
     c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
     c.lib.base <- c.libs[[2]]
