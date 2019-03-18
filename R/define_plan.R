@@ -42,85 +42,93 @@ define_plan <- function(params_path = "drake_params.tsv"){
 
 
   # Establish sublibrary names
-  if(file.exists(counts_filename)){
+  if(!file.exists(counts_filename)){
     temp.counts <- data.table::fread(counts_filename)
+    c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
+    c.lib.base <- c.libs[[2]]
+    c.libnames <- c.libs[[4]]
+
+    sn.lib.c <- paste0("_", c.libnames)
+    sn.libdir.c <- paste0(c.libnames, "/")
+
+    for(i in sn.libdir.c){if(!dir.exists(i)) dir.create(i)}
+
   } else{
     warning(paste("Counts file is missing. Are you in the right working directory? Currently looking for an enrichment file named", counts_filename, "in directory:", getwd()))
   }
 
   if(file.exists(enrichment_filename)){
     temp.enrich <- data.table::fread(enrichment_filename)
+    e.libs <- phipmake::u_pep_id_to_libnames(temp.enrich[,1])
+    e.lib.base <- e.libs[[2]]
+    e.libnames <- e.libs[[4]]
+
+    sn.lib.e <- paste0("_", e.libnames)
+    sn.libdir.e <- paste0(e.libnames, "/")
+
+    # Sublibrary directories create
+    for(i in sn.libdir.e){if(!dir.exists(i)) dir.create(i)
+      }
   } else{
     warning(paste("Enrichment file is missing. Are you in the right working directory? Currently looking for an enrichment file named", enrichment_filename, "in directory:", getwd()))
   }
 
-  c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
-  e.libs <- phipmake::u_pep_id_to_libnames(temp.enrich[,1])
-
-  c.libnames <- c.libs[[4]]
-  e.libnames <- e.libs[[4]]
-  libnames <- union(c.libnames, e.libnames)
-
-  c.lib.base <- c.libs[[2]]
-  e.lib.base <- e.libs[[2]]
-  lib.base <- union(c.lib.base, e.lib.base)
-
   # Establish output file names
+
   sn.ext <- paste0(".", output_extension)
-  sn.lib.c <- paste0("_", c.libnames)
-  sn.lib.e <- paste0("_", e.libnames)
-  sn.libdir.c <- paste0(c.libnames, "/")
-  sn.libdir.e <- paste0(e.libnames, "/")
-  sn.libdir <- paste0(libnames, "/")
   sn.annot <- paste0("_annotated")
   sn.a.ext <- paste0(sn.annot, sn.ext)
 
-  sn.enrichment <- paste0(screen_name, "_", enrichment_type)
-  names.enrichment.pan <- paste0(sn.enrichment, sn.ext)
-  names.enrichment.pan.annot <- paste0(sn.enrichment, sn.a.ext)
-  sn.enrichment.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type)
-  names.enrichment.sub <- paste0(sn.enrichment.sub, sn.ext)
-  names.enrichment.sub.annot <- paste0(sn.enrichment.sub, sn.a.ext)
+  if(file.exists(enrichment_filename)){
+    sn.enrichment <- paste0(screen_name, "_", enrichment_type)
+    names.enrichment.pan <- paste0(sn.enrichment, sn.ext)
+    names.enrichment.pan.annot <- paste0(sn.enrichment, sn.a.ext)
+    sn.enrichment.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type)
+    names.enrichment.sub <- paste0(sn.enrichment.sub, sn.ext)
+    names.enrichment.sub.annot <- paste0(sn.enrichment.sub, sn.a.ext)
 
-  sn.enrichment.promax <- paste0(sn.enrichment, "_promax")
-  names.enrichment.promax.pan <- paste0(sn.enrichment.promax, sn.ext)
-  names.enrichment.promax.pan.annot <- paste0(sn.enrichment.promax, sn.a.ext)
-  sn.enrichment.promax.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_promax")
-  names.enrichment.promax.sub <- paste0(sn.enrichment.promax.sub, sn.ext)
-  names.enrichment.promax.sub.annot <- paste0(sn.enrichment.promax.sub, sn.a.ext)
+    sn.enrichment.promax <- paste0(sn.enrichment, "_promax")
+    names.enrichment.promax.pan <- paste0(sn.enrichment.promax, sn.ext)
+    names.enrichment.promax.pan.annot <- paste0(sn.enrichment.promax, sn.a.ext)
+    sn.enrichment.promax.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_promax")
+    names.enrichment.promax.sub <- paste0(sn.enrichment.promax.sub, sn.ext)
+    names.enrichment.promax.sub.annot <- paste0(sn.enrichment.promax.sub, sn.a.ext)
 
-  sn.hits <- paste0(sn.enrichment, "_hits")
-  names.hits.pan <- paste0(sn.hits, sn.ext)
-  names.hits.pan.annot <- paste0(sn.hits, sn.a.ext)
-  sn.hits.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_hits")
-  names.hits.sub <- paste0(sn.hits.sub, sn.ext)
-  names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
+    sn.hits <- paste0(sn.enrichment, "_hits")
+    names.hits.pan <- paste0(sn.hits, sn.ext)
+    names.hits.pan.annot <- paste0(sn.hits, sn.a.ext)
+    sn.hits.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_hits")
+    names.hits.sub <- paste0(sn.hits.sub, sn.ext)
+    names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
-  sn.polycl <- paste0(sn.enrichment, "_polyclonal")
-  names.polycl.pan <- paste0(sn.polycl, sn.ext)
-  names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
-  sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_polyclonal")
-  names.polycl.sub <- paste0(sn.polycl.sub, sn.ext)
-  names.polycl.sub.annot <- paste0(sn.polycl.sub, sn.a.ext)
+    sn.polycl <- paste0(sn.enrichment, "_polyclonal")
+    names.polycl.pan <- paste0(sn.polycl, sn.ext)
+    names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
+    sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_polyclonal")
+    names.polycl.sub <- paste0(sn.polycl.sub, sn.ext)
+    names.polycl.sub.annot <- paste0(sn.polycl.sub, sn.a.ext)
 
-  sn.counts <- paste0(screen_name, "_", counts_type)
-  names.counts.pan <- paste0(sn.counts, sn.ext)
-  names.counts.pan.annot <- paste0(sn.counts, sn.a.ext)
-  sn.counts.sub <- paste0(sn.libdir.c, screen_name, sn.lib.c, "_", counts_type)
-  names.counts.sub <- paste0(sn.counts.sub, sn.ext)
-  names.counts.sub.annot <- paste0(sn.counts.sub, sn.a.ext)
-
-  sn.counts.prosum <- paste0(sn.counts, "_prosum")
-  names.counts.prosum.pan <- paste0(sn.counts.prosum, sn.ext)
-  names.counts.prosum.pan.annot <- paste0(sn.counts.prosum, sn.a.ext)
-  sn.counts.prosum.sub <- paste0(sn.libdir.c, screen_name, sn.lib.c, "_", counts_type, "_prosum")
-  names.counts.prosum.sub <- paste0(sn.counts.prosum.sub, sn.ext)
-  names.counts.prosum.sub.annot <- paste0(sn.counts.prosum.sub, sn.a.ext)
-
-  # Sublibrary directories create
-  for(i in sn.libdir){
-    if(!dir.exists(i)) dir.create(i)
   }
+
+  if(file.exists(counts_filename)){
+
+    sn.counts <- paste0(screen_name, "_", counts_type)
+    names.counts.pan <- paste0(sn.counts, sn.ext)
+    names.counts.pan.annot <- paste0(sn.counts, sn.a.ext)
+    sn.counts.sub <- paste0(sn.libdir.c, screen_name, sn.lib.c, "_", counts_type)
+    names.counts.sub <- paste0(sn.counts.sub, sn.ext)
+    names.counts.sub.annot <- paste0(sn.counts.sub, sn.a.ext)
+
+    sn.counts.prosum <- paste0(sn.counts, "_prosum")
+    names.counts.prosum.pan <- paste0(sn.counts.prosum, sn.ext)
+    names.counts.prosum.pan.annot <- paste0(sn.counts.prosum, sn.a.ext)
+    sn.counts.prosum.sub <- paste0(sn.libdir.c, screen_name, sn.lib.c, "_", counts_type, "_prosum")
+    names.counts.prosum.sub <- paste0(sn.counts.prosum.sub, sn.ext)
+    names.counts.prosum.sub.annot <- paste0(sn.counts.prosum.sub, sn.a.ext)
+
+  }
+
+
 
   # ============================================================================
   # Plan

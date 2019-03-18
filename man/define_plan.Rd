@@ -4,7 +4,10 @@
 \alias{define_plan}
 \title{define_plan}
 \usage{
-define_plan()
+define_plan(params_path = "drake_params.tsv")
+}
+\arguments{
+\item{params_path}{Path to project parameters file that can be created using the write_drake_params function.}
 }
 \description{
 Initialize and return drake_plan object. New for github drake 7.0+.

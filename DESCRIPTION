@@ -1,8 +1,8 @@
 Package: phipmake
 Type: Package
 Title: PhIP-seq Data Analysis Pipeline
-Version: 0.1.13
-Author: Brandon Sie
+Version: 0.1.14
+Author: Brandon Sie 
 Maintainer: Brandon Sie <brandonsie@gmail.com>
 Description: PhIP-seq Data Analysis Pipeline
 License: GPL-3 + file LICENSE
