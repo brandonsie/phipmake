@@ -2,12 +2,12 @@
 #'
 #' Initialize and return drake_plan object. New for github drake 7.0+.
 #'
-#'
+#' @param params_path Path to project parameters file that can be created using the write_drake_params function.
 #'
 #' @export
 #'
 
-define_plan <- function(){
+define_plan <- function(params_path = "drake_params.tsv"){
   options(stringsAsFactors = FALSE)
 
   #(!) load packages elsewhere
@@ -20,8 +20,12 @@ define_plan <- function(){
   # ============================================================================
   # Settings
 
+  if(!file.exists(params_path)){
+    warning(paste("Params file missing. If you haven't yet made a parameters file for this run, try write_drake_params(). Curently looking for a parameters file named", params_path, "in directory:", getwd()))
+  }
+
   # Load parameters from drake_params.tsv
-  params <- data.table::fread(file_in("drake_params.tsv"))
+  params <- data.table::fread(file_in(params_path))
   # use_params <- c("screen_name", "counts_filename", "enrichment_filename",
   #                 "enrichment_type", "enrichment_threshold", "metadata_path",
   #                 "output_extension")
@@ -41,13 +45,13 @@ define_plan <- function(){
   if(file.exists(counts_filename)){
     temp.counts <- data.table::fread(counts_filename)
   } else{
-    stop(paste("Counts file is missing. Are you in the right working directory? Currently looking for an enrichment file named", counts_filename, "in directory:", getwd()))
+    warning(paste("Counts file is missing. Are you in the right working directory? Currently looking for an enrichment file named", counts_filename, "in directory:", getwd()))
   }
 
   if(file.exists(enrichment_filename)){
     temp.enrich <- data.table::fread(enrichment_filename)
   } else{
-    stop(paste("Enrichment file is missing. Are you in the right working directory? Currently looking for an enrichment file named", enrichment_filename, "in directory:", getwd()))
+    warning(paste("Enrichment file is missing. Are you in the right working directory? Currently looking for an enrichment file named", enrichment_filename, "in directory:", getwd()))
   }
 
   c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
