@@ -3,3 +3,17 @@ title: phipmake
 template:
   params:
     bootswatch: sandstone
+navbar:
+  title: ~
+  left:
+    - icon: fas fa-home fa-lg
+      href: index.html
+    - text: "Reference"
+      href: "reference/index.html"
+  right:
+    - icon: fa-github
+      href: https://github.com/brandonsie/phipmake/
+    - text: brandonsie
+      href: https://brandonsie.github.io/
+
+
