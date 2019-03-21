@@ -389,7 +389,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
                ",pairwise=",!!avpairwise,
                ",blast=",!!avblast,
                ",out_path=",!!avout,
-               " AVARDA_BMS.sh")
+               " ", !!avpath, "AVARDA_BMS.sh")
       ),
       write_command = target(
         writeLines(command, "command.txt")
