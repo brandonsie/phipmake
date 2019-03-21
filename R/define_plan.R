@@ -377,7 +377,8 @@ define_plan <- function(params_path = "drake_params.tsv"){
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
     avblast <- paste0(avpath, "bin2/VirScan_filtered_virus_blast_new.csv")
-    avout <- paste0(avpath, "results")
+    avout <- paste0("AVARDA/")
+    if(!dir.exists(avout)) dir.create(avout)
 
     AVARDA_plan <- drake::drake_plan(
       command = target(
