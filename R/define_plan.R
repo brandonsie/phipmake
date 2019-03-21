@@ -372,7 +372,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
 
   if("Virscan" %in% c.lib.base){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
-    avcase <- paste0(avpath, "input/LCL_1_2.csv")
+    avcase <-   names.enrichment.sub[grep("Virscan", names.enrichment.sub)]
     avdf <- paste0(avpath, "bin2/df_new.csv")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
