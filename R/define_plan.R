@@ -133,7 +133,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
   # ============================================================================
   # Plan
 
-  plan <- drake::drake_plan(
+  main_plan <- drake::drake_plan(
 
     # Load parameters in plan environment
     params = data.table::fread(file_in("drake_params.tsv")),
@@ -367,10 +367,37 @@ define_plan <- function(params_path = "drake_params.tsv"){
   )
 
 
+  print("AVARDA setup:")
+  print(paste("libs:", c.lib.base))
 
+  if("Virscan" %in% c.lib.base){
+    avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
+    avcase <- paste0(avpath, "input/LCL_1_2.csv")
+    avdf <- paste0(avpath, "bin2/df_new.csv")
+    avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
+    avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
+    avblast <- paste0(avpath, "bin2/VirScan_filtered_virus_blast_new.csv")
+    avout <- paste0(avpath, "results")
 
-
-
-  return(plan)
-
+    AVARDA_plan <- drake::drake_plan(
+      command = target(
+        paste0("sbatch --export=case=",!!avcase,
+               ",thresh=",!!enrichment_threshold,
+               ",df=",!!avdf,
+               ",total=",!!avtotal,
+               ",pairwise=",!!avpairwise,
+               ",blast=",!!avblast,
+               ",out_path=",!!avout,
+               " AVARDA_BMS.sh")
+      ),
+      write_command = target(
+        writeLines(command, "command.txt")
+      ),
+      runAVARDA = target(
+        system(command)
+      )
+    )
+    main_plan <- rbind(main_plan, AVARDA_plan)
+  }
+  return(main_plan)
 }
