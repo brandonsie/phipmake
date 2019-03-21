@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>library_prosum — library_prosum • phipmake</title>
+<title>phipmake: PhIP-seq Data Analysis Pipeline. — phipmake • phipmake</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,10 +31,10 @@
 
 
 
-<meta property="og:title" content="library_prosum — library_prosum" />
+<meta property="og:title" content="phipmake: PhIP-seq Data Analysis Pipeline. — phipmake" />
 
-<meta property="og:description" content="For one peptide library, identify proteins from annotation file, and then
-call protein_prosum for each protein." />
+<meta property="og:description" content="PhIP-seq is an antibody profiling assay.
+Phipmake uses ropensci's drake package." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,44 +96,32 @@ call protein_prosum for each protein." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>library_prosum</h1>
+    <h1>phipmake: PhIP-seq Data Analysis Pipeline.</h1>
     
-    <div class="hidden name"><code>library_prosum.Rd</code></div>
+    <div class="hidden name"><code>phipmake.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>For one peptide library, identify proteins from annotation file, and then
-call protein_prosum for each protein.</p>
+    <p>PhIP-seq is an antibody profiling assay.
+Phipmake uses ropensci's drake package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>library_prosum</span>(<span class='no'>data</span>, <span class='no'>annot</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>data</th>
-      <td><p>Data frame with one library's data.</p></td>
-    </tr>
-    <tr>
-      <th>annot</th>
-      <td><p>Annotation file.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Logical whether or not to print progress.</p></td>
-    </tr>
-    </table>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>To keep track of multilibrary data, phipmake uses specially formatted lists
+that we are calling phiplists.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

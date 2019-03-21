@@ -1,0 +1,5 @@
+title: phipmake
+
+template:
+  params:
+    bootswatch: sandstone

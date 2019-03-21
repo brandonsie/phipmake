@@ -1,6 +1,6 @@
 # phipmake
 
-R package of [Drake](https://github.com/ropensci/drake)-based tools for the Larman Lab's [PhIP-seq](https://www.nature.com/articles/s41596-018-0025-6) data analysis pipeline.
+R package of [Drake](https://github.com/ropensci/drake)-based tools for the Larman Lab's [PhIP-Seq](https://www.nature.com/articles/s41596-018-0025-6) data analysis pipeline.
 
 ``` r  
 if(!requireNamespace("devtools")) install.packages("devtools")
