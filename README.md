@@ -15,4 +15,6 @@ v <- drake::vis_drake_graph(drake::drake_config(plan)) # visualize pipeline depe
 v
 visNetwork::visSave(v, "dependency_graph.html") # save dependency graph
 ```
-![dependency graph](https://raw.githubusercontent.com/brandonsie/brandonsie.github.io/master/docs/phipdrake_dependency_2.PNG)
+
+### Acknowledgements
+* Daniel Monaco wrote the network filter used for polyclonal scoring.
