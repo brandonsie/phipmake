@@ -368,16 +368,19 @@ define_plan <- function(params_path = "drake_params.tsv"){
 
 
   print("AVARDA setup:")
-  print(paste("libs:", c.lib.base))
+  print(paste("libs:", e.lib.base))
 5
-  if("VirscanLar" %in% c.lib.base){
+  if("VirscanLar" %in% e.lib.base){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
     avcase <-   names.enrichment.sub[grep("Virscan", names.enrichment.sub)]
     avdf <- paste0(avpath, "bin2/df_new.txt")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
     avblast <- paste0(avpath, "bin2/VirScan_filtered_virus_blast_new.csv")
-    avout <- paste0("AVARDA/")
+
+    virdir <- e.libnames[grep("Virscan", e.libnames)]
+
+    avout <- paste0(virdir, "/AVARDA/")
     if(!dir.exists(avout)) dir.create(avout)
 
     AVARDA_plan <- drake::drake_plan(
