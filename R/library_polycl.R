@@ -6,11 +6,12 @@
 #' @param data Data frame with one library's hits data
 #' @param annot Annotation file.
 #' @param pairs Data frame of BLAST aligning pairs within each protein.
+#' @param method Character string signifying which scoring method to use for evaluation. independence_filter or old_method.
 #' @param verbose Logical whether or not to print progress.
 #'
 #' @export
 
-library_polycl <- function(data, annot, pairs, verbose = TRUE){
+library_polycl <- function(data, annot, pairs, method = "independence_filter", verbose = TRUE){
 
   pro_ids <- annot$pro_id[match(data[,1], annot$u_pep_id)]  %>% na.omit
   proteins <- annot$pro_id %>% unique
@@ -25,7 +26,7 @@ library_polycl <- function(data, annot, pairs, verbose = TRUE){
   for(i in 1:length(proteins)){
     if(verbose){setTxtProgressBar(pb, i)}
     lib_polycl[i, -1] <- data[c(1:length(pro_ids))[
-      pro_ids == proteins[i]], ] %>% na.omit %>% protein_polycl(pairs)
+      pro_ids == proteins[i]], ] %>% na.omit %>% protein_polycl(pairs, method)
   }
   if(verbose) cat("\n")
 
