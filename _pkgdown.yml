@@ -3,6 +3,7 @@ title: phipmake
 template:
   params:
     bootswatch: sandstone
+    ganalytics: UA-131446137-1
 navbar:
   title: ~
   left:
