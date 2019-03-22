@@ -23,7 +23,7 @@ read_pairs <- function(libname, pairs_path){
   lib_pairs_files <- list.files(lib_pairs_path)
   # print(paste("lib pairs files", lib_pairs_files))
   lib_pairs_names <- lib_pairs_files[intersect(
-    grep(libname,lib_pairs_files), grep("_intrapairs", lib_pairs_files))]
+    grep(libname,lib_pairs_files), grep("_trimmedpairs", lib_pairs_files))]
   # print(paste("lib pairs name", lib_pairs_names))
 
   lib_pairs_file_path <- paste(lib_pairs_path, lib_pairs_names, sep = "/")

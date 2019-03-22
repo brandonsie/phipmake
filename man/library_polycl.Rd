@@ -4,7 +4,8 @@
 \alias{library_polycl}
 \title{library_polycl}
 \usage{
-library_polycl(data, annot, pairs, verbose = TRUE)
+library_polycl(data, annot, pairs, method = "independence_filter",
+  verbose = TRUE)
 }
 \arguments{
 \item{data}{Data frame with one library's hits data}
@@ -12,6 +13,8 @@ library_polycl(data, annot, pairs, verbose = TRUE)
 \item{annot}{Annotation file.}
 
 \item{pairs}{Data frame of BLAST aligning pairs within each protein.}
+
+\item{method}{Character string signifying which scoring method to use for evaluation. independence_filter or old_method.}
 
 \item{verbose}{Logical whether or not to print progress.}
 }

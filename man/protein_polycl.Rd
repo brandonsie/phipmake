@@ -4,14 +4,16 @@
 \alias{protein_polycl}
 \title{protein_polycl}
 \usage{
-protein_polycl(data, pairs, margin = 2)
+protein_polycl(data, pairs, margin = 2, method = "independence_filter")
 }
 \arguments{
 \item{data}{Data frame of numeric values for which to calculate maximum.}
 
-\item{pairs}{2 column table of aligning pairs that should not be double-counted for polyclonal score.}
+\item{pairs}{2 column table of aligning pairs that should not be double-counted for polyclonal score. For independence_filter method, this data should contain no redundancy e.g. a==b and b==a or self alignments e.g. a==a}
 
 \item{margin}{Numeric 1 for row 2 for column.}
+
+\item{method}{Character string signifying which scoring method to use for evaluation. independence_filter or old_method.}
 }
 \description{
 Take data frame input and calculate the polyclonal score in each column or row.
