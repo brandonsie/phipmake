@@ -1,12 +1,15 @@
 #' Initialize and return drake_plan object. New for github drake 7.0+.
 #'
 #' @param params_path Path to project parameters file that can be created using the write_drake_params function.
+#' @param runCounts Logical controlling whether or not to define counts targets.
+#' @param runEnrichment Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #'
 #' @export
 #'
 
-define_plan <- function(params_path = "drake_params.tsv", runAVARDA = FALSE){
+define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
+                        runEnrichment = TRUE, runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================
@@ -132,9 +135,12 @@ define_plan <- function(params_path = "drake_params.tsv", runAVARDA = FALSE){
 
 
   # ============================================================================
-  # Plan
+  # Plans
 
-  main_plan <- drake::drake_plan(
+  # --------------------------------------------------------------------------
+  # Parameters
+
+  params_plan <- drake::drake_plan(
 
     # Load parameters in plan environment
     params = data.table::fread(file_in("drake_params.tsv")),
@@ -146,226 +152,231 @@ define_plan <- function(params_path = "drake_params.tsv", runAVARDA = FALSE){
     enrichment_type = phipmake::getparam(params, "enrichment_type"),
     enrichment_threshold = phipmake::getparam(params, "enrichment_threshold"),
     metadata_path = phipmake::getparam(params, "metadata_path"),
-    output_extension = phipmake::getparam(params, "output_extension"),
-
-    # --------------------------------------------------------------------------
-    # Enrichment
-
-    enrichment = target(
-      data.table::fread(file_in(!!enrichment_filename))
-    ), #10
-
-    write_enrichment = target(
-      phipmake::write_data(enrichment, file_out(!!names.enrichment.pan))
-    ),
-
-    enrichment_sub = target(
-      phipmake::split_data(enrichment)
-    ),
-
-    write_enrichment_sub = target(
-      phipmake::write_data(enrichment_sub, file_out(!!names.enrichment.sub))
-    ),
-
-    enrichment_annotations = target(
-      phipmake::read_annot_list(enrichment_sub[[1]], !!metadata_path)
-    ),
-
-    enrichment_sub_annot = target(
-      phipmake::annotate_data(enrichment_sub, enrichment_annotations)
-    ),
-    write_enrichment_sub_annot = target(
-      phipmake::write_data(enrichment_sub_annot, file_out(!!names.enrichment.sub.annot))
-    ),
-
-    enrichment_annot = target(
-      dplyr::bind_rows(enrichment_sub_annot[-1])
-    ),
-
-    write_enrichment_annot = target(
-      phipmake::write_data(enrichment_annot, file_out(!!names.enrichment.pan.annot))
-    ), # 18
-
-
-    # Enrichment Promax
-    enrichment_sub_promax = target(
-      phipmake::compute_promax(enrichment_sub, enrichment_annotations)
-    ),
-
-    write_enrichment_sub_promax = target(
-      phipmake::write_data(enrichment_sub_promax, file_out(!!names.enrichment.promax.sub))
-    ),
-
-    enrichment_sub_promax_annot = target(
-      phipmake::annotate_data(enrichment_sub_promax, enrichment_annotations)
-    ),
-
-    write_enrichment_sub_promax_annot = target(
-      phipmake::write_data(enrichment_sub_promax_annot, file_out(!!names.enrichment.promax.sub.annot))
-    ),
-
-    enrichment_promax = target(
-      dplyr::bind_rows(enrichment_sub_promax[-1])
-    ),
-
-    write_enrichment_promax = target(
-      phipmake::write_data(enrichment_promax, file_out(!!names.enrichment.promax.pan))
-    ),
-
-    enrichment_promax_annot = target(
-      dplyr::bind_rows(enrichment_sub_promax_annot[-1])
-    ),
-
-    write_enrichment_promax_annot = target(
-      phipmake::write_data(enrichment_promax_annot, file_out(!!names.enrichment.promax.pan.annot))
-    ), #26
-
-    # Hits
-    hits_sub = target(
-      phipmake::compute_hits(enrichment_sub, enrichment_threshold)
-    ),
-
-    write_hits_sub = target(
-      phipmake::write_data(hits_sub, file_out(!!names.hits.sub))
-    ),
-
-    hits_sub_annot = target(
-      phipmake::annotate_data(hits_sub, enrichment_annotations)
-    ),
-
-    write_hits_sub_annot = target(
-      phipmake::write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
-    ),
-
-    hits = target(
-      dplyr::bind_rows(hits_sub[-1])
-    ),
-
-    write_hits = target(
-      phipmake::write_data(hits, file_out(!!names.hits.pan))
-    ),
-
-    hits_annot = target(
-      dplyr::bind_rows(hits_sub_annot[-1])
-    ),
-
-    write_hits_annot = target(
-      phipmake::write_data(hits_annot, file_out(!!names.hits.pan.annot))
-    ), #34
-
-    # Polyclonal
-    blast_pairs = target(
-      phipmake::read_pairs_list(enrichment_sub[[1]], !!metadata_path)
-    ),
-
-    polycl_sub = target(
-      phipmake::compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
-    ),
-
-    write_polycl_sub = target(
-      phipmake::write_data(polycl_sub, file_out(!!names.polycl.sub))
-    ),
-
-    polycl_sub_annot = target(
-      phipmake::annotate_data(polycl_sub, enrichment_annotations)
-    ),
-
-    write_polycl_sub_annot = target(
-      phipmake::write_data(polycl_sub_annot, file_out(!!names.polycl.sub.annot))
-    ),
-
-    polycl = target(
-      dplyr::bind_rows(polycl_sub[-1])
-    ),
-
-    write_polycl = target(
-      phipmake::write_data(polycl, file_out(!!names.polycl.pan))
-    ),
-
-    polycl_annot = target(
-      dplyr::bind_rows(polycl_sub_annot[-1])
-    ),
-
-    write_polycl_annot = target(
-      phipmake::write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
-    ),
-
-
-    # --------------------------------------------------------------------------
-    # Counts
-    counts = data.table::fread(file_in(!!counts_filename)),
-
-    write_counts = target(
-      phipmake::write_data(counts, file_out(!!names.counts.pan))
-    ),
-
-    counts_sub = target(
-      phipmake::split_data(counts)
-    ),
-
-    write_counts_sub = target(
-      phipmake::write_data(counts_sub, file_out(!!names.counts.sub))
-    ),
-
-    counts_annotations = target(
-      if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
-        enrichment_annotations
-      } else{
-        phipmake::read_annot_list(counts_sub[[1]], !!metadata_path)
-      }
-    ),
-
-    counts_sub_annot = target(
-      phipmake::annotate_data(counts_sub, counts_annotations),
-    ),
-
-    write_counts_sub_annot = target(
-      phipmake::write_data(counts_sub_annot, file_out(!!names.counts.sub.annot))
-    ),
-
-    counts_annot = target(
-      dplyr::bind_rows(counts_sub_annot[-1])
-    ),
-
-    write_counts_annot = target(
-      phipmake::write_data(counts_annot, file_out(!!names.counts.pan.annot))
-    ),
-
-    # Counts Prosum
-    counts_sub_prosum = target(
-      phipmake::compute_prosum(counts_sub, counts_annotations)
-    ),
-
-    write_counts_sub_prosum = target(
-      phipmake::write_data(counts_sub_prosum, file_out(!!names.counts.prosum.sub))
-    ),
-
-    counts_sub_prosum_annot = target(
-      phipmake::annotate_data(counts_sub_prosum, counts_annotations)
-    ),
-
-    write_counts_sub_prosum_annot = target(
-      phipmake::write_data(counts_sub_prosum_annot, file_out(!!names.counts.prosum.sub.annot))
-    ),
-
-    counts_prosum = target(
-      dplyr::bind_rows(counts_sub_prosum[-1])
-    ),
-
-    write_counts_prosum = target(
-      phipmake::write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
-    ),
-
-    counts_prosum_annot = target(
-      dplyr::bind_rows(counts_sub_prosum_annot[-1])
-    ),
-
-    write_counts_prosum_annot = target(
-      phipmake::write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
-    )
-
+    output_extension = phipmake::getparam(params, "output_extension")
   )
 
+  # --------------------------------------------------------------------------
+  # Enrichment
+
+  if(runEnrichment) {
+    enrichment_plan <- drake::drake_plan(
+      enrichment = target(
+        data.table::fread(file_in(!!enrichment_filename))
+      ), #10
+
+      write_enrichment = target(
+        phipmake::write_data(enrichment, file_out(!!names.enrichment.pan))
+      ),
+
+      enrichment_sub = target(
+        phipmake::split_data(enrichment)
+      ),
+
+      write_enrichment_sub = target(
+        phipmake::write_data(enrichment_sub, file_out(!!names.enrichment.sub))
+      ),
+
+      enrichment_annotations = target(
+        phipmake::read_annot_list(enrichment_sub[[1]], !!metadata_path)
+      ),
+
+      enrichment_sub_annot = target(
+        phipmake::annotate_data(enrichment_sub, enrichment_annotations)
+      ),
+      write_enrichment_sub_annot = target(
+        phipmake::write_data(enrichment_sub_annot, file_out(!!names.enrichment.sub.annot))
+      ),
+
+      enrichment_annot = target(
+        dplyr::bind_rows(enrichment_sub_annot[-1])
+      ),
+
+      write_enrichment_annot = target(
+        phipmake::write_data(enrichment_annot, file_out(!!names.enrichment.pan.annot))
+      ), # 18
+
+
+      # Enrichment Promax
+      enrichment_sub_promax = target(
+        phipmake::compute_promax(enrichment_sub, enrichment_annotations)
+      ),
+
+      write_enrichment_sub_promax = target(
+        phipmake::write_data(enrichment_sub_promax, file_out(!!names.enrichment.promax.sub))
+      ),
+
+      enrichment_sub_promax_annot = target(
+        phipmake::annotate_data(enrichment_sub_promax, enrichment_annotations)
+      ),
+
+      write_enrichment_sub_promax_annot = target(
+        phipmake::write_data(enrichment_sub_promax_annot, file_out(!!names.enrichment.promax.sub.annot))
+      ),
+
+      enrichment_promax = target(
+        dplyr::bind_rows(enrichment_sub_promax[-1])
+      ),
+
+      write_enrichment_promax = target(
+        phipmake::write_data(enrichment_promax, file_out(!!names.enrichment.promax.pan))
+      ),
+
+      enrichment_promax_annot = target(
+        dplyr::bind_rows(enrichment_sub_promax_annot[-1])
+      ),
+
+      write_enrichment_promax_annot = target(
+        phipmake::write_data(enrichment_promax_annot, file_out(!!names.enrichment.promax.pan.annot))
+      ), #26
+
+      # Hits
+      hits_sub = target(
+        phipmake::compute_hits(enrichment_sub, enrichment_threshold)
+      ),
+
+      write_hits_sub = target(
+        phipmake::write_data(hits_sub, file_out(!!names.hits.sub))
+      ),
+
+      hits_sub_annot = target(
+        phipmake::annotate_data(hits_sub, enrichment_annotations)
+      ),
+
+      write_hits_sub_annot = target(
+        phipmake::write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
+      ),
+
+      hits = target(
+        dplyr::bind_rows(hits_sub[-1])
+      ),
+
+      write_hits = target(
+        phipmake::write_data(hits, file_out(!!names.hits.pan))
+      ),
+
+      hits_annot = target(
+        dplyr::bind_rows(hits_sub_annot[-1])
+      ),
+
+      write_hits_annot = target(
+        phipmake::write_data(hits_annot, file_out(!!names.hits.pan.annot))
+      ), #34
+
+      # Polyclonal
+      blast_pairs = target(
+        phipmake::read_pairs_list(enrichment_sub[[1]], !!metadata_path)
+      ),
+
+      polycl_sub = target(
+        phipmake::compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
+      ),
+
+      write_polycl_sub = target(
+        phipmake::write_data(polycl_sub, file_out(!!names.polycl.sub))
+      ),
+
+      polycl_sub_annot = target(
+        phipmake::annotate_data(polycl_sub, enrichment_annotations)
+      ),
+
+      write_polycl_sub_annot = target(
+        phipmake::write_data(polycl_sub_annot, file_out(!!names.polycl.sub.annot))
+      ),
+
+      polycl = target(
+        dplyr::bind_rows(polycl_sub[-1])
+      ),
+
+      write_polycl = target(
+        phipmake::write_data(polycl, file_out(!!names.polycl.pan))
+      ),
+
+      polycl_annot = target(
+        dplyr::bind_rows(polycl_sub_annot[-1])
+      ),
+
+      write_polycl_annot = target(
+        phipmake::write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
+      )
+    )
+  }
+    # --------------------------------------------------------------------------
+    # Counts
+  if(runCounts) {
+    counts_plan <- drake::drake_plan(
+      counts = data.table::fread(file_in(!!counts_filename)),
+
+      write_counts = target(
+        phipmake::write_data(counts, file_out(!!names.counts.pan))
+      ),
+
+      counts_sub = target(
+        phipmake::split_data(counts)
+      ),
+
+      write_counts_sub = target(
+        phipmake::write_data(counts_sub, file_out(!!names.counts.sub))
+      ),
+
+      counts_annotations = target(
+        if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
+          enrichment_annotations
+        } else{
+          phipmake::read_annot_list(counts_sub[[1]], !!metadata_path)
+        }
+      ),
+
+      counts_sub_annot = target(
+        phipmake::annotate_data(counts_sub, counts_annotations),
+      ),
+
+      write_counts_sub_annot = target(
+        phipmake::write_data(counts_sub_annot, file_out(!!names.counts.sub.annot))
+      ),
+
+      counts_annot = target(
+        dplyr::bind_rows(counts_sub_annot[-1])
+      ),
+
+      write_counts_annot = target(
+        phipmake::write_data(counts_annot, file_out(!!names.counts.pan.annot))
+      ),
+
+      # Counts Prosum
+      counts_sub_prosum = target(
+        phipmake::compute_prosum(counts_sub, counts_annotations)
+      ),
+
+      write_counts_sub_prosum = target(
+        phipmake::write_data(counts_sub_prosum, file_out(!!names.counts.prosum.sub))
+      ),
+
+      counts_sub_prosum_annot = target(
+        phipmake::annotate_data(counts_sub_prosum, counts_annotations)
+      ),
+
+      write_counts_sub_prosum_annot = target(
+        phipmake::write_data(counts_sub_prosum_annot, file_out(!!names.counts.prosum.sub.annot))
+      ),
+
+      counts_prosum = target(
+        dplyr::bind_rows(counts_sub_prosum[-1])
+      ),
+
+      write_counts_prosum = target(
+        phipmake::write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
+      ),
+
+      counts_prosum_annot = target(
+        dplyr::bind_rows(counts_sub_prosum_annot[-1])
+      ),
+
+      write_counts_prosum_annot = target(
+        phipmake::write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
+      )
+
+    )
+  }
 
   if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
@@ -401,6 +412,13 @@ define_plan <- function(params_path = "drake_params.tsv", runAVARDA = FALSE){
     main_plan <- rbind(main_plan, AVARDA_plan)
   }
 
+
+  #-------------
+  # setup main plan based on input parameters runCounts runEnrichment runAVARDA
+  main_plan <- params_plan
+  if(runCounts){main_plan %<>% rbind(counts_plan)}
+  if(runEnrichment){main_plan %<>% rbind(enrichment_plan)}
+  if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
 
   return(main_plan)
 }
