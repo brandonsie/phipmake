@@ -4,10 +4,12 @@
 \alias{define_plan}
 \title{Initialize and return drake_plan object. New for github drake 7.0+.}
 \usage{
-define_plan(params_path = "drake_params.tsv")
+define_plan(params_path = "drake_params.tsv", runAVARDA = FALSE)
 }
 \arguments{
 \item{params_path}{Path to project parameters file that can be created using the write_drake_params function.}
+
+\item{runAVARDA}{Logical controlling whether or not to define AVARDA targets.}
 }
 \description{
 Initialize and return drake_plan object. New for github drake 7.0+.

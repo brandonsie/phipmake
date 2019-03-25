@@ -1,11 +1,12 @@
 #' Initialize and return drake_plan object. New for github drake 7.0+.
 #'
 #' @param params_path Path to project parameters file that can be created using the write_drake_params function.
+#' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #'
 #' @export
 #'
 
-define_plan <- function(params_path = "drake_params.tsv"){
+define_plan <- function(params_path = "drake_params.tsv", runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================
@@ -363,14 +364,10 @@ define_plan <- function(params_path = "drake_params.tsv"){
       phipmake::write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
     )
 
-
   )
 
 
-  print("AVARDA setup:")
-  print(paste("libs:", e.lib.base))
-
-  if("VirscanLar" %in% e.lib.base){
+  if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
     avcase <-   names.enrichment.sub[grep("Virscan", names.enrichment.sub)]
     avdf <- paste0(avpath, "bin2/df_new.txt")
@@ -403,5 +400,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
     )
     main_plan <- rbind(main_plan, AVARDA_plan)
   }
+
+
   return(main_plan)
 }
