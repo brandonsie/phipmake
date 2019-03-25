@@ -7,13 +7,16 @@
 protein_polycl(data, pairs, margin = 2, method = "independence_filter")
 }
 \arguments{
-\item{data}{Data frame of numeric values for which to calculate maximum.}
+\item{data}{Data frame of hits from which to calculate polyclonal score. The first column should contain peptide names. Each subsequent column should represent data for one sample and each row should represent data for one peptide. All peptides in data should be from the same protein.}
 
 \item{pairs}{2 column table of aligning pairs that should not be double-counted for polyclonal score. For independence_filter method, this data should contain no redundancy e.g. a==b and b==a or self alignments e.g. a==a}
 
 \item{margin}{Numeric 1 for row 2 for column.}
 
 \item{method}{Character string signifying which scoring method to use for evaluation. independence_filter or old_method.}
+}
+\value{
+polycl_scores; A numeric vector with length equal to the number of samples represented in the data parameter. One polyclonal score for each patient, collapsed from all input peptide hits data.
 }
 \description{
 Take data frame input and calculate the polyclonal score in each column or row.

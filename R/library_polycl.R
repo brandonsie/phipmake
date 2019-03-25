@@ -12,7 +12,7 @@
 library_polycl <- function(data, annot, pairs, method = "independence_filter", verbose = TRUE){
 
   pro_ids <- annot$pro_id[match(data[,1], annot$u_pep_id)]  %>% na.omit
-  proteins <- annot$pro_id %>% unique
+  proteins <- pro_ids %>% unique
 
   #setup polyclonal table
   lib_polycl <- data.frame(matrix(nrow = length(proteins), ncol = ncol(data)))
@@ -22,7 +22,7 @@ library_polycl <- function(data, annot, pairs, method = "independence_filter", v
   #loop through this librarys proteins
   if(verbose){pb <- pbar(0, length(proteins))}
   for(i in 1:length(proteins)){
-    print(i)
+    if(verbose >= 2){print(i)}
     if(verbose){setTxtProgressBar(pb, i)}
     lib_polycl[i, -1] <- data[c(1:length(pro_ids))[
       pro_ids == proteins[i]], ] %>% na.omit %>% protein_polycl(pairs, method)
