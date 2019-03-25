@@ -1,5 +1,3 @@
-#' protein_prosum
-#'
 #' Take data frame input and calculate the sum of values in each column or row.
 #'
 #' @param data Data frame of numeric values for which to calculate sum

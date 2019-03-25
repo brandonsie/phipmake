@@ -2,7 +2,7 @@
 % Please edit documentation in R/subset_data.R
 \name{subset_data}
 \alias{subset_data}
-\title{subset_data}
+\title{Pull out specific sublibrary data from a larger data frame based on first column grep.}
 \usage{
 subset_data(data, sub, filename)
 }

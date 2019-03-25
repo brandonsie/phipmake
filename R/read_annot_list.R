@@ -1,5 +1,3 @@
-#' read_annot_list
-#'
 #' Read annotation files based on library names and metadata path.
 #'
 #' @param libs Character vector of library names.

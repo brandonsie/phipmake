@@ -2,7 +2,7 @@
 % Please edit documentation in R/pbar.R
 \name{pbar}
 \alias{pbar}
-\title{pbar}
+\title{Wrapper for txtProgressBar with some defualt settings.}
 \usage{
 pbar(min, max)
 }

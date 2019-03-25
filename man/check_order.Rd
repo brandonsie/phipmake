@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_order.R
 \name{check_order}
 \alias{check_order}
-\title{check_order}
+\title{Maintains specified order of panlibrary data after a call to dplyr::bind_rows.}
 \usage{
 check_order(libs, data)
 }

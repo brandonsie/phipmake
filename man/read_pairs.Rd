@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_pairs.R
 \name{read_pairs}
 \alias{read_pairs}
-\title{read_pairs}
+\title{Read BLAST pairs file based on md path and library name.}
 \usage{
 read_pairs(libname, pairs_path)
 }

@@ -1,5 +1,3 @@
-#' compute_polycl
-#'
 #' For multilibrary hits data, identify libraries, and call library_polycl
 #' for each.
 #'

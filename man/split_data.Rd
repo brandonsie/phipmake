@@ -2,7 +2,7 @@
 % Please edit documentation in R/split_data.R
 \name{split_data}
 \alias{split_data}
-\title{split_data}
+\title{Separate multilibrary peptide data into a phipmake list.}
 \usage{
 split_data(data)
 }

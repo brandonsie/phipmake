@@ -1,5 +1,3 @@
-#' pbar
-#'
 #' Wrapper for txtProgressBar with some defualt settings.
 #'
 #' @param min Progress bar minimum value.

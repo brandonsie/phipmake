@@ -1,5 +1,3 @@
-#' library_prosum
-#'
 #' For one peptide library, identify proteins from annotation file, and then
 #' call protein_prosum for each protein.
 #'

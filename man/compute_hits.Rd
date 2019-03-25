@@ -2,7 +2,8 @@
 % Please edit documentation in R/compute_hits.R
 \name{compute_hits}
 \alias{compute_hits}
-\title{compute_hits}
+\title{For multilibrary enrichment, identify libraries, and identify values above threshold.
+for each.}
 \usage{
 compute_hits(data, threshold = 5)
 }

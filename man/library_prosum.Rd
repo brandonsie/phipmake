@@ -2,7 +2,8 @@
 % Please edit documentation in R/library_prosum.R
 \name{library_prosum}
 \alias{library_prosum}
-\title{library_prosum}
+\title{For one peptide library, identify proteins from annotation file, and then
+call protein_prosum for each protein.}
 \usage{
 library_prosum(data, annot, verbose = TRUE)
 }

@@ -4,6 +4,53 @@ template:
   params:
     bootswatch: sandstone
     ganalytics: UA-131446137-1
+reference:
+  - title: Package Documentation
+    desc: Helpfile for phipmake package.
+    contents:
+      - '`phipmake`'
+  - title: User Functions
+    desc: Functions intended to be called by user.
+    contents:
+      - '`define_plan`'
+      - '`write_drake_params`'
+  - title: Annotation Functions
+    desc: For adding & interacting with metadata.
+    contents:
+      - '`annotate_data`'
+      - '`read_annot`'
+      - '`read_annot_list`'
+      - '`read_pairs`'
+      - '`read_pairs_list`'
+      - '`u_pep_id_to_libnames`'
+  - title: Prosum and Promax
+    desc: For basic collapsing of peptide-level data to protein-level.
+    contents:
+      - '`compute_prosum`'
+      - '`library_prosum`'
+      - '`protein_prosum`'
+      - '`compute_promax`'
+      - '`library_promax`'
+      - '`protein_promax`'
+  - title: Hits and Polyclonal
+    desc: Processing enrichment data based on a threshold.
+    contents:
+      - '`compute_hits`'
+      - '`compute_polycl`'
+      - '`library_polycl`'
+      - '`protein_polycl`'
+      - '`independence_filter`'
+  - title: Helper Functions
+    desc: Small functions for various tasks.
+    contents:
+      - '`check_order`'
+      - '`getparam`'
+      - '`pbar`'
+      - '`split_data`'
+      - '`subset_data`'
+      - '`prepare_blast_pairs`'
+      - '`trimDictionary`'
+      - '`write_data`'
 navbar:
   title: ~
   left:

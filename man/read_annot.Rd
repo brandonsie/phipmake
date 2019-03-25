@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_annot.R
 \name{read_annot}
 \alias{read_annot}
-\title{read_annot}
+\title{Read annotation file based on md path and library name.}
 \usage{
 read_annot(libname, metadata_path)
 }

@@ -1,5 +1,3 @@
-#' check_order
-#'
 #' Maintains specified order of panlibrary data after a call to dplyr::bind_rows.
 #'
 #' @param libs Character vector of library ID's in order

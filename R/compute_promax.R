@@ -1,5 +1,3 @@
-#' compute_promax
-#'
 #' For multilibrary hits data, identify libraries, and call library_promax
 #' for each.
 #'

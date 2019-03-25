@@ -1,5 +1,3 @@
-#' define_plan
-#'
 #' Initialize and return drake_plan object. New for github drake 7.0+.
 #'
 #' @param params_path Path to project parameters file that can be created using the write_drake_params function.

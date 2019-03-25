@@ -1,5 +1,3 @@
-#' annotate_data
-#'
 #' Add peptide/protein annotation to data file.
 #'
 #'@param libname Library name contained in data.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotate_data.R
 \name{annotate_data}
 \alias{annotate_data}
-\title{annotate_data}
+\title{Add peptide/protein annotation to data file.}
 \usage{
 annotate_data(data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",

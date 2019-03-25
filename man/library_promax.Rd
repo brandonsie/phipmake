@@ -2,7 +2,8 @@
 % Please edit documentation in R/library_promax.R
 \name{library_promax}
 \alias{library_promax}
-\title{library_promax}
+\title{For one peptide library, identify proteins from annotation file, and then
+call protein_promax for each protein.}
 \usage{
 library_promax(data, annot, verbose = TRUE)
 }

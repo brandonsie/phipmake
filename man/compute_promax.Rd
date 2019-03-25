@@ -2,7 +2,8 @@
 % Please edit documentation in R/compute_promax.R
 \name{compute_promax}
 \alias{compute_promax}
-\title{compute_promax}
+\title{For multilibrary hits data, identify libraries, and call library_promax
+for each.}
 \usage{
 compute_promax(data, annot, verbose = TRUE)
 }

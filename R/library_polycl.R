@@ -1,5 +1,3 @@
-#' library_polycl
-#'
 #' For one peptide library, identify proteins from annotation file, and then
 #' call protein_polycl for each protein.
 #'

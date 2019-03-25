@@ -2,7 +2,7 @@
 % Please edit documentation in R/define_plan.R
 \name{define_plan}
 \alias{define_plan}
-\title{define_plan}
+\title{Initialize and return drake_plan object. New for github drake 7.0+.}
 \usage{
 define_plan(params_path = "drake_params.tsv")
 }

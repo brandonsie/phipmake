@@ -2,7 +2,8 @@
 % Please edit documentation in R/compute_polycl.R
 \name{compute_polycl}
 \alias{compute_polycl}
-\title{compute_polycl}
+\title{For multilibrary hits data, identify libraries, and call library_polycl
+for each.}
 \usage{
 compute_polycl(data, annot, pairs, method = "independence_filter",
   verbose = TRUE)

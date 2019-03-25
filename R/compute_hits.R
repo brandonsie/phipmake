@@ -1,6 +1,4 @@
-#' compute_hits
-#'
-#' For multilibrary enrichment, identify libraries, and identify values above threshold.
+#'  For multilibrary enrichment, identify libraries, and identify values above threshold.
 #' for each.
 #'
 #' @param data List with first element a character vector of library names and

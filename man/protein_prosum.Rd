@@ -2,7 +2,7 @@
 % Please edit documentation in R/protein_prosum.R
 \name{protein_prosum}
 \alias{protein_prosum}
-\title{protein_prosum}
+\title{Take data frame input and calculate the sum of values in each column or row.}
 \usage{
 protein_prosum(data, margin = 2)
 }

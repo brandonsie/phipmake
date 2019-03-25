@@ -2,7 +2,8 @@
 % Please edit documentation in R/library_polycl.R
 \name{library_polycl}
 \alias{library_polycl}
-\title{library_polycl}
+\title{For one peptide library, identify proteins from annotation file, and then
+call protein_polycl for each protein.}
 \usage{
 library_polycl(data, annot, pairs, method = "independence_filter",
   verbose = TRUE)

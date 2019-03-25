@@ -1,5 +1,3 @@
-#' read_pairs_list
-#'
 #' Read blast alignment pair files based on library names and metadata path.
 #'
 #' @param libs Character vector of library names.

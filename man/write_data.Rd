@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_data.R
 \name{write_data}
 \alias{write_data}
-\title{write_data}
+\title{A wrapper for data.table::fwrite to write file to drive.}
 \usage{
 write_data(data, filename)
 }
@@ -15,5 +15,5 @@ separate files.}
 \item{filename}{Filename or filenames to write.}
 }
 \description{
-Mainly a wrapper for data.table::fwrite to write file to drive.
+A wrapper for data.table::fwrite to write file to drive.
 }

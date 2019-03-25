@@ -2,7 +2,7 @@
 % Please edit documentation in R/protein_promax.R
 \name{protein_promax}
 \alias{protein_promax}
-\title{protein_promax}
+\title{Take data frame input and calculate the maximum value in each column or row.}
 \usage{
 protein_promax(data, margin = 2)
 }

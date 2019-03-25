@@ -2,7 +2,7 @@
 % Please edit documentation in R/getparam.R
 \name{getparam}
 \alias{getparam}
-\title{getparam}
+\title{Function to retreive value of parameter from param name.}
 \usage{
 getparam(params, param)
 }

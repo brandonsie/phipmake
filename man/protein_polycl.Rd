@@ -2,7 +2,7 @@
 % Please edit documentation in R/protein_polycl.R
 \name{protein_polycl}
 \alias{protein_polycl}
-\title{protein_polycl}
+\title{Take data frame input and calculate the polyclonal score in each column or row.}
 \usage{
 protein_polycl(data, pairs, margin = 2, method = "independence_filter")
 }

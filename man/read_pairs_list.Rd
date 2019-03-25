@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_pairs_list.R
 \name{read_pairs_list}
 \alias{read_pairs_list}
-\title{read_pairs_list}
+\title{Read blast alignment pair files based on library names and metadata path.}
 \usage{
 read_pairs_list(libs, pairs_path)
 }

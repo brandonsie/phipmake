@@ -1,5 +1,3 @@
-#' getparam
-#'
 #' Function to retreive value of parameter from param name.
 #'
 #' @param params Data frame of parameters with two columns param and value.

@@ -1,5 +1,3 @@
-#' read_pairs
-#'
 #' Read BLAST pairs file based on md path and library name.
 #'
 #' @param libname Library name.

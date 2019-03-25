@@ -1,5 +1,3 @@
-#' split_data
-#'
 #' Separate multilibrary peptide data into a phipmake list.
 #'
 #'

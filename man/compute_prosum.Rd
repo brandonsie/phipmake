@@ -2,7 +2,8 @@
 % Please edit documentation in R/compute_prosum.R
 \name{compute_prosum}
 \alias{compute_prosum}
-\title{compute_prosum}
+\title{For multilibrary data, identify libraries, and call library_prosum
+for each.}
 \usage{
 compute_prosum(data, annot, verbose = TRUE)
 }

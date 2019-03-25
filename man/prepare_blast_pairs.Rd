@@ -2,7 +2,10 @@
 % Please edit documentation in R/prepare_blast_pairs.R
 \name{prepare_blast_pairs}
 \alias{prepare_blast_pairs}
-\title{prepare_blast_pairs}
+\title{Convert BLAST+ alignment table to two outputs. First, a full symmetrical two
+column table of aligning peptides. Second, a subset of the first, including
+only intra-protein alignments, for which protein identity is specified by
+an annotation file.}
 \usage{
 prepare_blast_pairs(blast.file, annot, name1, name2)
 }

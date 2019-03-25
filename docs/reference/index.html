@@ -136,8 +136,42 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-package-documentation" class="hasAnchor"><a href="#section-package-documentation" class="anchor"></a>Package Documentation</h2>
+          <p class="section-desc"><p>Helpfile for phipmake package.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="phipmake.html">phipmake</a></code> </p>
+        </td>
+        <td><p>phipmake: PhIP-seq Data Analysis Pipeline.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-user-functions" class="hasAnchor"><a href="#section-user-functions" class="anchor"></a>User Functions</h2>
+          <p class="section-desc"><p>Functions intended to be called by user.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="define_plan.html">define_plan()</a></code> </p>
+        </td>
+        <td><p>Initialize and return drake_plan object. New for github drake 7.0+.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_drake_params.html">write_drake_params()</a></code> </p>
+        </td>
+        <td><p>write_drake_params</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-annotation-functions" class="hasAnchor"><a href="#section-annotation-functions" class="anchor"></a>Annotation Functions</h2>
+          <p class="section-desc"><p>For adding &amp; interacting with metadata.</p></p>
         </th>
       </tr>
       <tr>
@@ -145,151 +179,173 @@
         <td>
           <p><code><a href="annotate_data.html">annotate_data()</a></code> </p>
         </td>
-        <td><p>annotate_data</p></td>
+        <td><p>Add peptide/protein annotation to data file.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="check_order.html">check_order()</a></code> </p>
+          <p><code><a href="read_annot.html">read_annot()</a></code> </p>
         </td>
-        <td><p>check_order</p></td>
+        <td><p>Read annotation file based on md path and library name.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="compute_hits.html">compute_hits()</a></code> </p>
+          <p><code><a href="read_annot_list.html">read_annot_list()</a></code> </p>
         </td>
-        <td><p>compute_hits</p></td>
+        <td><p>Read annotation files based on library names and metadata path.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="compute_polycl.html">compute_polycl()</a></code> </p>
+          <p><code><a href="read_pairs.html">read_pairs()</a></code> </p>
         </td>
-        <td><p>compute_polycl</p></td>
+        <td><p>Read BLAST pairs file based on md path and library name.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_pairs_list.html">read_pairs_list()</a></code> </p>
+        </td>
+        <td><p>Read blast alignment pair files based on library names and metadata path.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="u_pep_id_to_libnames.html">u_pep_id_to_libnames()</a></code> </p>
+        </td>
+        <td><p>Take ids of the form HumanLarma_000_&lt;sequence&gt; and returns unique libraries</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-prosum-and-promax" class="hasAnchor"><a href="#section-prosum-and-promax" class="anchor"></a>Prosum and Promax</h2>
+          <p class="section-desc"><p>For basic collapsing of peptide-level data to protein-level.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="compute_prosum.html">compute_prosum()</a></code> </p>
+        </td>
+        <td><p>For multilibrary data, identify libraries, and call library_prosum
+for each.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="library_prosum.html">library_prosum()</a></code> </p>
+        </td>
+        <td><p>For one peptide library, identify proteins from annotation file, and then
+call protein_prosum for each protein.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="protein_prosum.html">protein_prosum()</a></code> </p>
+        </td>
+        <td><p>Take data frame input and calculate the sum of values in each column or row.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="compute_promax.html">compute_promax()</a></code> </p>
         </td>
-        <td><p>compute_promax</p></td>
+        <td><p>For multilibrary hits data, identify libraries, and call library_promax
+for each.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="compute_prosum.html">compute_prosum()</a></code> </p>
+          <p><code><a href="library_promax.html">library_promax()</a></code> </p>
         </td>
-        <td><p>compute_prosum</p></td>
+        <td><p>For one peptide library, identify proteins from annotation file, and then
+call protein_promax for each protein.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="define_plan.html">define_plan()</a></code> </p>
+          <p><code><a href="protein_promax.html">protein_promax()</a></code> </p>
         </td>
-        <td><p>define_plan</p></td>
+        <td><p>Take data frame input and calculate the maximum value in each column or row.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-hits-and-polyclonal" class="hasAnchor"><a href="#section-hits-and-polyclonal" class="anchor"></a>Hits and Polyclonal</h2>
+          <p class="section-desc"><p>Processing enrichment data based on a threshold.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="compute_hits.html">compute_hits()</a></code> </p>
+        </td>
+        <td><p>For multilibrary enrichment, identify libraries, and identify values above threshold.
+for each.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="getparam.html">getparam()</a></code> </p>
+          <p><code><a href="compute_polycl.html">compute_polycl()</a></code> </p>
         </td>
-        <td><p>getparam</p></td>
+        <td><p>For multilibrary hits data, identify libraries, and call library_polycl
+for each.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hello.html">hello()</a></code> </p>
+          <p><code><a href="library_polycl.html">library_polycl()</a></code> </p>
         </td>
-        <td><p>Hello, World!</p></td>
+        <td><p>For one peptide library, identify proteins from annotation file, and then
+call protein_polycl for each protein.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="protein_polycl.html">protein_polycl()</a></code> </p>
+        </td>
+        <td><p>Take data frame input and calculate the polyclonal score in each column or row.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="independence_filter.html">independence_filter()</a></code> </p>
         </td>
         <td><p>Compute independent hits usingg network graphing.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
+          <p class="section-desc"><p>Small functions for various tasks.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="check_order.html">check_order()</a></code> </p>
+        </td>
+        <td><p>Maintains specified order of panlibrary data after a call to dplyr::bind_rows.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="library_polycl.html">library_polycl()</a></code> </p>
+          <p><code><a href="getparam.html">getparam()</a></code> </p>
         </td>
-        <td><p>library_polycl</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="library_promax.html">library_promax()</a></code> </p>
-        </td>
-        <td><p>library_promax</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="library_prosum.html">library_prosum()</a></code> </p>
-        </td>
-        <td><p>library_prosum</p></td>
+        <td><p>Function to retreive value of parameter from param name.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="pbar.html">pbar()</a></code> </p>
         </td>
-        <td><p>pbar</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="phipmake.html">phipmake</a></code> </p>
-        </td>
-        <td><p>phipmake: PhIP-seq Data Analysis Pipeline.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="prepare_blast_pairs.html">prepare_blast_pairs()</a></code> </p>
-        </td>
-        <td><p>prepare_blast_pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="protein_polycl.html">protein_polycl()</a></code> </p>
-        </td>
-        <td><p>protein_polycl</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="protein_promax.html">protein_promax()</a></code> </p>
-        </td>
-        <td><p>protein_promax</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="protein_prosum.html">protein_prosum()</a></code> </p>
-        </td>
-        <td><p>protein_prosum</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_annot.html">read_annot()</a></code> </p>
-        </td>
-        <td><p>read_annot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_annot_list.html">read_annot_list()</a></code> </p>
-        </td>
-        <td><p>read_annot_list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_pairs.html">read_pairs()</a></code> </p>
-        </td>
-        <td><p>read_pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_pairs_list.html">read_pairs_list()</a></code> </p>
-        </td>
-        <td><p>read_pairs_list</p></td>
+        <td><p>Wrapper for txtProgressBar with some defualt settings.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="split_data.html">split_data()</a></code> </p>
         </td>
-        <td><p>split_data</p></td>
+        <td><p>Separate multilibrary peptide data into a phipmake list.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="subset_data.html">subset_data()</a></code> </p>
         </td>
-        <td><p>subset_data</p></td>
+        <td><p>Pull out specific sublibrary data from a larger data frame based on first column grep.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="prepare_blast_pairs.html">prepare_blast_pairs()</a></code> </p>
+        </td>
+        <td><p>Convert BLAST+ alignment table to two outputs. First, a full symmetrical two
+column table of aligning peptides. Second, a subset of the first, including
+only intra-protein alignments, for which protein identity is specified by
+an annotation file.</p></td>
       </tr><tr>
         
         <td>
@@ -299,21 +355,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="u_pep_id_to_libnames.html">u_pep_id_to_libnames()</a></code> </p>
-        </td>
-        <td><p>u_pep_id_to_libnames</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="write_data.html">write_data()</a></code> </p>
         </td>
-        <td><p>write_data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="write_drake_params.html">write_drake_params()</a></code> </p>
-        </td>
-        <td><p>write_drake_params</p></td>
+        <td><p>A wrapper for data.table::fwrite to write file to drive.</p></td>
       </tr>
     </tbody>
     </table>
@@ -322,7 +366,12 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-package-documentation">Package Documentation</a></li>
+      <li><a href="#section-user-functions">User Functions</a></li>
+      <li><a href="#section-annotation-functions">Annotation Functions</a></li>
+      <li><a href="#section-prosum-and-promax">Prosum and Promax</a></li>
+      <li><a href="#section-hits-and-polyclonal">Hits and Polyclonal</a></li>
+      <li><a href="#section-helper-functions">Helper Functions</a></li>
     </ul>
   </div>
 </div>

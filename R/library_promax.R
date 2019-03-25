@@ -1,5 +1,3 @@
-#' library_promax
-#'
 #' For one peptide library, identify proteins from annotation file, and then
 #' call protein_promax for each protein.
 #'

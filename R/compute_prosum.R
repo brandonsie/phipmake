@@ -1,5 +1,3 @@
-#' compute_prosum
-#'
 #' For multilibrary data, identify libraries, and call library_prosum
 #' for each.
 #'

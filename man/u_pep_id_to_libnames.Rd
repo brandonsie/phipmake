@@ -2,7 +2,7 @@
 % Please edit documentation in R/u_pep_id_to_libnames.R
 \name{u_pep_id_to_libnames}
 \alias{u_pep_id_to_libnames}
-\title{u_pep_id_to_libnames}
+\title{Take ids of the form HumanLarma_000_<sequence> and returns unique libraries}
 \usage{
 u_pep_id_to_libnames(upepid)
 }

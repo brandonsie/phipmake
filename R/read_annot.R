@@ -1,5 +1,3 @@
-#' read_annot
-#'
 #' Read annotation file based on md path and library name.
 #'
 #' @param libname Library name.

@@ -1,5 +1,3 @@
-#' u_pep_id_to_libnames
-#'
 #' Take ids of the form HumanLarma_000_<sequence> and returns unique libraries
 #'
 #'

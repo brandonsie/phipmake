@@ -1,5 +1,3 @@
-#' protein_promax
-#'
 #' Take data frame input and calculate the maximum value in each column or row.
 #'
 #' @param data Data frame of numeric values for which to calculate maximum.

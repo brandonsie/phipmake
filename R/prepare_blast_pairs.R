@@ -1,5 +1,3 @@
-#' prepare_blast_pairs
-#'
 #' Convert BLAST+ alignment table to two outputs. First, a full symmetrical two
 #' column table of aligning peptides. Second, a subset of the first, including
 #' only intra-protein alignments, for which protein identity is specified by

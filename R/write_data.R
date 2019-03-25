@@ -1,6 +1,4 @@
-#' write_data
-#'
-#' Mainly a wrapper for data.table::fwrite to write file to drive.
+#' A wrapper for data.table::fwrite to write file to drive.
 #'
 #'
 #' @param data Data to write. If class of data is data.frame or data.table, then

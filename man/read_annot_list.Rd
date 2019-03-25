@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_annot_list.R
 \name{read_annot_list}
 \alias{read_annot_list}
-\title{read_annot_list}
+\title{Read annotation files based on library names and metadata path.}
 \usage{
 read_annot_list(libs, metadata_path)
 }

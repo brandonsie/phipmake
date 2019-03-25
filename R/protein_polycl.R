@@ -1,5 +1,3 @@
-#' protein_polycl
-#'
 #' Take data frame input and calculate the polyclonal score in each column or row.
 #'
 #' @param data Data frame of numeric values for which to calculate maximum.

@@ -1,5 +1,3 @@
-#' subset_data
-#'
 #' Pull out specific sublibrary data from a larger data frame based on first column grep.
 #'
 #'
