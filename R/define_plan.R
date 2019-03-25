@@ -8,18 +8,15 @@
 define_plan <- function(params_path = "drake_params.tsv"){
   options(stringsAsFactors = FALSE)
 
-  #(!) load packages elsewhere
-  #(!) setup defineparams function with defaults
-
-
-  # Character vectors for tidy evaluation (sublibary names, filenames, etc.)
-  # need to read params up here? or can do at beginning of drake plan?
-
   # ============================================================================
   # Settings
 
   if(!file.exists(params_path)){
-    warning(paste("Params file missing. If you haven't yet made a parameters file for this run, try write_drake_params(). Curently looking for a parameters file named", params_path, "in directory:", getwd()))
+    stop(paste("Params file missing.",
+               "If you haven't yet made a parameters file for this run,",
+               "try write_drake_params().",
+               "Curently looking for a parameters file named",
+               params_path, "in directory:", getwd()))
   }
 
   # Load parameters from drake_params.tsv
@@ -52,7 +49,10 @@ define_plan <- function(params_path = "drake_params.tsv"){
     for(i in sn.libdir.c){if(!dir.exists(i)) dir.create(i)}
 
   } else{
-    warning(paste("Counts file is missing. Are you in the right working directory? Currently looking for a counts file named", counts_filename, "in directory:", getwd()))
+    warning(paste("Counts file is missing.",
+                  "Are you in the right working directory?",
+                  "Currently looking for a counts file named",
+                  counts_filename, "in directory:", getwd()))
     sn.lib.c <- sn.libdir.c <- "NA"
   }
 
@@ -69,10 +69,14 @@ define_plan <- function(params_path = "drake_params.tsv"){
     for(i in sn.libdir.e){if(!dir.exists(i)) dir.create(i)
       }
   } else{
-    warning(paste("Enrichment file is missing. Are you in the right working directory? Currently looking for an enrichment file named", enrichment_filename, "in directory:", getwd()))
+    warning(paste("Enrichment file is missing.",
+                  "Are you in the right working directory?",
+                  "Currently looking for an enrichment file named",
+                  enrichment_filename, "in directory:", getwd()))
     sn.lib.e <- sn.libdir.e <- "NA"
   }
 
+  # ============================================================================
   # Establish output file names
 
   sn.ext <- paste0(".", output_extension)
@@ -123,8 +127,6 @@ define_plan <- function(params_path = "drake_params.tsv"){
   sn.counts.prosum.sub <- paste0(sn.libdir.c, screen_name, sn.lib.c, "_", counts_type, "_prosum")
   names.counts.prosum.sub <- paste0(sn.counts.prosum.sub, sn.ext)
   names.counts.prosum.sub.annot <- paste0(sn.counts.prosum.sub, sn.a.ext)
-
-
 
 
 
