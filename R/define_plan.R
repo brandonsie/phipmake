@@ -367,7 +367,7 @@ define_plan <- function(params_path = "drake_params.tsv"){
 
   print("AVARDA setup:")
   print(paste("libs:", e.lib.base))
-5
+
   if("VirscanLar" %in% e.lib.base){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
     avcase <-   names.enrichment.sub[grep("Virscan", names.enrichment.sub)]
