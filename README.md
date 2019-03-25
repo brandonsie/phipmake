@@ -22,7 +22,7 @@ A simplified version of the dependency graph is below. For a more complete & int
 
 ![simple dependency](https://raw.githubusercontent.com/brandonsie/phipmake/master/docs/simple_dependency.png)
 
-More documentation will come soon to [phipmake's website](https//brandonsie.github.io/phipmake/).
+More documentation will come soon to [phipmake's website](https://brandonsie.github.io/phipmake/).
 
 ### Acknowledgements
 * Daniel Monaco wrote the network filter used for polyclonal scoring.
