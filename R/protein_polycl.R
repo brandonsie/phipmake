@@ -12,7 +12,7 @@
 
 
 protein_polycl <- function(data, pairs, margin = 2, method = "independence_filter"){
-  # #take single protein, multi patient data. calc max of EVERY column (separately)
+  # #take single protein, multi patient data. cunalc max of EVERY column (separately)
   # apply(data, margin, function(x){x %>% na.omit %>% max})
   options(stringsAsFactors = FALSE)
   library(magrittr)
@@ -20,34 +20,53 @@ protein_polycl <- function(data, pairs, margin = 2, method = "independence_filte
   peptides <- data[,1]
   sub_pairs <- pairs[pairs[,1] %in% peptides,]
 
-
   # get hits for that person
   # check which hits align
 
-  polycl_scores <- apply(data[,-1], margin, function(x){
-    # for this protein, for this sample, list peptide hits
-    hits <- data[,1][as.numeric(x) == 1]
+  if(nrow(sub_pairs) == 0){
+    polycl_scores <- data[,-1]
+  } else{
+    for(x in 1:ncol(data)){
 
-
-    if(method == "independence_filter"){
-      independent_hit_count <- independence_filter(pairs, hits)
-
-    } else if(method == "old_method"){
-      # initialize a vector to keep track of which hits have either been counted for polyclonal or blast align to another hit that has been counted for polyclonal.
-      explained_hits <- vector(mode = "character")
-      independent_hit_count <- 0
-
-      for(i in hits){
-        if(!(i %in% explained_hits)){
-          independent_hit_count %<>% + 1
-          aligning_peptides <- sub_pairs[sub_pairs[,1] == i, 2]
-          explained_hits %<>% c(aligning_peptides)
-        }
-      }
     }
 
-    return(independent_hit_count)
-  })
+    polycl_scores <- apply(data[,-1], margin, function(x){
+      # for this protein, for this sample, list peptide hits
+
+      if(length(x) == 0){
+        independent_hit_count <- 0
+      } else if(length(x) == 1){
+        independent_hit_count <- x
+      } else{
+        hits <- data[,1][as.numeric(x) == 1]
+
+
+        if(method == "independence_filter"){
+          if(length(hits) > 0){
+            independent_hit_count <- independence_filter(pairs, hits)
+          } else independent_hit_count <- 0
+
+        } else if(method == "old_method"){
+          # initialize a vector to keep track of which hits have either been counted for polyclonal or blast align to another hit that has been counted for polyclonal.
+          explained_hits <- vector(mode = "character")
+          independent_hit_count <- 0
+
+          for(i in hits){
+            if(!(i %in% explained_hits)){
+              independent_hit_count %<>% + 1
+              aligning_peptides <- sub_pairs[sub_pairs[,1] == i, 2]
+              explained_hits %<>% c(aligning_peptides)
+            }
+          }
+        }
+      }
+
+
+
+      return(independent_hit_count)
+    })
+
+  }
 
   return(polycl_scores) #note this returns values only, no protein name
 }

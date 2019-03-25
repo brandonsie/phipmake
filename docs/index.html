@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.18</span>
       </span>
     </div>
 
@@ -51,6 +51,18 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="dependency_graph.html">Dependency Graph</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -86,7 +98,20 @@
 <a class="sourceLine" id="cb2-3" title="3">v &lt;-<span class="st"> </span>drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/vis_drake_graph">vis_drake_graph</a></span>(drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/drake_config">drake_config</a></span>(plan)) <span class="co"># visualize pipeline dependencies</span></a>
 <a class="sourceLine" id="cb2-4" title="4">v</a>
 <a class="sourceLine" id="cb2-5" title="5">visNetwork<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/visNetwork/topics/visSave">visSave</a></span>(v, <span class="st">"dependency_graph.html"</span>) <span class="co"># save dependency graph</span></a></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/brandonsie/brandonsie.github.io/master/docs/phipdrake_dependency_2.PNG" alt="dependency graph"></p>
+<div id="dependency-graph" class="section level3">
+<h3 class="hasAnchor">
+<a href="#dependency-graph" class="anchor"></a>Dependency Graph</h3>
+<p>A simplified version of the dependency graph is below. For a more complete/complex representation, please click <a href="docs/dependency_graph.html">here</a>.</p>
+<p><img src="docs/simple_dependency.png" alt="simple dependency"></p>
+<p>More documentation will come soon to <a href="https//brandonsie.github.io/phipmake/">phipmake’s website</a>.</p>
+</div>
+<div id="acknowledgements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h3>
+<ul>
+<li>Daniel Monaco wrote the network filter used for polyclonal scoring.</li>
+</ul>
+</div>
 </div>
   </div>
 

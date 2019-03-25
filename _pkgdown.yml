@@ -11,6 +11,11 @@ navbar:
       href: index.html
     - text: "Reference"
       href: "reference/index.html"
+    - text: "Articles"
+      menu:
+        - text: 'Dependency Graph'
+          href: dependency_graph.html
+
   right:
     - icon: fa-github
       href: https://github.com/brandonsie/phipmake/

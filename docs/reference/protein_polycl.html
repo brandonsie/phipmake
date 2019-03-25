@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.18</span>
       </span>
     </div>
 
@@ -88,6 +88,18 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../dependency_graph.html">Dependency Graph</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -124,7 +136,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>protein_polycl</span>(<span class='no'>data</span>, <span class='no'>pairs</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>protein_polycl</span>(<span class='no'>data</span>, <span class='no'>pairs</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"independence_filter"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,11 +147,15 @@
     </tr>
     <tr>
       <th>pairs</th>
-      <td><p>2 column table of aligning pairs that should not be double-counted for polyclonal score.</p></td>
+      <td><p>2 column table of aligning pairs that should not be double-counted for polyclonal score. For independence_filter method, this data should contain no redundancy e.g. a==b and b==a or self alignments e.g. a==a</p></td>
     </tr>
     <tr>
       <th>margin</th>
       <td><p>Numeric 1 for row 2 for column.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Character string signifying which scoring method to use for evaluation. independence_filter or old_method.</p></td>
     </tr>
     </table>
     

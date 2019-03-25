@@ -24,6 +24,7 @@ library_polycl <- function(data, annot, pairs, method = "independence_filter", v
   #loop through this librarys proteins
   if(verbose){pb <- pbar(0, length(proteins))}
   for(i in 1:length(proteins)){
+    print(i)
     if(verbose){setTxtProgressBar(pb, i)}
     lib_polycl[i, -1] <- data[c(1:length(pro_ids))[
       pro_ids == proteins[i]], ] %>% na.omit %>% protein_polycl(pairs, method)

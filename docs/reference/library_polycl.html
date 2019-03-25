@@ -75,7 +75,7 @@ call protein_polycl for each protein." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.18</span>
       </span>
     </div>
 
@@ -89,6 +89,18 @@ call protein_polycl for each protein." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../dependency_graph.html">Dependency Graph</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -126,7 +138,8 @@ call protein_polycl for each protein.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>library_polycl</span>(<span class='no'>data</span>, <span class='no'>annot</span>, <span class='no'>pairs</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>library_polycl</span>(<span class='no'>data</span>, <span class='no'>annot</span>, <span class='no'>pairs</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"independence_filter"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +155,10 @@ call protein_polycl for each protein.</p>
     <tr>
       <th>pairs</th>
       <td><p>Data frame of BLAST aligning pairs within each protein.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Character string signifying which scoring method to use for evaluation. independence_filter or old_method.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

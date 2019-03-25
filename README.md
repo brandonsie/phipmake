@@ -16,5 +16,13 @@ v
 visNetwork::visSave(v, "dependency_graph.html") # save dependency graph
 ```
 
+
+### Dependency Graph
+A simplified version of the dependency graph is below. For a more complete/complex representation, please click [here](docs/dependency_graph.html).
+
+![simple dependency](docs/simple_dependency.png)
+
+More documentation will come soon to [phipmake's website](https//brandonsie.github.io/phipmake/).
+
 ### Acknowledgements
 * Daniel Monaco wrote the network filter used for polyclonal scoring.
