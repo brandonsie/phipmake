@@ -319,11 +319,11 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       counts_annotations = target(
-        if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
-          enrichment_annotations
-        } else{
+        # if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
+        #   enrichment_annotations
+        # } else{
           phipmake::read_annot_list(counts_sub[[1]], !!metadata_path)
-        }
+        # }
       ),
 
       counts_sub_annot = target(
