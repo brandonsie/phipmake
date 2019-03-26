@@ -47,7 +47,7 @@ protein_polycl <- function(data, pairs, margin = 2, method = "independence_filte
 
         polycl_scores[i-1] <- independence_filter(sub_pairs, hits)
 
-      } else if(method == "old_method"){
+      } else if(method == "conservative_blast"){
         # initialize a vector to keep track of which hits have either been
         # counted for polyclonal or blast align to another hit that has been
         # counted for polyclonal.
