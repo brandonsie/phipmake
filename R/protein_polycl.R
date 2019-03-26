@@ -22,15 +22,15 @@ protein_polycl <- function(data, pairs, margin = 2, method = "independence_filte
   # get hits for that sample
   # check which hits align to each other & collapse
 
-  # check for trivial CASES
+  # check for trivial cases
   if(nrow(data) == 0){
-    warning("Warning: no peptide data input to protein_polycl. (i.e., parameter data has 0 rows).")
+    warning("Warning: no peptide data input to protein_polycl. (i.e., the 'data' parameter has 0 rows).")
 
   } else if((nrow(sub_pairs) == 0) | (nrow(data) == 1)){
     # if none of this protein's peptides align to each other,
-    # or if this protein only has one peptide then
-    # polyclonal score <- hits score
-    polycl_scores <- data[,-1]
+    # or if this protein only has one peptide, then
+    # polyclonal score <- sum of peptide hits scores
+    polycl_scores <- protein_prosum(data[,-1])
 
   } else{
     for(i in 2:ncol(data)){
