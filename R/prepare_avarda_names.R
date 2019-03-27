@@ -44,4 +44,6 @@ prepare_avarda_names <- function(data, annotations = NULL, metadata_path = NULL,
     output_data[[i+1]] <- sub.data
   }
 
+  return(output_data)
+
 }
