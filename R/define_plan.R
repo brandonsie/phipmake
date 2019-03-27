@@ -134,6 +134,8 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
 
 
+  names.enrichment.avarda <- paste0(sn.enrichment.sub, "_AVARDA", sn.ext)
+
   # ============================================================================
   # Plans
 
@@ -380,18 +382,23 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
   if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
-    avcase <-   names.enrichment.sub[grep("Virscan", names.enrichment.sub)]
+    avcase <-   names.enrichment.avarda[grep("Virscan", names.enrichment.avarda)]
     avdf <- paste0(avpath, "bin2/df_new.txt")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
     avblast <- paste0(avpath, "bin2/VirScan_filtered_virus_blast_new.csv")
 
     virdir <- e.libnames[grep("Virscan", e.libnames)]
-
     avout <- paste0(virdir, "/AVARDA/")
     if(!dir.exists(avout)) dir.create(avout)
 
     AVARDA_plan <- drake::drake_plan(
+      enrichment_sub_avnames = target(
+        phipmake::prepare_avarda_names(enrichment_sub, !!metadata_path)
+      ),
+      write_enrichment_sub_avnames = target(
+        phipmake::write_data(enrichment_sub_avnames, file_out(!!names.enrichment.avarda))
+      ),
       command = target(
         paste0("sbatch --export=case=",!!avcase,
                ",thresh=",!!enrichment_threshold,
