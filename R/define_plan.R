@@ -134,7 +134,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
 
 
-  names.enrichment.avarda <- paste0(sn.enrichment.sub, "_AVARDA", sn.ext)
+  names.enrichment.avarda <- paste0(sn.enrichment.sub, "_avnames", sn.ext)
 
   # ============================================================================
   # Plans
@@ -413,7 +413,10 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
         writeLines(command, "command.txt")
       ),
       runAVARDA = target(
-        system(command)
+        {
+          file_in(!!names.enrichment.avarda)
+          system(command)
+        }
       )
     )
   }
