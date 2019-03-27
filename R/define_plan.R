@@ -394,7 +394,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
     AVARDA_plan <- drake::drake_plan(
       enrichment_sub_avnames = target(
-        phipmake::prepare_avarda_names(enrichment_sub, !!metadata_path)
+        phipmake::prepare_avarda_names(enrichment_sub, enrichment_annotations)
       ),
       write_enrichment_sub_avnames = target(
         phipmake::write_data(enrichment_sub_avnames, file_out(!!names.enrichment.avarda))
