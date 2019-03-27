@@ -416,7 +416,6 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
         system(command)
       )
     )
-    main_plan <- rbind(main_plan, AVARDA_plan)
   }
 
 
