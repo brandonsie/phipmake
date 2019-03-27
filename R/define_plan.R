@@ -383,9 +383,9 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
   if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
     avcase <-   names.enrichment.avarda[grep("Virscan", names.enrichment.avarda)]
-    avdf <- paste0(avpath, "bin2/df_new.txt")
+    avdf <- paste0(avpath, "bin2/my_df.csv")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
-    avpairwise <- paste0(avpath, "bin2/unique_probabilities2.csv")
+    avpairwise <- paste0(avpath, "bin2/unique_probabilities3.csv")
     avblast <- paste0(avpath, "bin2/VirScan_filtered_virus_blast_new.csv")
 
     virdir <- e.libnames[grep("Virscan", e.libnames)]
