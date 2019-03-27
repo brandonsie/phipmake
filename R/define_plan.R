@@ -410,7 +410,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
                " ", !!avpath, "AVARDA_BMS.sh")
       ),
       write_command = target(
-        writeLines(command, "command.txt")
+        writeLines(command, file_out("command.txt"))
       ),
       runAVARDA = target(
         {
