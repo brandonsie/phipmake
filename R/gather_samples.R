@@ -4,7 +4,7 @@
 #' @param col.names Character vector of columns to extract. Vector order should match desired order in output.
 #' @param retain.first.col Logical whether to also include the furst column of the first specified source file. Often this column will contain peptide names of interest.
 #'
-#' @xport
+#' @export
 
 
 gather_samples <- function(sources, col.names, retain.first.col = TRUE){
