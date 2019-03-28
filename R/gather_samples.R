@@ -28,7 +28,10 @@ gather_samples <- function(sources, col.names, retain.first.col = TRUE){
 
     # retrieve data for relevant col.names
 
-    output_file[, colnames(output_file) %in% colnames(this.source)] <- this.source[, match(colnames(output_file), colnames(this.source))]
+
+    matching.cols <- c(1:ncol(output_file))[colnames(output_file) %in% colnames(this.source)]
+    output_file[, matching.cols] <- this.source[, match(colnames(output_file)[matching.cols], colnames(this.source))]
+
 
   } #end loop
 
