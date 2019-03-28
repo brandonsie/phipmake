@@ -1,5 +1,7 @@
 # phipmake <img src="https://brandonsie.github.io/docs/HexStickers_phipmake_1.png" align="right" width="120">
 
+<img src="https://img.shields.io/github/license/brandonsie/phipmake.svg"> <img src="https://img.shields.io/github/last-commit/brandonsie/phipmake.svg"> 
+
 R package of [Drake](https://github.com/ropensci/drake)-based tools for the Larman Lab's [PhIP-Seq](https://www.nature.com/articles/s41596-018-0025-6) data analysis pipeline.
 
 ``` r  
