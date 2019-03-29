@@ -1,6 +1,9 @@
 # phipmake <img src="https://brandonsie.github.io/docs/HexStickers_phipmake_1.png" align="right" width="120">
 
-<img src="https://img.shields.io/github/license/brandonsie/phipmake.svg"> <img src="https://img.shields.io/github/last-commit/brandonsie/phipmake.svg"> 
+![License](https://img.shields.io/github/license/brandonsie/phipmake.svg) 
+[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/) 
+![Code Size](https://img.shields.io/github/languages/code-size/brandonsie/phipmake.svg) 
+![Last Commit](https://img.shields.io/github/last-commit/brandonsie/epitopefinder.svg)
 
 R package of [Drake](https://github.com/ropensci/drake)-based tools for the Larman Lab's [PhIP-Seq](https://www.nature.com/articles/s41596-018-0025-6) data analysis pipeline.
 
