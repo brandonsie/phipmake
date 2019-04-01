@@ -14,6 +14,7 @@ remotes::install_github("brandonsie/phipmake")
 ```  
 
 ``` r
+drake::expose_imports(phipmake) # allow drake to keep track of nested function dependencies.
 plan <- phipdrake::define_plan() # initialize pipeline. looks for mpath.txt and ppath.txt in working directory
 drake::make(plan) # execute pipeline
 v <- drake::vis_drake_graph(drake::drake_config(plan)) # visualize pipeline dependencies
