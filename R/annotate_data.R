@@ -5,6 +5,7 @@
 #' @param annotations Phiplist of annotation files. Don't use with metadata_path param.
 #' @param metadata_path Metadata directory. Don't use with annotations param.
 #' @param fields What information to populate from annotation file.
+#' @param parallel Logical whether or not to use foreach and doParallel to parallelize individual library computations.
 #'
 #' @return
 #'
@@ -14,7 +15,8 @@ annotate_data <- function(
   data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end",
              "UniProt_acc", "pep_aa", "taxon_genus", "taxon_species",
-             "gene_symbol", "product")
+             "gene_symbol", "product"),
+  parallel = FALSE
   ){
 
   # check for proper annotation order
@@ -29,8 +31,9 @@ annotate_data <- function(
   output_data <- list()
   output_data[[1]] <- libs <- data[[1]]
 
-  # loop over libraries as specified in data[[1]]
-  for(i in 1:length(libs)){
+  # define function to be called by loop
+  prepare_annotations <- function(
+    data, annotations, metadata_path, fields, i){
 
     # load annotation file
     if(!is.null(annotations)){
@@ -53,7 +56,32 @@ annotate_data <- function(
     # combine annotation and original data, prepare output
     sub.output <- cbind(sub.data[,1], annot_fields, sub.data[,-1])
     names(sub.output)[1] <- names(sub.data)[1]
-    output_data[[i+1]] <- sub.output
+    return(sub.output)
   }
+
+  # loop over libraries as specified in data[[1]]
+  if(parallel){
+    require(foreach)
+    require(doParallel)
+
+    ncores <- parallel::detectCores() - 1
+    cl <- parallel::makeCluster(ncores)
+    doParallel::registerDoParallel(cl, cores = ncores)
+    print(paste("Paralellization registered with cores = ", ncores))
+
+    foreach::foreach(i = 1:length(libs)) %dopar% {
+
+      output_data[[i+1]] <- prepare_annotations(
+        data, annotations, metadata_path, fields, i)
+    }
+
+  } else{
+    for(i in 1:length(libs)){
+
+      output_data[[i+1]] <- prepare_annotations(
+        data, annotations, metadata_path, fields, i)
+    }
+  }
+
   return(output_data)
 }

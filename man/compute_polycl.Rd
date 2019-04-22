@@ -6,7 +6,7 @@
 for each.}
 \usage{
 compute_polycl(data, annot, pairs, method = "independence_filter",
-  verbose = TRUE)
+  verbose = TRUE, parallel = FALSE)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
@@ -19,6 +19,8 @@ subsequent elements data frames of data for corresponding libraries.}
 \item{method}{Character string signifying which scoring method to use for evaluation. independence_filter or old_method.}
 
 \item{verbose}{Logical whether or not to print progress.}
+
+\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
 }
 \description{
 For multilibrary hits data, identify libraries, and call library_polycl

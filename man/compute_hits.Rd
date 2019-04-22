@@ -5,13 +5,15 @@
 \title{For multilibrary enrichment, identify libraries, and identify values above threshold.
 for each.}
 \usage{
-compute_hits(data, threshold = 5)
+compute_hits(data, threshold = 5, parallel = FALSE)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and
 subsequent elements data frames of data for corresponding libraries.}
 
 \item{threshold}{Minimum enrichment value to be considered a hit.}
+
+\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
 }
 \description{
 For multilibrary enrichment, identify libraries, and identify values above threshold.

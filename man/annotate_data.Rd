@@ -6,7 +6,8 @@
 \usage{
 annotate_data(data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",
-  "taxon_genus", "taxon_species", "gene_symbol", "product"))
+  "taxon_genus", "taxon_species", "gene_symbol", "product"),
+  parallel = FALSE)
 }
 \arguments{
 \item{data}{Phiplist of unannotated edata.}
@@ -16,6 +17,8 @@ annotate_data(data, annotations = NULL, metadata_path = NULL,
 \item{metadata_path}{Metadata directory. Don't use with annotations param.}
 
 \item{fields}{What information to populate from annotation file.}
+
+\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
 
 \item{libname}{Library name contained in data.}
 }

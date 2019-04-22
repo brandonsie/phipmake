@@ -15,13 +15,26 @@ write_data <- function(data, filename){
   if(class(data)[1] == "data.table" | class(data)[1] == "data.frame"){
     data.table::fwrite(data, filename, sep = "\t", na = "NA")
   } else if(class(data) == "list"){
-    libs <- data[[1]]
-    for(i in 1:length(libs)){
-      if(!grepl(libs[i], filename[i])){
-        stop(paste("Error: phipmake write_data: filename sublibrary mismatch:",
-                   libs[i], filename[i]))
+
+    if(class(data[[1]]) == "character"){
+      libs <- data[[1]]
+      for(i in 1:length(libs)){
+        if(!grepl(libs[i], filename[i])){
+          stop(paste("Error: phipmake write_data: filename sublibrary mismatch:",
+                     libs[i], filename[i]))
+        }
+        data.table::fwrite(data[[i+1]], filename[[i]], sep = "\t", na = "NA")
       }
-      data.table::fwrite(data[[i+1]], filename[[i]], sep = "\t", na = "NA")
+    } else if(class(data[[1]]) == "data.table" | class(data[[1]]) == "data.frame"){
+      libs <- names(data)
+      for(i in 1:length(libs)){
+        if(!grepl(libs[i], filename[i])){
+          stop(paste("Error: phipmake write_data: filename sublibrary mismatch:",
+                     libs[i], filename[i]))
+        }
+        data.table::fwrite(data[[i]], filename[[i]], sep = "\t", na = "NA")
+      }
+
     }
   }
 }

@@ -2,6 +2,7 @@
 #'
 #' @param params_path Path to project parameters file that can be created using the write_drake_params function.
 #' @param runCounts Logical controlling whether or not to define counts targets.
+#' @param runPairwise Logical controlling whether or not to define pairwise targets.
 #' @param runEnrichment Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #'
@@ -9,6 +10,7 @@
 #'
 
 define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
+                        runPairwise = FALSE,
                         runEnrichment = TRUE, runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
 
@@ -30,20 +32,21 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
   #                 "output_extension")
   # for(i in 1:use_params){assign(i, getparam(params, i))}
 
-  screen_name <- phipmake::getparam(params, "screen_name")
-  counts_filename <- phipmake::getparam(params, "counts_filename")
-  counts_type <- phipmake::getparam(params, "counts_type")
-  enrichment_filename <- phipmake::getparam(params, "enrichment_filename")
-  enrichment_type <- phipmake::getparam(params, "enrichment_type")
-  enrichment_threshold <- phipmake::getparam(params, "enrichment_threshold")
-  metadata_path <- phipmake::getparam(params, "metadata_path")
-  output_extension <- phipmake::getparam(params, "output_extension")
-
+  screen_name <- getparam(params, "screen_name")
+  counts_filename <- getparam(params, "counts_filename")
+  counts_type <- getparam(params, "counts_type")
+  enrichment_filename <- getparam(params, "enrichment_filename")
+  enrichment_type <- getparam(params, "enrichment_type")
+  enrichment_threshold <- getparam(params, "enrichment_threshold")
+  metadata_path <- getparam(params, "metadata_path")
+  output_extension <- getparam(params, "output_extension")
+  output_separator <- getparam(params, "output_separator")
+  sublibrary_parallel <- as.logical(getparam(params, "sublibrary_parallel"))
 
   # Establish sublibrary names
   if(file.exists(counts_filename)){
     temp.counts <- data.table::fread(counts_filename)
-    c.libs <- phipmake::u_pep_id_to_libnames(temp.counts[,1])
+    c.libs <- u_pep_id_to_libnames(temp.counts[,1])
     c.lib.base <- c.libs[[2]]
     c.libnames <- c.libs[[4]]
 
@@ -62,7 +65,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
   if(file.exists(enrichment_filename)){
     temp.enrich <- data.table::fread(enrichment_filename)
-    e.libs <- phipmake::u_pep_id_to_libnames(temp.enrich[,1])
+    e.libs <- u_pep_id_to_libnames(temp.enrich[,1])
     e.lib.base <- e.libs[[2]]
     e.libnames <- e.libs[[4]]
 
@@ -82,6 +85,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
   # ============================================================================
   # Establish output file names
+  # ============================================================================
 
   sn.ext <- paste0(".", output_extension)
   sn.annot <- paste0("_annotated")
@@ -136,26 +140,32 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
   names.enrichment.avarda <- paste0(sn.enrichment.sub, "_avnames", sn.ext)
 
+
   # ============================================================================
   # Plans
 
   # --------------------------------------------------------------------------
   # Parameters
+  # --------------------------------------------------------------------------
 
   params_plan <- drake::drake_plan(
 
     # Load parameters in plan environment
     params = data.table::fread(file_in("drake_params.tsv")),
 
-    screen_name = phipmake::getparam(params, "screen_name"),
-    counts_filename = phipmake::getparam(params, "counts_filename"),
-    counts_type = phipmake::getparam(params, "counts_type"),
-    enrichment_filename = phipmake::getparam(params, "enrichment_filename"),
-    enrichment_type = phipmake::getparam(params, "enrichment_type"),
-    enrichment_threshold = phipmake::getparam(params, "enrichment_threshold"),
-    metadata_path = phipmake::getparam(params, "metadata_path"),
-    output_extension = phipmake::getparam(params, "output_extension")
+    screen_name = getparam(params, "screen_name"),
+    counts_filename = getparam(params, "counts_filename"),
+    counts_type = getparam(params, "counts_type"),
+    enrichment_filename = getparam(params, "enrichment_filename"),
+    enrichment_type = getparam(params, "enrichment_type"),
+    enrichment_threshold = getparam(params, "enrichment_threshold"),
+    metadata_path = getparam(params, "metadata_path"),
+    output_extension = getparam(params, "output_extension"),
+    output_separator <- getparam(params, "output_separator"),
+    sublibrary_parallel <- as.logical(getparam(params, "sublibrary_parallel"))
+
   )
+
 
   # --------------------------------------------------------------------------
   # Enrichment
@@ -167,26 +177,27 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ), #10
 
       write_enrichment = target(
-        phipmake::write_data(enrichment, file_out(!!names.enrichment.pan))
+        write_data(enrichment, file_out(!!names.enrichment.pan))
       ),
 
       enrichment_sub = target(
-        phipmake::split_data(enrichment)
+        split_data(enrichment)
       ),
 
       write_enrichment_sub = target(
-        phipmake::write_data(enrichment_sub, file_out(!!names.enrichment.sub))
+        write_data(enrichment_sub, file_out(!!names.enrichment.sub))
       ),
 
       enrichment_annotations = target(
-        phipmake::read_annot_list(enrichment_sub[[1]], !!metadata_path)
+        read_annot_list(enrichment_sub[[1]], !!metadata_path)
       ),
 
       enrichment_sub_annot = target(
-        phipmake::annotate_data(enrichment_sub, enrichment_annotations)
+        annotate_data(enrichment_sub, enrichment_annotations)
       ),
       write_enrichment_sub_annot = target(
-        phipmake::write_data(enrichment_sub_annot, file_out(!!names.enrichment.sub.annot))
+        write_data(enrichment_sub_annot,
+                             file_out(!!names.enrichment.sub.annot))
       ),
 
       enrichment_annot = target(
@@ -194,25 +205,28 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_enrichment_annot = target(
-        phipmake::write_data(enrichment_annot, file_out(!!names.enrichment.pan.annot))
+        write_data(enrichment_annot,
+                             file_out(!!names.enrichment.pan.annot))
       ), # 18
 
 
       # Enrichment Promax
       enrichment_sub_promax = target(
-        phipmake::compute_promax(enrichment_sub, enrichment_annotations)
+        compute_promax(enrichment_sub, enrichment_annotations)
       ),
 
       write_enrichment_sub_promax = target(
-        phipmake::write_data(enrichment_sub_promax, file_out(!!names.enrichment.promax.sub))
+        write_data(enrichment_sub_promax,
+                             file_out(!!names.enrichment.promax.sub))
       ),
 
       enrichment_sub_promax_annot = target(
-        phipmake::annotate_data(enrichment_sub_promax, enrichment_annotations)
+        annotate_data(enrichment_sub_promax, enrichment_annotations)
       ),
 
       write_enrichment_sub_promax_annot = target(
-        phipmake::write_data(enrichment_sub_promax_annot, file_out(!!names.enrichment.promax.sub.annot))
+        write_data(enrichment_sub_promax_annot,
+                             file_out(!!names.enrichment.promax.sub.annot))
       ),
 
       enrichment_promax = target(
@@ -220,7 +234,8 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_enrichment_promax = target(
-        phipmake::write_data(enrichment_promax, file_out(!!names.enrichment.promax.pan))
+        write_data(enrichment_promax,
+                             file_out(!!names.enrichment.promax.pan))
       ),
 
       enrichment_promax_annot = target(
@@ -228,24 +243,25 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_enrichment_promax_annot = target(
-        phipmake::write_data(enrichment_promax_annot, file_out(!!names.enrichment.promax.pan.annot))
+        write_data(enrichment_promax_annot,
+                             file_out(!!names.enrichment.promax.pan.annot))
       ), #26
 
       # Hits
       hits_sub = target(
-        phipmake::compute_hits(enrichment_sub, enrichment_threshold)
+        compute_hits(enrichment_sub, enrichment_threshold)
       ),
 
       write_hits_sub = target(
-        phipmake::write_data(hits_sub, file_out(!!names.hits.sub))
+        write_data(hits_sub, file_out(!!names.hits.sub))
       ),
 
       hits_sub_annot = target(
-        phipmake::annotate_data(hits_sub, enrichment_annotations)
+        annotate_data(hits_sub, enrichment_annotations)
       ),
 
       write_hits_sub_annot = target(
-        phipmake::write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
+        write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
       ),
 
       hits = target(
@@ -253,7 +269,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_hits = target(
-        phipmake::write_data(hits, file_out(!!names.hits.pan))
+        write_data(hits, file_out(!!names.hits.pan))
       ),
 
       hits_annot = target(
@@ -261,28 +277,29 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_hits_annot = target(
-        phipmake::write_data(hits_annot, file_out(!!names.hits.pan.annot))
+        write_data(hits_annot, file_out(!!names.hits.pan.annot))
       ), #34
 
       # Polyclonal
       blast_pairs = target(
-        phipmake::read_pairs_list(enrichment_sub[[1]], !!metadata_path)
+        read_pairs_list(enrichment_sub[[1]], !!metadata_path)
       ),
 
       polycl_sub = target(
-        phipmake::compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
+        compute_polycl(hits_sub, enrichment_annotations, blast_pairs)
       ),
 
       write_polycl_sub = target(
-        phipmake::write_data(polycl_sub, file_out(!!names.polycl.sub))
+        write_data(polycl_sub, file_out(!!names.polycl.sub))
       ),
 
       polycl_sub_annot = target(
-        phipmake::annotate_data(polycl_sub, enrichment_annotations)
+        annotate_data(polycl_sub, enrichment_annotations)
       ),
 
       write_polycl_sub_annot = target(
-        phipmake::write_data(polycl_sub_annot, file_out(!!names.polycl.sub.annot))
+        write_data(polycl_sub_annot,
+                             file_out(!!names.polycl.sub.annot))
       ),
 
       polycl = target(
@@ -290,7 +307,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_polycl = target(
-        phipmake::write_data(polycl, file_out(!!names.polycl.pan))
+        write_data(polycl, file_out(!!names.polycl.pan))
       ),
 
       polycl_annot = target(
@@ -298,7 +315,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_polycl_annot = target(
-        phipmake::write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
+        write_data(polycl_annot, file_out(!!names.polycl.pan.annot))
       )
     )
   }
@@ -309,31 +326,32 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       counts = data.table::fread(file_in(!!counts_filename)),
 
       write_counts = target(
-        phipmake::write_data(counts, file_out(!!names.counts.pan))
+        write_data(counts, file_out(!!names.counts.pan))
       ),
 
       counts_sub = target(
-        phipmake::split_data(counts)
+        split_data(counts)
       ),
 
       write_counts_sub = target(
-        phipmake::write_data(counts_sub, file_out(!!names.counts.sub))
+        write_data(counts_sub, file_out(!!names.counts.sub))
       ),
 
       counts_annotations = target(
         # if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
         #   enrichment_annotations
         # } else{
-          phipmake::read_annot_list(counts_sub[[1]], !!metadata_path)
+          read_annot_list(counts_sub[[1]], !!metadata_path)
         # }
       ),
 
       counts_sub_annot = target(
-        phipmake::annotate_data(counts_sub, counts_annotations),
+        annotate_data(counts_sub, counts_annotations),
       ),
 
       write_counts_sub_annot = target(
-        phipmake::write_data(counts_sub_annot, file_out(!!names.counts.sub.annot))
+        write_data(counts_sub_annot,
+                             file_out(!!names.counts.sub.annot))
       ),
 
       counts_annot = target(
@@ -341,24 +359,27 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_counts_annot = target(
-        phipmake::write_data(counts_annot, file_out(!!names.counts.pan.annot))
+        write_data(counts_annot,
+                             file_out(!!names.counts.pan.annot))
       ),
 
       # Counts Prosum
       counts_sub_prosum = target(
-        phipmake::compute_prosum(counts_sub, counts_annotations)
+        compute_prosum(counts_sub, counts_annotations)
       ),
 
       write_counts_sub_prosum = target(
-        phipmake::write_data(counts_sub_prosum, file_out(!!names.counts.prosum.sub))
+        write_data(counts_sub_prosum,
+                             file_out(!!names.counts.prosum.sub))
       ),
 
       counts_sub_prosum_annot = target(
-        phipmake::annotate_data(counts_sub_prosum, counts_annotations)
+        annotate_data(counts_sub_prosum, counts_annotations)
       ),
 
       write_counts_sub_prosum_annot = target(
-        phipmake::write_data(counts_sub_prosum_annot, file_out(!!names.counts.prosum.sub.annot))
+        write_data(counts_sub_prosum_annot,
+                             file_out(!!names.counts.prosum.sub.annot))
       ),
 
       counts_prosum = target(
@@ -366,7 +387,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_counts_prosum = target(
-        phipmake::write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
+        write_data(counts_prosum, file_out(!!names.counts.prosum.pan))
       ),
 
       counts_prosum_annot = target(
@@ -374,7 +395,8 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
       ),
 
       write_counts_prosum_annot = target(
-        phipmake::write_data(counts_prosum_annot, file_out(!!names.counts.prosum.pan.annot))
+        write_data(counts_prosum_annot,
+                             file_out(!!names.counts.prosum.pan.annot))
       )
 
     )
@@ -382,7 +404,7 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
   if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
-    avcase <-   names.enrichment.avarda[grep("Virscan", names.enrichment.avarda)]
+    avcase <- names.enrichment.avarda[grep("Virscan", names.enrichment.avarda)]
     avdf <- paste0(avpath, "bin2/my_df.csv")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities3.csv")
@@ -394,10 +416,11 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
 
     AVARDA_plan <- drake::drake_plan(
       enrichment_sub_avnames = target(
-        phipmake::prepare_avarda_names(enrichment_sub, enrichment_annotations)
+        prepare_avarda_names(enrichment_sub, enrichment_annotations)
       ),
       write_enrichment_sub_avnames = target(
-        phipmake::write_data(enrichment_sub_avnames, file_out(!!names.enrichment.avarda))
+        write_data(enrichment_sub_avnames,
+                             file_out(!!names.enrichment.avarda))
       ),
       command = target(
         paste0("sbatch --export=case=",!!avcase,
@@ -421,6 +444,18 @@ define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
     )
   }
 
+
+  if(runPairwise){
+
+
+    #(!) todo
+    #convert pairs input.csv to samples.txt
+    #take input paths.txt (?)
+    # assemble counts with gather_samples
+    # call Daniel Pairwise to generate enrichments
+    # check if runenrichments. add those targetse.
+    # assemble plan below
+  }
 
   #-------------
   # setup main plan based on input parameters runCounts runEnrichment runAVARDA

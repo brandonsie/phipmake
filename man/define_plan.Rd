@@ -5,12 +5,14 @@
 \title{Initialize and return drake_plan object. New for github drake 7.0+.}
 \usage{
 define_plan(params_path = "drake_params.tsv", runCounts = TRUE,
-  runEnrichment = TRUE, runAVARDA = FALSE)
+  runPairwise = FALSE, runEnrichment = TRUE, runAVARDA = FALSE)
 }
 \arguments{
 \item{params_path}{Path to project parameters file that can be created using the write_drake_params function.}
 
 \item{runCounts}{Logical controlling whether or not to define counts targets.}
+
+\item{runPairwise}{Logical controlling whether or not to define pairwise targets.}
 
 \item{runEnrichment}{Logical controlling whether or not to define enrichment targets.}
 

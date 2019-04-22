@@ -15,7 +15,8 @@ gather_samples <- function(sources, col.names, retain.first.col = TRUE){
     this.source <- data.table::fread(sources[i], data.table = FALSE) #read source file
 
     if(i == 1){ #setup output table
-      output_file <- data.frame(matrix(nrow = nrow(this.source), ncol = (length(col.names))))
+      output_file <- data.frame(matrix(nrow = nrow(this.source),
+                                       ncol = (length(col.names))))
       colnames(output_file) <- col.names
 
 
@@ -29,9 +30,11 @@ gather_samples <- function(sources, col.names, retain.first.col = TRUE){
     # retrieve data for relevant col.names
 
 
-    matching.cols <- c(1:ncol(output_file))[colnames(output_file) %in% colnames(this.source)]
-    output_file[, matching.cols] <- this.source[, match(colnames(output_file)[matching.cols], colnames(this.source))]
-
+    matching.cols <- c(1:ncol(output_file))[
+      colnames(output_file) %in% colnames(this.source)]
+    output_file[, matching.cols] <-
+      this.source[, match(colnames(output_file)[matching.cols],
+                          colnames(this.source))]
 
   } #end loop
 
