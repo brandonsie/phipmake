@@ -1,4 +1,4 @@
-# phipmake <img src="https://brandonsie.github.io/docs/HexStickers_phipmake_1.png" align="right" width="120">
+# phipmake <img src="https://brandonsie.github.io/docs/phipmake.png" align="right" width="140">
 
 ![License](https://img.shields.io/github/license/brandonsie/phipmake.svg) 
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/) 
