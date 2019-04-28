@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maintains specified order of panlibrary data after a call to dplyr::bind_rows. — check_order • phipmake</title>
+<title>swap out u_pep_id names for older pep_id names to improve AVARDA speed — prepare_avarda_names • phipmake</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,9 +31,9 @@
 
 
 
-<meta property="og:title" content="Maintains specified order of panlibrary data after a call to dplyr::bind_rows. — check_order" />
+<meta property="og:title" content="swap out u_pep_id names for older pep_id names to improve AVARDA speed — prepare_avarda_names" />
 
-<meta property="og:description" content="Maintains specified order of panlibrary data after a call to dplyr::bind_rows." />
+<meta property="og:description" content="swap out u_pep_id names for older pep_id names to improve AVARDA speed" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,29 +128,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maintains specified order of panlibrary data after a call to dplyr::bind_rows.</h1>
+    <h1>swap out u_pep_id names for older pep_id names to improve AVARDA speed</h1>
     
-    <div class="hidden name"><code>check_order.Rd</code></div>
+    <div class="hidden name"><code>prepare_avarda_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Maintains specified order of panlibrary data after a call to dplyr::bind_rows.</p>
+    <p>swap out u_pep_id names for older pep_id names to improve AVARDA speed</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>check_order</span>(<span class='no'>libs</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>prepare_avarda_names</span>(<span class='no'>data</span>, <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metadata_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>replacement_column</span> <span class='kw'>=</span> <span class='st'>"pep_id"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>libs</th>
-      <td><p>Character vector of library ID's in order</p></td>
+      <th>data</th>
+      <td><p>Phiplist of data to modify.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>Merged data to re-sort.</p></td>
+      <th>annotations</th>
+      <td><p>Phiplist of annotation files. Don't use with metadata_path param.</p></td>
+    </tr>
+    <tr>
+      <th>metadata_path</th>
+      <td><p>Metadata directory. Don't use with annotations param.</p></td>
+    </tr>
+    <tr>
+      <th>replacement_column</th>
+      <td><p>Column of metadata with which to replace current first column of data.</p></td>
     </tr>
     </table>
     

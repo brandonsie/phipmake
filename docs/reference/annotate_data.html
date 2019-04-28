@@ -111,7 +111,10 @@
   </a>
 </li>
 <li>
-  <a href="https://brandonsie.github.io/">brandonsie</a>
+  <a href="https://brandonsie.github.io/">
+    <span class="fa fa-github-alt"></span>
+     
+  </a>
 </li>
       </ul>
       
@@ -138,7 +141,8 @@
 
     <pre class="usage"><span class='fu'>annotate_data</span>(<span class='no'>data</span>, <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metadata_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pep_id"</span>, <span class='st'>"pos_start"</span>, <span class='st'>"pos_end"</span>, <span class='st'>"UniProt_acc"</span>, <span class='st'>"pep_aa"</span>,
-  <span class='st'>"taxon_genus"</span>, <span class='st'>"taxon_species"</span>, <span class='st'>"gene_symbol"</span>, <span class='st'>"product"</span>))</pre>
+  <span class='st'>"taxon_genus"</span>, <span class='st'>"taxon_species"</span>, <span class='st'>"gene_symbol"</span>, <span class='st'>"product"</span>),
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,6 +162,10 @@
     <tr>
       <th>fields</th>
       <td><p>What information to populate from annotation file.</p></td>
+    </tr>
+    <tr>
+      <th>parallel</th>
+      <td><p>Logical whether or not to use foreach and doParallel to parallelize individual library computations.</p></td>
     </tr>
     <tr>
       <th>libname</th>

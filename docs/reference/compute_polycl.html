@@ -114,7 +114,10 @@ for each." />
   </a>
 </li>
 <li>
-  <a href="https://brandonsie.github.io/">brandonsie</a>
+  <a href="https://brandonsie.github.io/">
+    <span class="fa fa-github-alt"></span>
+     
+  </a>
 </li>
       </ul>
       
@@ -142,7 +145,7 @@ for each.</p>
     </div>
 
     <pre class="usage"><span class='fu'>compute_polycl</span>(<span class='no'>data</span>, <span class='no'>annot</span>, <span class='no'>pairs</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"independence_filter"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +170,10 @@ subsequent elements data frames of data for corresponding libraries.</p></td>
     <tr>
       <th>verbose</th>
       <td><p>Logical whether or not to print progress.</p></td>
+    </tr>
+    <tr>
+      <th>parallel</th>
+      <td><p>Logical whether or not to use foreach and doParallel to parallelize individual library computations.</p></td>
     </tr>
     </table>
     

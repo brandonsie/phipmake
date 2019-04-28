@@ -111,7 +111,10 @@
   </a>
 </li>
 <li>
-  <a href="https://brandonsie.github.io/">brandonsie</a>
+  <a href="https://brandonsie.github.io/">
+    <span class="fa fa-github-alt"></span>
+     
+  </a>
 </li>
       </ul>
       
@@ -136,7 +139,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>define_plan</span>(<span class='kw'>params_path</span> <span class='kw'>=</span> <span class='st'>"drake_params.tsv"</span>)</pre>
+    <pre class="usage"><span class='fu'>define_plan</span>(<span class='kw'>params_path</span> <span class='kw'>=</span> <span class='st'>"drake_params.tsv"</span>, <span class='kw'>runCounts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>runPairwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>runEnrichment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>runAVARDA</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,6 +148,22 @@
     <tr>
       <th>params_path</th>
       <td><p>Path to project parameters file that can be created using the write_drake_params function.</p></td>
+    </tr>
+    <tr>
+      <th>runCounts</th>
+      <td><p>Logical controlling whether or not to define counts targets.</p></td>
+    </tr>
+    <tr>
+      <th>runPairwise</th>
+      <td><p>Logical controlling whether or not to define pairwise targets.</p></td>
+    </tr>
+    <tr>
+      <th>runEnrichment</th>
+      <td><p>Logical controlling whether or not to define enrichment targets.</p></td>
+    </tr>
+    <tr>
+      <th>runAVARDA</th>
+      <td><p>Logical controlling whether or not to define AVARDA targets.</p></td>
     </tr>
     </table>
     

@@ -73,7 +73,10 @@
   </a>
 </li>
 <li>
-  <a href="https://brandonsie.github.io/">brandonsie</a>
+  <a href="https://brandonsie.github.io/">
+    <span class="fa fa-github-alt"></span>
+     
+  </a>
 </li>
       </ul>
 </div>
@@ -86,18 +89,21 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="phipmake" class="section level1">
+<div id="phipmake-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#phipmake" class="anchor"></a>phipmake</h1></div>
+<a href="#phipmake-" class="anchor"></a>phipmake <img src="https://brandonsie.github.io/docs/phipmake.png" align="right" width="140">
+</h1></div>
+<p><img src="https://img.shields.io/github/license/brandonsie/phipmake.svg" alt="License"><a href="https://www.tidyverse.org/lifecycle/"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle"></a> <img src="https://img.shields.io/github/languages/code-size/brandonsie/phipmake.svg" alt="Code Size"><img src="https://img.shields.io/github/last-commit/brandonsie/epitopefinder.svg" alt="Last Commit"></p>
 <p>R package of <a href="https://github.com/ropensci/drake">Drake</a>-based tools for the Larman Lab’s <a href="https://www.nature.com/articles/s41596-018-0025-6">PhIP-Seq</a> data analysis pipeline.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/drake"</span>) <span class="co"># drake is on CRAN, but we use the more recently updated Github version.</span></a>
-<a class="sourceLine" id="cb1-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"brandonsie/phipmake"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">plan &lt;-<span class="st"> </span>phipdrake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/phipdrake/topics/define_plan">define_plan</a></span>() <span class="co"># initialize pipeline. looks for mpath.txt and ppath.txt in working directory</span></a>
-<a class="sourceLine" id="cb2-2" title="2">drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/make">make</a></span>(plan) <span class="co"># execute pipeline</span></a>
-<a class="sourceLine" id="cb2-3" title="3">v &lt;-<span class="st"> </span>drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/vis_drake_graph">vis_drake_graph</a></span>(drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/drake_config">drake_config</a></span>(plan)) <span class="co"># visualize pipeline dependencies</span></a>
-<a class="sourceLine" id="cb2-4" title="4">v</a>
-<a class="sourceLine" id="cb2-5" title="5">visNetwork<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/visNetwork/topics/visSave">visSave</a></span>(v, <span class="st">"dependency_graph.html"</span>) <span class="co"># save dependency graph</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"remotes"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/drake"</span>) <span class="co"># drake is on CRAN, but phipmake depends on the more recently updated Github version.</span></a>
+<a class="sourceLine" id="cb1-3" title="3">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"brandonsie/phipmake"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/expose_imports">expose_imports</a></span>(phipmake) <span class="co"># allow drake to keep track of nested function dependencies.</span></a>
+<a class="sourceLine" id="cb2-2" title="2">plan &lt;-<span class="st"> </span>phipdrake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/phipdrake/topics/define_plan">define_plan</a></span>() <span class="co"># initialize pipeline. looks for mpath.txt and ppath.txt in working directory</span></a>
+<a class="sourceLine" id="cb2-3" title="3">drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/make">make</a></span>(plan) <span class="co"># execute pipeline</span></a>
+<a class="sourceLine" id="cb2-4" title="4">v &lt;-<span class="st"> </span>drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/vis_drake_graph">vis_drake_graph</a></span>(drake<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drake/topics/drake_config">drake_config</a></span>(plan)) <span class="co"># visualize pipeline dependencies</span></a>
+<a class="sourceLine" id="cb2-5" title="5">v</a>
+<a class="sourceLine" id="cb2-6" title="6">visNetwork<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/visNetwork/topics/visSave">visSave</a></span>(v, <span class="st">"dependency_graph.html"</span>) <span class="co"># save dependency graph</span></a></code></pre></div>
 <div id="dependency-graph" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dependency-graph" class="anchor"></a>Dependency Graph</h3>

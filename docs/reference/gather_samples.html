@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maintains specified order of panlibrary data after a call to dplyr::bind_rows. — check_order • phipmake</title>
+<title>read in multiple input files and extract specified columns — gather_samples • phipmake</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,9 +31,9 @@
 
 
 
-<meta property="og:title" content="Maintains specified order of panlibrary data after a call to dplyr::bind_rows. — check_order" />
+<meta property="og:title" content="read in multiple input files and extract specified columns — gather_samples" />
 
-<meta property="og:description" content="Maintains specified order of panlibrary data after a call to dplyr::bind_rows." />
+<meta property="og:description" content="read in multiple input files and extract specified columns" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,29 +128,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maintains specified order of panlibrary data after a call to dplyr::bind_rows.</h1>
+    <h1>read in multiple input files and extract specified columns</h1>
     
-    <div class="hidden name"><code>check_order.Rd</code></div>
+    <div class="hidden name"><code>gather_samples.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Maintains specified order of panlibrary data after a call to dplyr::bind_rows.</p>
+    <p>read in multiple input files and extract specified columns</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>check_order</span>(<span class='no'>libs</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>gather_samples</span>(<span class='no'>sources</span>, <span class='no'>col.names</span>, <span class='kw'>retain.first.col</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>libs</th>
-      <td><p>Character vector of library ID's in order</p></td>
+      <th>sources</th>
+      <td><p>Character vector of filepaths to read in. All source files should contain the same type of data - enrichments, normalized read counts, etc.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>Merged data to re-sort.</p></td>
+      <th>col.names</th>
+      <td><p>Character vector of columns to extract. Vector order should match desired order in output.</p></td>
+    </tr>
+    <tr>
+      <th>retain.first.col</th>
+      <td><p>Logical whether to also include the furst column of the first specified source file. Often this column will contain peptide names of interest.</p></td>
     </tr>
     </table>
     
