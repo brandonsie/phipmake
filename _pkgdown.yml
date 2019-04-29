@@ -64,9 +64,11 @@ navbar:
           href: dependency_graph.html
 
   right:
-    - icon: fa-github
-      href: https://github.com/brandonsie/phipmake/
-    - icon: fa-github-alt
-      href: https://brandonsie.github.io/
+    - text: Links
+      menu:
+      - text: Github Repo
+        href: https://github.com/brandonsie/phipmake/
+      - text: brandonsie.github.io
+        href: https://brandonsie.github.io/
 
 
