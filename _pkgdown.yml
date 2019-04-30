@@ -1,9 +1,13 @@
 title: phipmake
+url: https://brandonsie.github.io/phipmake
 
 template:
   params:
     bootswatch: sandstone
     ganalytics: UA-131446137-1
+    docsearch:
+      api_key: 398291142c6ea72cd7c19e0286eef8e1
+      index_name: phipmake
 reference:
   - title: Package Documentation
     desc: Helpfile for phipmake package.
