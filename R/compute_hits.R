@@ -5,10 +5,11 @@
 #' subsequent elements data frames of data for corresponding libraries.
 #' @param threshold Minimum enrichment value to be considered a hit.
 #' @param parallel Logical whether or not to use foreach and doParallel to parallelize individual library computations.
+#' @param verbose Logical whether to print additional info
 #'
 #' @export
 
-compute_hits <- function(data, threshold = 5, parallel = FALSE){
+compute_hits <- function(data, threshold = 5, parallel = FALSE, verbose = FALSE){
 
   # prep output data list
   output_data <- list()
