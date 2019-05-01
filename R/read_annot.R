@@ -27,7 +27,7 @@ read_annot <- function(libname, metadata_path){
 
   # read annotation file & return
   annot <- data.table::fread(lib_annot_file_path, data.table = FALSE)
-  annot <- replace(annot, is.na(a1), "NA")
+  annot <- replace(annot, is.na(annot), "NA")
 
   return(annot)
 }
