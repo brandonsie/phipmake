@@ -9,9 +9,12 @@
 #' @export
 #'
 
-define_plan <- function(params_path = "drake_params.tsv", runCounts = TRUE,
-                        runPairwise = FALSE,
-                        runEnrichment = TRUE, runAVARDA = FALSE){
+define_plan <- function(
+  params_path = "drake_params.tsv",
+  runCounts = TRUE,
+  runPairwise = FALSE,
+  runEnrichment = TRUE,
+  runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================

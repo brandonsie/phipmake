@@ -52,6 +52,8 @@ annotate_data <- function(
       fields <- fields[!(fields %in% pep_fields)]
     }
     annot_fields <- annot[match(sub.data[,ref_col], annot[,ref_col]), fields]
+    annot_fields[,] <- lapply(annot_fields[,], as.character)
+
 
     # combine annotation and original data, prepare output
     sub.output <- cbind(sub.data[,1], annot_fields, sub.data[,-1])
