@@ -169,8 +169,8 @@ define_plan <- function(
     enrichment_threshold = getparam(params, "enrichment_threshold"),
     metadata_path = getparam(params, "metadata_path"),
     output_extension = getparam(params, "output_extension"),
-    output_separator <- getparam(params, "output_separator"),
-    sublibrary_parallel <- as.logical(getparam(params, "sublibrary_parallel"))
+    output_separator = getparam(params, "output_separator"),
+    sublibrary_parallel = as.logical(getparam(params, "sublibrary_parallel"))
 
   )
 
