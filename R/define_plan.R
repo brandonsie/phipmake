@@ -4,6 +4,7 @@
 #' @param runCounts Logical controlling whether or not to define counts targets.
 #' @param runPairwise Logical controlling whether or not to define pairwise targets.
 #' @param runEnrichment Logical controlling whether or not to define enrichment targets.
+#' @param runPolyclonal Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #'
 #' @export
@@ -14,6 +15,7 @@ define_plan <- function(
   runCounts = TRUE,
   runPairwise = FALSE,
   runEnrichment = TRUE,
+  runPolyclonal = TRUE,
   runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
 
@@ -45,6 +47,9 @@ define_plan <- function(
   output_extension <- getparam(params, "output_extension")
   output_separator <- getparam(params, "output_separator")
   sublibrary_parallel <- as.logical(getparam(params, "sublibrary_parallel"))
+
+  # counts_libs <- getparam(params, "counts_libs")
+  # enrichment_libs <- getparam(params, "enrichment_libs")
 
   # Establish sublibrary names
   if(file.exists(counts_filename)){
@@ -281,8 +286,12 @@ define_plan <- function(
 
       write_hits_annot = target(
         write_data(hits_annot, file_out(!!names.hits.pan.annot))
-      ), #34
+      ) #34
+    )
+  }
 
+  if(runPolyclonal){
+    polyclonal_plan <- drake::drake_plan(
       # Polyclonal
       blast_pairs = target(
         read_pairs_list(enrichment_sub[[1]], !!metadata_path)
@@ -465,6 +474,7 @@ define_plan <- function(
   main_plan <- params_plan
   if(runCounts){main_plan %<>% rbind(counts_plan)}
   if(runEnrichment){main_plan %<>% rbind(enrichment_plan)}
+  if(runPolyclonal){main_plan %<>% rbind(polyclonal_plan)}
   if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
 
   return(main_plan)
