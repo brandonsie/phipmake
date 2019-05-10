@@ -12,5 +12,7 @@ check_order <- function(libs, data){
     sorted_data %<>% rbind(data[grep(i, data[,1]),])
   }
 
+  return(sorted_data)
+
 }
 

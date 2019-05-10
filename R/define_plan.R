@@ -64,11 +64,14 @@ define_plan <- function(
     for(i in sn.libdir.c){if(!dir.exists(i)) dir.create(i)}
 
   } else{
-    warning(paste("Counts file is missing.",
+    sn.lib.c <- sn.libdir.c <- "NA"
+
+    if(runCounts) {
+      warning(paste("Counts file is missing.",
                   "Are you in the right working directory?",
                   "Currently looking for a counts file named",
                   counts_filename, "in directory:", getwd()))
-    sn.lib.c <- sn.libdir.c <- "NA"
+    }
   }
 
   if(file.exists(enrichment_filename)){
@@ -84,11 +87,14 @@ define_plan <- function(
     for(i in sn.libdir.e){if(!dir.exists(i)) dir.create(i)
       }
   } else{
-    warning(paste("Enrichment file is missing.",
-                  "Are you in the right working directory?",
-                  "Currently looking for an enrichment file named",
-                  enrichment_filename, "in directory:", getwd()))
     sn.lib.e <- sn.libdir.e <- "NA"
+    if(runEnrichment | runPolyclonal | runAVARDA){
+      warning(paste("Enrichment file is missing.",
+                    "Are you in the right working directory?",
+                    "Currently looking for an enrichment file named",
+                    enrichment_filename, "in directory:", getwd()))
+
+    }
   }
 
   # ============================================================================
