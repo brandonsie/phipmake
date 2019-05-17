@@ -452,7 +452,7 @@ define_plan <- function(
                " ", !!avpath, "AVARDA_BMS.sh")
       ),
       write_command = target(
-        writeLines(command, file_out("AVARDA/command.txt"))
+        writeLines(command, file_out("AVARDA_command.txt"))
       ),
       runAVARDA = target(
         {
