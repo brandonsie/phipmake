@@ -18,23 +18,6 @@ compute_hits <- function(data, threshold = 5, parallel = FALSE, verbose = FALSE)
 
 
   if(parallel){
-    require(foreach)
-    require(doParallel)
-
-    ncores <- parallel::detectCores() - 1
-    cl <- parallel::makeCluster(ncores)
-    doParallel::registerDoParallel(cl, cores = ncores)
-    print(paste("Paralellization registered with cores = ", ncores))
-
-    foreach::foreach(i = 1:length(libs)) %dopar% {
-      if(verbose) print(paste("Hits:", libs[i],":",i,"of",length(libs)))
-      sub.data <- data[[i + 1]]
-      hits <- data.frame(matrix(nrow = nrow(sub.data), ncol = ncol(sub.data)))
-      names(hits) <- names(sub.data)
-      hits[,1] <- sub.data[,1]
-      hits[,-1] <- (sub.data[,-1] > threshold) %>% as.numeric
-      output_data[[i+1]] <- hits
-    }
 
   } else{
     for(i in 1:length(libs)){

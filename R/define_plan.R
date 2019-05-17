@@ -264,7 +264,7 @@ define_plan <- function(
 
       # Hits
       hits_sub = target(
-        compute_hits(enrichment_sub, enrichment_threshold)
+        compute_hits(enrichment_sub, !!enrichment_threshold)
       ),
 
       write_hits_sub = target(
