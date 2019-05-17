@@ -152,7 +152,7 @@ define_plan <- function(
 
 
 
-  names.enrichment.avarda <- paste0("AVARDA/", sn.enrichment.sub,
+  names.enrichment.avarda <- paste0(sn.enrichment.sub,
                                     "_avardanames", sn.ext)
 
 
