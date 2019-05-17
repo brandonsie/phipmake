@@ -152,7 +152,8 @@ define_plan <- function(
 
 
 
-  names.enrichment.avarda <- paste0(sn.enrichment.sub, "_avnames", sn.ext)
+  names.enrichment.avarda <- paste0("AVARDA/", sn.enrichment.sub,
+                                    "_avardanames", sn.ext)
 
 
   # ============================================================================
@@ -433,11 +434,11 @@ define_plan <- function(
     if(!dir.exists(avout)) dir.create(avout)
 
     AVARDA_plan <- drake::drake_plan(
-      enrichment_sub_avnames = target(
+      enrichment_sub_avardanames = target(
         prepare_avarda_names(enrichment_sub, enrichment_annotations)
       ),
-      write_enrichment_sub_avnames = target(
-        write_data(enrichment_sub_avnames,
+      write_enrichment_sub_avardanames = target(
+        write_data(enrichment_sub_avardanames,
                              file_out(!!names.enrichment.avarda))
       ),
       command = target(
@@ -451,7 +452,7 @@ define_plan <- function(
                " ", !!avpath, "AVARDA_BMS.sh")
       ),
       write_command = target(
-        writeLines(command, file_out("command.txt"))
+        writeLines(command, file_out("AVARDA/command.txt"))
       ),
       runAVARDA = target(
         {

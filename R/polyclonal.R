@@ -36,17 +36,11 @@ compute_polycl <- function(data, annot, pairs, method = "independence_filter", v
 
   # run loop
   if(parallel){
-    require(foreach)
-    require(doParallel)
 
-    ncores <- parallel::detectCores() - 1
-    cl <- parallel::makeCluster(ncores)
-    doParallel::registerDoParallel(cl, cores = ncores)
-    print(paste("Paralellization registered with cores = ", ncores))
+    require(future)
+    require(future.apply)
 
-    foreach::foreach(i = 1:length(libs)) %dopar% {
-      output_data[[i+1]] <- prepare_polycl(data, annot, pairs, method, verbose, i)
-    }
+    # future_lapply(1:length(libs), )
 
   } else{
     for(i in 1:length(libs)){
