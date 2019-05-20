@@ -22,7 +22,6 @@ split_data <- function(data){
 
   #prepare output list
   output.data <- list()
-  output.data[[1]] <- libs.univ
 
   # library_versions (e.g. HumanLarma_002, HumanLarma_003) for each peptide
   all.vers <- paste(all.names[,1], all.names[,2], sep = "_")
@@ -36,8 +35,8 @@ split_data <- function(data){
     # (!) split_data currently only works on peptide data with u_pep_id
 
     # add data to list for return output
-    output.data[[i+1]] <- sub.data
-
+    output.data[[i]] <- sub.data
+    names(output_data) <- libs_univ
 
     # # write data to sublibrary folder
     # if(!dir.exists(libs.univ[i])){dir.create(libs.univ[i])}
