@@ -42,7 +42,7 @@ define_plan <- function(
   counts_type <- getparam(params, "counts_type")
   enrichment_filename <- getparam(params, "enrichment_filename")
   enrichment_type <- getparam(params, "enrichment_type")
-  enrichment_threshold <- getparam(params, "enrichment_threshold")
+  enrichment_threshold <- getparam(params, "enrichment_threshold") %>% as.numeric
   metadata_path <- getparam(params, "metadata_path")
   output_extension <- getparam(params, "output_extension")
   output_separator <- getparam(params, "output_separator")
@@ -173,7 +173,7 @@ define_plan <- function(
     counts_type = getparam(params, "counts_type"),
     enrichment_filename = getparam(params, "enrichment_filename"),
     enrichment_type = getparam(params, "enrichment_type"),
-    enrichment_threshold = getparam(params, "enrichment_threshold"),
+    enrichment_threshold = getparam(params, "enrichment_threshold") %>% as.numeric,
     metadata_path = getparam(params, "metadata_path"),
     output_extension = getparam(params, "output_extension"),
     output_separator = getparam(params, "output_separator"),
