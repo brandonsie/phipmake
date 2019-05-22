@@ -36,7 +36,7 @@ split_data <- function(data){
 
     # add data to list for return output
     output.data[[i]] <- sub.data
-    names(output_data) <- libs.univ
+    names(output.data) <- libs.univ
 
     # # write data to sublibrary folder
     # if(!dir.exists(libs.univ[i])){dir.create(libs.univ[i])}
