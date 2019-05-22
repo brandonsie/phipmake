@@ -4,7 +4,7 @@
 \alias{read_pairs}
 \title{Read BLAST pairs file based on md path and library name.}
 \usage{
-read_pairs(libname, pairs_path)
+read_pairs(libname, pairs_path, pairs_grep = "_trimmedpairs")
 }
 \arguments{
 \item{libname}{Library name.}

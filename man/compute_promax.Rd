@@ -15,7 +15,7 @@ subsequent elements data frames of data for corresponding libraries.}
 
 \item{verbose}{Logical whether or not to print progress.}
 
-\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
+\item{parallel}{Logical whether or not to use future and future.apply to parallelize individual library computations.}
 }
 \description{
 For multilibrary hits data, identify libraries, and call library_promax

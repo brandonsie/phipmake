@@ -13,7 +13,7 @@ subsequent elements data frames of data for corresponding libraries.}
 
 \item{threshold}{Minimum enrichment value to be considered a hit.}
 
-\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
+\item{parallel}{Logical whether or not to use future and future.apply to parallelize individual library computations.}
 
 \item{verbose}{Logical whether to print additional info}
 }
