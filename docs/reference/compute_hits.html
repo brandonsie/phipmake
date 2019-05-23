@@ -168,7 +168,7 @@ for each.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>compute_hits</span>(<span class='no'>data</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>compute_hits</span>(<span class='no'>data</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,6 +185,10 @@ subsequent elements data frames of data for corresponding libraries.</p></td>
     <tr>
       <th>parallel</th>
       <td><p>Logical whether or not to use foreach and doParallel to parallelize individual library computations.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical whether to print additional info</p></td>
     </tr>
     </table>
     
