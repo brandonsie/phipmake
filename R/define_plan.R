@@ -204,7 +204,7 @@ define_plan <- function(
       ),
 
       enrichment_annotations = target(
-        read_annot_list(enrichment_sub[[1]], !!metadata_path)
+        read_annot_list(names(enrichment_sub), !!metadata_path)
       ),
 
       enrichment_sub_annot = target(
@@ -216,7 +216,7 @@ define_plan <- function(
       ),
 
       enrichment_annot = target(
-        dplyr::bind_rows(enrichment_sub_annot[-1])
+        dplyr::bind_rows(enrichment_sub_annot)
       ),
 
       write_enrichment_annot = target(
@@ -245,7 +245,7 @@ define_plan <- function(
       ),
 
       enrichment_promax = target(
-        dplyr::bind_rows(enrichment_sub_promax[-1])
+        dplyr::bind_rows(enrichment_sub_promax)
       ),
 
       write_enrichment_promax = target(
@@ -254,7 +254,7 @@ define_plan <- function(
       ),
 
       enrichment_promax_annot = target(
-        dplyr::bind_rows(enrichment_sub_promax_annot[-1])
+        dplyr::bind_rows(enrichment_sub_promax_annot)
       ),
 
       write_enrichment_promax_annot = target(
@@ -280,7 +280,7 @@ define_plan <- function(
       ),
 
       hits = target(
-        dplyr::bind_rows(hits_sub[-1])
+        dplyr::bind_rows(hits_sub)
       ),
 
       write_hits = target(
@@ -288,7 +288,7 @@ define_plan <- function(
       ),
 
       hits_annot = target(
-        dplyr::bind_rows(hits_sub_annot[-1])
+        dplyr::bind_rows(hits_sub_annot)
       ),
 
       write_hits_annot = target(
@@ -301,7 +301,7 @@ define_plan <- function(
     polyclonal_plan <- drake::drake_plan(
       # Polyclonal
       blast_pairs = target(
-        read_pairs_list(enrichment_sub[[1]], !!metadata_path)
+        read_pairs_list(names(enrichment_sub), !!metadata_path)
       ),
 
       polycl_sub = target(
@@ -322,7 +322,7 @@ define_plan <- function(
       ),
 
       polycl = target(
-        dplyr::bind_rows(polycl_sub[-1])
+        dplyr::bind_rows(polycl_sub)
       ),
 
       write_polycl = target(
@@ -330,7 +330,7 @@ define_plan <- function(
       ),
 
       polycl_annot = target(
-        dplyr::bind_rows(polycl_sub_annot[-1])
+        dplyr::bind_rows(polycl_sub_annot)
       ),
 
       write_polycl_annot = target(
@@ -360,7 +360,7 @@ define_plan <- function(
         # if(mean(counts_sub[[1]] == enrichment_sub[[1]]) == 1){
         #   enrichment_annotations
         # } else{
-          read_annot_list(counts_sub[[1]], !!metadata_path)
+          read_annot_list(names(counts_sub), !!metadata_path)
         # }
       ),
 
@@ -374,7 +374,7 @@ define_plan <- function(
       ),
 
       counts_annot = target(
-        dplyr::bind_rows(counts_sub_annot[-1])
+        dplyr::bind_rows(counts_sub_annot)
       ),
 
       write_counts_annot = target(
@@ -402,7 +402,7 @@ define_plan <- function(
       ),
 
       counts_prosum = target(
-        dplyr::bind_rows(counts_sub_prosum[-1])
+        dplyr::bind_rows(counts_sub_prosum)
       ),
 
       write_counts_prosum = target(
@@ -410,7 +410,7 @@ define_plan <- function(
       ),
 
       counts_prosum_annot = target(
-        dplyr::bind_rows(counts_sub_prosum_annot[-1])
+        dplyr::bind_rows(counts_sub_prosum_annot)
       ),
 
       write_counts_prosum_annot = target(

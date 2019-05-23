@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -126,6 +126,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://brandonsie.github.io/phipmake/news/index.html">Changelog</a>
+    </li>
     <li>
       <a href="https://github.com/brandonsie/phipmake/">Github Repo</a>
     </li>
@@ -166,6 +169,7 @@
     <pre class="usage"><span class='fu'>annotate_data</span>(<span class='no'>data</span>, <span class='kw'>annotations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metadata_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pep_id"</span>, <span class='st'>"pos_start"</span>, <span class='st'>"pos_end"</span>, <span class='st'>"UniProt_acc"</span>, <span class='st'>"pep_aa"</span>,
   <span class='st'>"taxon_genus"</span>, <span class='st'>"taxon_species"</span>, <span class='st'>"gene_symbol"</span>, <span class='st'>"product"</span>),
+  <span class='kw'>pep_fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pep_id"</span>, <span class='st'>"pos_start"</span>, <span class='st'>"pos_end"</span>, <span class='st'>"pep_aa"</span>),
   <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -189,7 +193,7 @@
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>Logical whether or not to use foreach and doParallel to parallelize individual library computations.</p></td>
+      <td><p>Logical whether or not to use future and future.apply to parallelize individual library computations.</p></td>
     </tr>
     <tr>
       <th>libname</th>

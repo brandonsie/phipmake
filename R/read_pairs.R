@@ -14,12 +14,12 @@
 read_pairs_list <- function(libs, pairs_path){
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- libs
 
   for(i in 1:length(libs)){
-    output_data[[i+1]] <- read_pairs(libs[i], pairs_path)
+    output_data[[i]] <- read_pairs(libs[i], pairs_path)
   }
 
+  names(output_data) <- libs
   return(output_data)
 
 }
@@ -32,7 +32,7 @@ read_pairs_list <- function(libs, pairs_path){
 #' @export
 #'
 
-read_pairs <- function(libname, pairs_path){
+read_pairs <- function(libname, pairs_path, pairs_grep = "_trimmedpairs"){
   #prepare to load intrapeptide alignment pairs for specific library
   # print(paste("libname:", libname))
   # print(paste("pairs path:", pairs_path))
@@ -47,7 +47,7 @@ read_pairs <- function(libname, pairs_path){
   lib_pairs_files <- list.files(lib_pairs_path)
   # print(paste("lib pairs files", lib_pairs_files))
   lib_pairs_names <- lib_pairs_files[intersect(
-    grep(libname,lib_pairs_files), grep("_trimmedpairs", lib_pairs_files))]
+    grep(libname,lib_pairs_files), grep(pairs_grep, lib_pairs_files))]
   # print(paste("lib pairs name", lib_pairs_names))
 
   lib_pairs_file_path <- paste(lib_pairs_path, lib_pairs_names, sep = "/")

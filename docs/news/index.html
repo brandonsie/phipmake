@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read BLAST pairs file based on md path and library name. — read_pairs • phipmake</title>
+<title>Changelog • phipmake</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,9 +44,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Read BLAST pairs file based on md path and library name. — read_pairs" />
-
-<meta property="og:description" content="Read BLAST pairs file based on md path and library name." />
+<meta property="og:title" content="Changelog" />
 
 <meta property="og:image" content="https://brandonsie.github.io/phipmake/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -76,7 +74,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -155,41 +153,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read BLAST pairs file based on md path and library name.</h1>
-    
-    <div class="hidden name"><code>read_pairs.Rd</code></div>
+      <h1>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    
-    <p>Read BLAST pairs file based on md path and library name.</p>
-    
-    </div>
-
-    <pre class="usage"><span class='fu'>read_pairs</span>(<span class='no'>libname</span>, <span class='no'>pairs_path</span>, <span class='kw'>pairs_grep</span> <span class='kw'>=</span> <span class='st'>"_trimmedpairs"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>libname</th>
-      <td><p>Library name.</p></td>
-    </tr>
-    <tr>
-      <th>pairs_path</th>
-      <td><p>Pairs data directory.</p></td>
-    </tr>
-    </table>
-    
-
+    <div id="phipmake-020" class="section level1">
+<h1 class="page-header">
+<a href="#phipmake-020" class="anchor"></a>phipmake 0.2.0</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Supports drake’s future parallelization</li>
+<li>Updates multi-library list targets (phiplists). Previously, these targets stored library names in the first list element and individual library data in subsequent elements. Now, library names are stored as list element names rather than in their own list element. For example, previously, if phipmake was run on data with two libraires “LibA” and “LibB”, previously the counts data for there libraries would be stored in a three element list. counts_sub[[1]] == c(“LibA”, “LibB”); counts_sub[[2]] == <counts data for liba>; counts_sub[[3]] == <counts data for lib b>. Now, the equivalent data i stored in a two element list. counts_sub$LibA == <counts data for liba>; counts_sub$LibB == <counts data for libb></counts></counts></counts></counts>
+</li>
+</ul>
+</div>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#phipmake-020">0.2.0</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
       <footer>
