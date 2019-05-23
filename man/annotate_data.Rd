@@ -7,6 +7,7 @@
 annotate_data(data, annotations = NULL, metadata_path = NULL,
   fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",
   "taxon_genus", "taxon_species", "gene_symbol", "product"),
+  pep_fields = c("pep_id", "pos_start", "pos_end", "pep_aa"),
   parallel = FALSE)
 }
 \arguments{
@@ -18,7 +19,7 @@ annotate_data(data, annotations = NULL, metadata_path = NULL,
 
 \item{fields}{What information to populate from annotation file.}
 
-\item{parallel}{Logical whether or not to use foreach and doParallel to parallelize individual library computations.}
+\item{parallel}{Logical whether or not to use future and future.apply to parallelize individual library computations.}
 
 \item{libname}{Library name contained in data.}
 }

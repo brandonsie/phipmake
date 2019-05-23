@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -126,6 +126,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://brandonsie.github.io/phipmake/news/index.html">Changelog</a>
+    </li>
     <li>
       <a href="https://github.com/brandonsie/phipmake/">Github Repo</a>
     </li>
@@ -164,7 +167,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>define_plan</span>(<span class='kw'>params_path</span> <span class='kw'>=</span> <span class='st'>"drake_params.tsv"</span>, <span class='kw'>runCounts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>runPairwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>runEnrichment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>runAVARDA</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>runPairwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>runEnrichment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>runPolyclonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>runAVARDA</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,6 +187,10 @@
     </tr>
     <tr>
       <th>runEnrichment</th>
+      <td><p>Logical controlling whether or not to define enrichment targets.</p></td>
+    </tr>
+    <tr>
+      <th>runPolyclonal</th>
       <td><p>Logical controlling whether or not to define enrichment targets.</p></td>
     </tr>
     <tr>

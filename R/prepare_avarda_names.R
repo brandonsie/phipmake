@@ -13,37 +13,38 @@ prepare_avarda_names <- function(data, annotations = NULL, metadata_path = NULL,
 
   # check for proper annotation order
   if(!is.null(annotations)){
-    if(mean(annotations[[1]] == data[[1]]) < 1){
+    if(mean(names(annotations) == names(data)) < 1){
       stop(paste("Error: annotate_data: annotation and data mismatch",
-                 annotations[[1]], ";", data[[1]]))
+                 names(annotations), ";", names(data)))
     }
   }
 
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- libs <- data[[1]]
+  libs <- names(data)
 
-  # loop over libraries as specified in data[[1]]
+  # loop over libraries as specified in data
   for(i in 1:length(libs)){
 
     # load annotation file
     if(!is.null(annotations)){
-      annot <- annotations[[i+1]]
+      annot <- annotations[[i]]
     } else if(!is.null(metadata_path)){
       annot <- read_annot(libs[i], metadata_path)
     }
 
     # process sublibrary data
-    sub.data <- data[[i+1]]
+    sub.data <- data[[i]]
 
     annot_orig <- annot[, names(annot) == names(sub.data)[1]]
     annot_replace <- annot[, names(annot) == replacement_column]
 
     sub.data[,1] <- annot_replace[match(sub.data[,1], annot_orig)]
 
-    output_data[[i+1]] <- sub.data
+    output_data[[1]] <- sub.data
   }
 
+  names(output_data) <- names(data)
   return(output_data)
 
 }

@@ -15,11 +15,12 @@ read_annot_list <- function(libs, metadata_path){
 
   # prep output data list
   output_data <- list()
-  output_data[[1]] <- libs
 
   for(i in 1:length(libs)){
-    output_data[[i+1]] <- read_annot(libs[i], metadata_path)
+    output_data[[i]] <- read_annot(libs[i], metadata_path)
   }
+
+  names(output_data) <- libs
 
   return(output_data)
 

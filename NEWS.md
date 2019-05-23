@@ -1,0 +1,4 @@
+# phipmake 0.2.0
+## Major changes
+- Supports drake's future parallelization
+- Updates multi-library list targets (phiplists). Previously, these targets stored library names in the first list element and individual library data in subsequent elements. Now, library names are stored as list element names rather than in their own list element. For example, previously, if phipmake was run on data with two libraires "LibA" and "LibB", previously the counts data for there libraries would be stored in a three element list. counts_sub[[1]] == c("LibA", "LibB"); counts_sub[[2]] == <counts data for LibA>; counts_sub[[3]] == <counts data for Lib B>. Now, the equivalent data i stored in a two element list. counts_sub$LibA == <counts data for LibA>; counts_sub$LibB == <counts data for LibB> 
