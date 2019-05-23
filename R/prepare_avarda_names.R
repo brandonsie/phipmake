@@ -23,7 +23,7 @@ prepare_avarda_names <- function(data, annotations = NULL, metadata_path = NULL,
   output_data <- list()
   libs <- names(data)
 
-  # loop over libraries as specified in data[[1]]
+  # loop over libraries as specified in data
   for(i in 1:length(libs)){
 
     # load annotation file
@@ -44,6 +44,7 @@ prepare_avarda_names <- function(data, annotations = NULL, metadata_path = NULL,
     output_data[[i]] <- sub.data
   }
 
+  names(output_data) <- names(data)
   return(output_data)
 
 }
