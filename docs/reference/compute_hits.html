@@ -92,7 +92,7 @@ for each." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phipmake</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -129,6 +129,9 @@ for each." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://brandonsie.github.io/phipmake/news/index.html">Changelog</a>
+    </li>
     <li>
       <a href="https://github.com/brandonsie/phipmake/">Github Repo</a>
     </li>
@@ -168,7 +171,7 @@ for each.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>compute_hits</span>(<span class='no'>data</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>compute_hits</span>(<span class='no'>data</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,7 +187,11 @@ subsequent elements data frames of data for corresponding libraries.</p></td>
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>Logical whether or not to use foreach and doParallel to parallelize individual library computations.</p></td>
+      <td><p>Logical whether or not to use future and future.apply to parallelize individual library computations.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical whether to print additional info</p></td>
     </tr>
     </table>
     
