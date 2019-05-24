@@ -152,10 +152,6 @@
 <h2 class="hasAnchor">
 <a href="#marcc" class="anchor"></a>1. MARCC</h2>
 <p>For usage with PhIPdb, the following R package installation steps should occur via a secure shell (SSH) connection to MARCC, using an account that is part of the hlarman1 group. For each step, I provide an option using interactive mode and using MARCC’s SLURM task scheduler.</p>
-<p>To install packages interactively without using the login node, use an <code>srun</code> command similar to the following:</p>
-<pre class="command1"><code>srun -N 1 -p shared --pty bash
-ml R
-R</code></pre>
 <p>To install packages using the SLURM scheduler, use the resources in PhIPdb/Software/install_r_pkg:</p>
 <pre class="command2"><code># Navigate to install_r_pkg
 cd /data/hlarman1/PhIPdb/Software/install_r_pkg
@@ -166,31 +162,37 @@ sbatch --export=pkg="tidyverse" installCRAN.sh
 # Example of installing a package hosted on GitHub
 sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 </code></pre>
+<p>To install packages interactively, load R using the following two commands:</p>
+<pre class="command1"><code>ml R
+R</code></pre>
+<p>Note, for heavy computation, you should not use the default login node. You can request an interactive session on a compute node with <code>srun</code>, example below. However, installing R packages interactively from a compute node on MARCC causes some problems.</p>
+<pre class="command"><code>srun -N 1 -p shared --pty bash</code></pre>
 </div>
 <div id="install-drake-and-phipmake-from-github" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-drake-and-phipmake-from-github" class="anchor"></a>2. Install <a href="https://github.com/ropensci/drake"><code>drake</code></a> and <a href="https://github.com/brandonsie/phipmake"><code>phipmake</code></a> from GitHub:</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Interactive</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"remotes"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># drake is on CRAN, but phipmake depends on the more recently updated Github version.</span></a>
-<a class="sourceLine" id="cb3-5" title="5">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/drake"</span>) </a>
-<a class="sourceLine" id="cb3-6" title="6">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"brandonsie/phipmake"</span>)</a></code></pre></div>
 <pre class="command3"><code># SLURM
 sbatch --export=pkg="ropensci/drake" installGithub.sh
 sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 </code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Interactive</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"remotes"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># drake is on CRAN, but phipmake depends on the more recently updated Github version.</span></a>
+<a class="sourceLine" id="cb5-5" title="5">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/drake"</span>) </a>
+<a class="sourceLine" id="cb5-6" title="6">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"brandonsie/phipmake"</span>)</a></code></pre></div>
 <p>This should install <code>drake</code>, <code>phipmake</code>, and all required dependencies.</p>
 </div>
 <div id="install-optional-depdendencies-for-parallelization-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-optional-depdendencies-for-parallelization-" class="anchor"></a>3. Install optional depdendencies for parallelization.</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future"</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future.apply"</span>)</a></code></pre></div>
 <pre class="command4"><code># SLURM
 sbatch --export=pkg="future" installCRAN.sh
 sbatch --export=pkg="future.apply" installCRAN.sh
 </code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Interactive</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future"</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future.apply"</span>)</a></code></pre></div>
 <p><code>drake</code> uses <code>future</code> to parellalize plans so that multiple targets can be generated simultaneously. <code>phipmake</code> uses <code>future.apply</code> to parallelize within certain individual targets.</p>
 </div>
 </div>
@@ -202,10 +204,10 @@ sbatch --export=pkg="future.apply" installCRAN.sh
 <a href="#parameter-setup" class="anchor"></a>Parameter Setup</h2>
 <p><code>phipmake</code> relies on a parameters file, usually a file called drake_params.tsv and stored in the root directory of a project in PhIPdb/ProcessedData. For example, PhIPdb/ProcessedData/phipseq_0100/drake_params.tsv.</p>
 <p>To create drake_params.tsv with default parameters for a new PhIP-Seq screen interactively, you can use the following command from <code>phipmake</code>. Alternatively, it’s fine to copy and modify a drake_params.tsv file from a previous project.:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Replace phipseq_9999 with appropriate project ID.</span></a>
-<a class="sourceLine" id="cb7-2" title="2">phipmake<span class="op">:::</span><span class="kw"><a href="../reference/write_drake_params.html">write_drake_params</a></span>(</a>
-<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">dir =</span> <span class="st">"/data/hlarman1/PhIPdb/ProcessedData/phipseq_9999"</span>,</a>
-<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">screen_name =</span> <span class="st">"phipseq_9999"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Replace phipseq_9999 with appropriate project ID.</span></a>
+<a class="sourceLine" id="cb8-2" title="2">phipmake<span class="op">:::</span><span class="kw"><a href="../reference/write_drake_params.html">write_drake_params</a></span>(</a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">dir =</span> <span class="st">"/data/hlarman1/PhIPdb/ProcessedData/phipseq_9999"</span>,</a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="dt">screen_name =</span> <span class="st">"phipseq_9999"</span>)</a></code></pre></div>
 <p>This will write drake_params.tsv to the specified directory, expecting a counts file named counts.csv, an enrichment file called enrichment.csv. <code>write_drake_params</code> also assumes a default enrichment threshold of 5, a metadata path of /data/hlarman1/PhIPdb/Metadata/PeptideLibraries, and a desired output file extension of tsv. All of these options can be modified via parameters passed to <code>write_drake_params.</code></p>
 </div>
 <div id="running-phipmake" class="section level2">

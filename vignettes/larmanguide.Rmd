@@ -46,13 +46,6 @@ Some definitions:
 
 For usage with PhIPdb, the following R package installation steps should occur via a secure shell (SSH) connection to MARCC, using an account that is part of the hlarman1 group. For each step, I provide an option using interactive mode and using MARCC's SLURM task scheduler. 
 
-To install packages interactively without using the login node, use an `srun` command similar to the following:
-```{command1, eval = FALSE}
-srun -N 1 -p shared --pty bash
-ml R
-R
-```
-
 To install packages using the SLURM scheduler, use the resources in PhIPdb/Software/install_r_pkg:
 ```{command2, eval = FALSE}
 # Navigate to install_r_pkg
@@ -66,8 +59,27 @@ sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 
 ```
 
+To install packages interactively, load R using the following two commands:
+```{command1, eval = FALSE}
+ml R
+R
+```
+
+Note, for heavy computation, you should not use the default login node. You can request an interactive session on a compute node with `srun`, example below. However, installing R packages interactively from a compute node on MARCC causes some problems.
+```{command 1b, eval = FALSE}
+srun -N 1 -p shared --pty bash
+```
+
 
 ## 2. Install [`drake`](https://github.com/ropensci/drake) and [`phipmake`](https://github.com/brandonsie/phipmake) from GitHub:  
+
+
+```{command3, eval = FALSE}
+# SLURM
+sbatch --export=pkg="ropensci/drake" installGithub.sh
+sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
+
+```
 
 ```{r, eval = FALSE}
 # Interactive
@@ -79,28 +91,22 @@ remotes::install_github("brandonsie/phipmake")
 
 ```
 
-```{command3, eval = FALSE}
-# SLURM
-sbatch --export=pkg="ropensci/drake" installGithub.sh
-sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
-
-```
-
 
 This should install `drake`, `phipmake`, and all required dependencies.
 
 ## 3. Install optional depdendencies for parallelization.  
 
-```{r, eval = FALSE}
-install.packages("future")
-install.packages("future.apply")
-
-```
-
 ```{command4, eval = FALSE}
 # SLURM
 sbatch --export=pkg="future" installCRAN.sh
 sbatch --export=pkg="future.apply" installCRAN.sh
+
+```
+
+```{r, eval = FALSE}
+# Interactive
+install.packages("future")
+install.packages("future.apply")
 
 ```
 
