@@ -1,5 +1,5 @@
 ---
-title: "Guide to `phipmake` for Larman Lab"
+title: "Guide to phipmake for Larman Lab"
 author: "Brandon Sie"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -42,12 +42,14 @@ Some definitions:
 # Setup
 
 
-## 1. MARCC  
+## 1. MARCC   
 
 For usage with PhIPdb, the following R package installation steps should occur via a secure shell (SSH) connection to MARCC, using an account that is part of the hlarman1 group. For each step, I provide an option using interactive mode and using MARCC's SLURM task scheduler. 
 
+### SLURM
+
 To install packages using the SLURM scheduler, use the resources in PhIPdb/Software/install_r_pkg:
-```{command2, eval = FALSE}
+```{bash, eval = FALSE}
 # Navigate to install_r_pkg
 cd /data/hlarman1/PhIPdb/Software/install_r_pkg
 
@@ -59,27 +61,34 @@ sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 
 ```
 
-To install packages interactively, load R using the following two commands:
-```{command1, eval = FALSE}
+### Interactive
+
+Alternatively, to install packages in an interactive session, load R using the following two commands:
+```{bash, eval = FALSE}
 ml R
 R
 ```
 
 Note, for heavy computation, you should not use the default login node. You can request an interactive session on a compute node with `srun`, example below. However, installing R packages interactively from a compute node on MARCC causes some problems.
-```{command 1b, eval = FALSE}
+```{bash 1b, eval = FALSE}
 srun -N 1 -p shared --pty bash
 ```
 
 
 ## 2. Install [`drake`](https://github.com/ropensci/drake) and [`phipmake`](https://github.com/brandonsie/phipmake) from GitHub:  
 
+### SLURM
 
-```{command3, eval = FALSE}
+```{bash, eval = FALSE}
 # SLURM
 sbatch --export=pkg="ropensci/drake" installGithub.sh
 sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 
 ```
+
+This should install `drake`, `phipmake`, and all required dependencies.
+
+### Interactive
 
 ```{r, eval = FALSE}
 # Interactive
@@ -96,12 +105,16 @@ This should install `drake`, `phipmake`, and all required dependencies.
 
 ## 3. Install optional depdendencies for parallelization.  
 
-```{command4, eval = FALSE}
+### SLURM
+
+```{bash, eval = FALSE}
 # SLURM
 sbatch --export=pkg="future" installCRAN.sh
 sbatch --export=pkg="future.apply" installCRAN.sh
 
 ```
+
+### Interactive
 
 ```{r, eval = FALSE}
 # Interactive
@@ -132,7 +145,7 @@ This will write drake_params.tsv to the specified directory, expecting a counts 
 ## Running `phipmake`
 
 Navigate to the phipmake software directory in PhIPdb and use the provided shell script.
-```{command5, eval = FALSE}
+```{bash, eval = FALSE}
 cd /data/hlarman1/PhIPdb/Software/phipmake
 
 

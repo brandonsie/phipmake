@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide to <code>phipmake</code> for Larman Lab • phipmake</title>
+<title>Guide to phipmake for Larman Lab • phipmake</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Guide to &lt;code&gt;phipmake&lt;/code&gt; for Larman Lab">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Guide to phipmake for Larman Lab">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://brandonsie.github.io/phipmake/logo.png">
 <meta name="twitter:card" content="summary">
@@ -114,7 +114,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Guide to <code>phipmake</code> for Larman Lab</h1>
+      <h1>Guide to phipmake for Larman Lab</h1>
                         <h4 class="author">Brandon Sie</h4>
             
             <h4 class="date">2019-05-24</h4>
@@ -152,29 +152,43 @@
 <h2 class="hasAnchor">
 <a href="#marcc" class="anchor"></a>1. MARCC</h2>
 <p>For usage with PhIPdb, the following R package installation steps should occur via a secure shell (SSH) connection to MARCC, using an account that is part of the hlarman1 group. For each step, I provide an option using interactive mode and using MARCC’s SLURM task scheduler.</p>
+<div id="slurm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#slurm" class="anchor"></a>SLURM</h3>
 <p>To install packages using the SLURM scheduler, use the resources in PhIPdb/Software/install_r_pkg:</p>
-<pre class="command2"><code># Navigate to install_r_pkg
-cd /data/hlarman1/PhIPdb/Software/install_r_pkg
-
-# Example of installing a package hosted on CRAN
-sbatch --export=pkg="tidyverse" installCRAN.sh
-
-# Example of installing a package hosted on GitHub
-sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
-</code></pre>
-<p>To install packages interactively, load R using the following two commands:</p>
-<pre class="command1"><code>ml R
-R</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Navigate to install_r_pkg</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="bu">cd</span> /data/hlarman1/PhIPdb/Software/install_r_pkg</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># Example of installing a package hosted on CRAN</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="ex">sbatch</span> --export=pkg=<span class="st">"tidyverse"</span> installCRAN.sh</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># Example of installing a package hosted on GitHub</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="ex">sbatch</span> --export=pkg=<span class="st">"brandonsie/phipmake"</span> installGithub.sh</a></code></pre></div>
+</div>
+<div id="interactive" class="section level3">
+<h3 class="hasAnchor">
+<a href="#interactive" class="anchor"></a>Interactive</h3>
+<p>Alternatively, to install packages in an interactive session, load R using the following two commands:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">ml</span> R</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">R</span></a></code></pre></div>
 <p>Note, for heavy computation, you should not use the default login node. You can request an interactive session on a compute node with <code>srun</code>, example below. However, installing R packages interactively from a compute node on MARCC causes some problems.</p>
-<pre class="command"><code>srun -N 1 -p shared --pty bash</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">srun</span> -N 1 -p shared --pty bash</a></code></pre></div>
+</div>
 </div>
 <div id="install-drake-and-phipmake-from-github" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-drake-and-phipmake-from-github" class="anchor"></a>2. Install <a href="https://github.com/ropensci/drake"><code>drake</code></a> and <a href="https://github.com/brandonsie/phipmake"><code>phipmake</code></a> from GitHub:</h2>
-<pre class="command3"><code># SLURM
-sbatch --export=pkg="ropensci/drake" installGithub.sh
-sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
-</code></pre>
+<div id="slurm-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#slurm-1" class="anchor"></a>SLURM</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># SLURM</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">sbatch</span> --export=pkg=<span class="st">"ropensci/drake"</span> installGithub.sh</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="ex">sbatch</span> --export=pkg=<span class="st">"brandonsie/phipmake"</span> installGithub.sh</a></code></pre></div>
+<p>This should install <code>drake</code>, <code>phipmake</code>, and all required dependencies.</p>
+</div>
+<div id="interactive-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#interactive-1" class="anchor"></a>Interactive</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Interactive</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"remotes"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
 <a class="sourceLine" id="cb5-3" title="3"></a>
@@ -183,17 +197,25 @@ sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
 <a class="sourceLine" id="cb5-6" title="6">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"brandonsie/phipmake"</span>)</a></code></pre></div>
 <p>This should install <code>drake</code>, <code>phipmake</code>, and all required dependencies.</p>
 </div>
+</div>
 <div id="install-optional-depdendencies-for-parallelization-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-optional-depdendencies-for-parallelization-" class="anchor"></a>3. Install optional depdendencies for parallelization.</h2>
-<pre class="command4"><code># SLURM
-sbatch --export=pkg="future" installCRAN.sh
-sbatch --export=pkg="future.apply" installCRAN.sh
-</code></pre>
+<div id="slurm-2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#slurm-2" class="anchor"></a>SLURM</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># SLURM</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="ex">sbatch</span> --export=pkg=<span class="st">"future"</span> installCRAN.sh</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="ex">sbatch</span> --export=pkg=<span class="st">"future.apply"</span> installCRAN.sh</a></code></pre></div>
+</div>
+<div id="interactive-2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#interactive-2" class="anchor"></a>Interactive</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Interactive</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future"</span>)</a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"future.apply"</span>)</a></code></pre></div>
 <p><code>drake</code> uses <code>future</code> to parellalize plans so that multiple targets can be generated simultaneously. <code>phipmake</code> uses <code>future.apply</code> to parallelize within certain individual targets.</p>
+</div>
 </div>
 </div>
 <div id="usage-on-marcc" class="section level1">
@@ -215,22 +237,22 @@ sbatch --export=pkg="future.apply" installCRAN.sh
 <a href="#running-phipmake" class="anchor"></a>Running <code>phipmake</code>
 </h2>
 <p>Navigate to the phipmake software directory in PhIPdb and use the provided shell script.</p>
-<pre class="command5"><code>cd /data/hlarman1/PhIPdb/Software/phipmake
-
-
-#Setup variables for sbatch exports
-pdir="/home-1/bsie1@jhu.edu/data/PhIPdb/ProcessedData/"
-screen="phipseq_0101" 
-plans="Counts-Enrichment-Polyclonal-AVARDA" 
-targs_to_clean="NULL" 
-pjobs=4 
-
-# Some notes about above variables
-# screen: changes from project to project
-# plans and targs_to_clean four possible plans are delimited by "-". See additional notes below.
-# pjobs: can be set to 1 to not parallelize and not depeend on future or future.apply
-
-sbatch --export=wd=$pdir$screen,plan=$plans,clean=$targs_to_clean,njobs=$pjobs runphipmake.sh</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="bu">cd</span> /data/hlarman1/PhIPdb/Software/phipmake</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co">#Setup variables for sbatch exports</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="va">pdir=</span><span class="st">"/home-1/bsie1@jhu.edu/data/PhIPdb/ProcessedData/"</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="va">screen=</span><span class="st">"phipseq_0101"</span> </a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="va">plans=</span><span class="st">"Counts-Enrichment-Polyclonal-AVARDA"</span> </a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="va">targs_to_clean=</span><span class="st">"NULL"</span> </a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="va">pjobs=</span>4 </a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co"># Some notes about above variables</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co"># screen: changes from project to project</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co"># plans and targs_to_clean four possible plans are delimited by "-". See additional notes below.</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="co"># pjobs: can be set to 1 to not parallelize and not depeend on future or future.apply</span></a>
+<a class="sourceLine" id="cb9-15" title="15"></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="ex">sbatch</span> --export=wd=<span class="va">$pdir$screen</span>,plan=<span class="va">$plans</span>,clean=<span class="va">$targs_to_clean</span>,njobs=<span class="va">$pjobs</span> runphipmake.sh</a></code></pre></div>
 <p>Explanation of some of the parameters exported in the <code>sbatch</code> command:</p>
 <ul>
 <li>
