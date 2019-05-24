@@ -64,6 +64,8 @@ navbar:
       href: "reference/index.html"
     - text: "Articles"
       menu:
+        - text: "Setup Guide for Larman Lab"
+          href: articles/larmanguide.html
         - text: 'Dependency Graph'
           href: dependency_graph.html
 

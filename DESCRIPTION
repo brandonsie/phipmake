@@ -14,3 +14,7 @@ Imports:
     magrittr,
   	dplyr,
   	drake
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,167 @@
+---
+title: "Guide to `phipmake` for Larman Lab"
+author: "Brandon Sie"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+
+This guide is intended to help members of the [Larman Lab](http://labs.pathology.jhu.edu/larman/) at JHU to get up and running with `phipmake` on MARCC, with help of the SLURM task scheudler. Some of the steps are generalizable and others are specific to the Larman Lab.
+
+<!-- make -->
+<!-- drake -->
+<!-- plans -->
+<!-- targets -->
+<!-- phipmake -->
+<!-- counts  -->
+<!-- enrichments -->
+<!-- prosum -->
+<!-- promax -->
+<!-- polyclonal -->
+
+<!-- ## Prerequisites -->
+<!-- marcc account -->
+<!-- blast+ -->
+<!-- library annotations etc -->
+
+# Setup
+
+
+## 1. MARCC  
+
+For usage with PhIPdb, the following R package installation steps should occur via a secure shell (SSH) connection to MARCC, using an account that is part of the hlarman1 group. For each step, I provide an option using interactive mode and using MARCC's SLURM task scheduler. 
+
+To install packages interactively without using the login node, use an `srun` command similar to the following:
+```{command1, eval = FALSE}
+srun -N 1 -p shared --pty bash
+ml R
+R
+```
+
+To install packages using the SLURM scheduler, use the resources in PhIPdb/Software/install_r_pkg:
+```{command2, eval = FALSE}
+# Navigate to install_r_pkg
+cd /data/hlarman1/PhIPdb/Software/install_r_pkg
+
+# Example of installing a package hosted on CRAN
+sbatch --export=pkg="tidyverse" installCRAN.sh
+
+# Example of installing a package hosted on GitHub
+sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
+
+```
+
+
+## 2. Install [`drake`](https://github.com/ropensci/drake) and [`phipmake`](https://github.com/brandonsie/phipmake) from GitHub:  
+
+```{r, eval = FALSE}
+# Interactive
+if(!requireNamespace("remotes")) install.packages("remotes")
+
+# drake is on CRAN, but phipmake depends on the more recently updated Github version.
+remotes::install_github("ropensci/drake") 
+remotes::install_github("brandonsie/phipmake")
+
+```
+
+```{command3, eval = FALSE}
+# SLURM
+sbatch --export=pkg="ropensci/drake" installGithub.sh
+sbatch --export=pkg="brandonsie/phipmake" installGithub.sh
+
+```
+
+
+This should install `drake`, `phipmake`, and all required dependencies.
+
+## 3. Install optional depdendencies for parallelization.  
+
+```{r, eval = FALSE}
+install.packages("future")
+install.packages("future.apply")
+
+```
+
+```{command4, eval = FALSE}
+# SLURM
+sbatch --export=pkg="future" installCRAN.sh
+sbatch --export=pkg="future.apply" installCRAN.sh
+
+```
+
+
+`drake` uses `future` to parellalize plans so that multiple targets can be generated simultaneously. `phipmake` uses `future.apply` to parallelize within certain individual targets.
+
+# Usage on MARCC
+
+## Parameter Setup  
+
+`phipmake` relies on a parameters file, usually a file called drake_params.tsv and stored in the root directory of a project in PhIPdb/ProcessedData. For example, PhIPdb/ProcessedData/phipseq_0100/drake_params.tsv.
+
+To create drake_params.tsv with default parameters for a new PhIP-Seq screen interactively, you can use the following command from `phipmake`. Alternatively, it's fine to copy and modify a drake_params.tsv file from a previous project.:
+```{r, eval = FALSE}
+# Replace phipseq_9999 with appropriate project ID.
+phipmake:::write_drake_params(
+  dir = "/data/hlarman1/PhIPdb/ProcessedData/phipseq_9999",
+  screen_name = "phipseq_9999")
+```
+
+This will write drake_params.tsv to the specified directory, expecting a counts file named counts.csv, an enrichment file called enrichment.csv. `write_drake_params` also assumes a default enrichment threshold of 5, a metadata path of /data/hlarman1/PhIPdb/Metadata/PeptideLibraries, and a desired output file extension of tsv. All of these options can be modified via parameters passed to `write_drake_params.`
+
+## Running `phipmake`
+
+Navigate to the phipmake software directory in PhIPdb and use the provided shell script.
+```{command5, eval = FALSE}
+cd /data/hlarman1/PhIPdb/Software/phipmake
+
+
+#Setup variables for sbatch exports
+pdir="/home-1/bsie1@jhu.edu/data/PhIPdb/ProcessedData/"
+screen="phipseq_0101" 
+plans="Counts-Enrichment-Polyclonal-AVARDA" 
+targs_to_clean="NULL" 
+pjobs=4 
+
+# Some notes about above variables
+# screen: changes from project to project
+# plans and targs_to_clean four possible plans are delimited by "-". See additional notes below.
+# pjobs: can be set to 1 to not parallelize and not depeend on future or future.apply
+
+sbatch --export=wd=$pdir$screen,plan=$plans,clean=$targs_to_clean,njobs=$pjobs runphipmake.sh
+```
+
+Explanation of some of the parameters exported in the `sbatch` command:  
+
+* `plans` specified the four sub-workflows in the Larman Lab's `phipmake` pipeline that can be toggled on/off. Targets are delimited by hyphens "-". For example, to run only Enrichment and Polyclonal parts of the pipeline, excluding Counts and AVARDA, set `plans="Enrichment-Polyclonal"`.   
+* `targs_to_clean` specifies targets of the `phipmake` plan to force to be rebuilt, even if `drake` thinks that that target is up-to-date. These targets are also delimited by hyphens "-". For example, to indicate that data pulled from annotation files must be updated, set `targs_to_clean="counts_annotations-enrichment_annotations". This will delete drake's cache for these two targets, and so these targets and all downstream dependencies should be rebuilt.
+
+
+# Types of Output Files
+
+# Maintenance & Updating
+
+## Updating annotation files
+
+
+## Adding a New Library
+
+### BLAST+, Tidying
+ 
+### Annotations
+
+## Github Pull Requests  
+
+PR's are welcome.
