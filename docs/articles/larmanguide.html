@@ -130,20 +130,20 @@
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>This guide is intended to help members of the <a href="http://labs.pathology.jhu.edu/larman/">Larman Lab</a> at JHU to get up and running with <code>phipmake</code> on MARCC, with help of the SLURM task scheudler. Some of the steps are generalizable and others are specific to the Larman Lab.</p>
-<!-- make -->
-<!-- drake -->
-<!-- plans -->
-<!-- targets -->
-<!-- phipmake -->
-<!-- counts  -->
-<!-- enrichments -->
-<!-- prosum -->
-<!-- promax -->
-<!-- polyclonal -->
-<!-- ## Prerequisites -->
-<!-- marcc account -->
-<!-- blast+ -->
-<!-- library annotations etc -->
+<p>Some definitions:</p>
+<ul>
+<li>
+<a href="https://github.com/ropensci/drake"><code>drake</code></a> is an R package written by <a href="https://github.com/wlandau">Will Landau</a> and part of <a href="https://github.com/ropensci">rOpenSci</a> designed to support reproducible data analysis workflows. <code>drake</code> keep track of which steps of a data analysis pipeline are out-of-date, so that you can update only those steps without re-running all of your code from scratch.<br>
+</li>
+<li>
+<a href="https://github.com/brandonsie/phipmake"><code>phipmake</code></a> is an R package written to use tools from <code>drake</code> to implement the Larman Lab’s PhIP-Seq analysis pipeline.</li>
+<li>
+<em>plans</em> are workflow recipes, consisting of objects to be build (targets) and instructions for building those objects (commands).<br>
+</li>
+<li>
+<em>targets</em> are individual objects in a <code>drake</code> workflow to be built.</li>
+</ul>
+<!-- counts  --><!-- enrichments --><!-- prosum --><!-- promax --><!-- polyclonal --><!-- ## Prerequisites --><!-- marcc account --><!-- blast+ --><!-- library annotations etc -->
 </div>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
@@ -232,10 +232,10 @@ sbatch --export=wd=$pdir$screen,plan=$plans,clean=$targs_to_clean,njobs=$pjobs r
 <p>Explanation of some of the parameters exported in the <code>sbatch</code> command:</p>
 <ul>
 <li>
-<code>plans</code> specified the four sub-workflows in the Larman Lab’s <code>phipmake</code> pipeline that can be toggled on/off. Targets are delimited by hyphens “-”. For example, to run only Enrichment and Polyclonal parts of the pipeline, excluding Counts and AVARDA, set <code>plans="Enrichment-Polyclonal"</code>.<br>
+<code>plans</code> specifies the four sub-workflows in the Larman Lab’s <code>phipmake</code> pipeline that can be toggled on/off. Targets are delimited by hyphens “-”. For example, to run only Enrichment and Polyclonal parts of the pipeline, excluding Counts and AVARDA, set <code>plans="Enrichment-Polyclonal"</code>.<br>
 </li>
 <li>
-<code>targs_to_clean</code> specifies targets of the <code>phipmake</code> plan to force to be rebuilt, even if <code>drake</code> thinks that that target is up-to-date. These targets are also delimited by hyphens “-”. For example, to indicate that data pulled from annotation files must be updated, set `targs_to_clean=“counts_annotations-enrichment_annotations”. This will delete drake’s cache for these two targets, and so these targets and all downstream dependencies should be rebuilt.</li>
+<code>targs_to_clean</code> specifies targets of the <code>phipmake</code> plan to force to be rebuilt, even if <code>drake</code> thinks that that target is up-to-date. These targets are also delimited by hyphens “-”. For example, to indicate that data pulled from annotation files must be updated, set <code>targs_to_clean="counts_annotations-enrichment_annotations"</code>. This will delete drake’s cache for these two targets, and so these targets and all downstream dependencies should be rebuilt.</li>
 </ul>
 </div>
 </div>

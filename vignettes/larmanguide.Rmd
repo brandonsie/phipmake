@@ -21,11 +21,13 @@ knitr::opts_chunk$set(
 
 This guide is intended to help members of the [Larman Lab](http://labs.pathology.jhu.edu/larman/) at JHU to get up and running with `phipmake` on MARCC, with help of the SLURM task scheudler. Some of the steps are generalizable and others are specific to the Larman Lab.
 
-<!-- make -->
-<!-- drake -->
-<!-- plans -->
-<!-- targets -->
-<!-- phipmake -->
+Some definitions:  
+
+* [`drake`](https://github.com/ropensci/drake) is an R package written by [Will Landau](https://github.com/wlandau) and part of [rOpenSci](https://github.com/ropensci) designed to support reproducible data analysis workflows. `drake` keep track of which steps of a data analysis pipeline are out-of-date, so that you can update only those steps without re-running all of your code from scratch.  
+* [`phipmake`](https://github.com/brandonsie/phipmake) is an R package written to use tools from `drake` to implement the Larman Lab's PhIP-Seq analysis pipeline.
+* _plans_ are workflow recipes, consisting of objects to be build (targets) and instructions for building those objects (commands).  
+* _targets_ are individual objects in a `drake` workflow to be built.  
+
 <!-- counts  -->
 <!-- enrichments -->
 <!-- prosum -->
@@ -145,8 +147,8 @@ sbatch --export=wd=$pdir$screen,plan=$plans,clean=$targs_to_clean,njobs=$pjobs r
 
 Explanation of some of the parameters exported in the `sbatch` command:  
 
-* `plans` specified the four sub-workflows in the Larman Lab's `phipmake` pipeline that can be toggled on/off. Targets are delimited by hyphens "-". For example, to run only Enrichment and Polyclonal parts of the pipeline, excluding Counts and AVARDA, set `plans="Enrichment-Polyclonal"`.   
-* `targs_to_clean` specifies targets of the `phipmake` plan to force to be rebuilt, even if `drake` thinks that that target is up-to-date. These targets are also delimited by hyphens "-". For example, to indicate that data pulled from annotation files must be updated, set `targs_to_clean="counts_annotations-enrichment_annotations". This will delete drake's cache for these two targets, and so these targets and all downstream dependencies should be rebuilt.
+* `plans` specifies the four sub-workflows in the Larman Lab's `phipmake` pipeline that can be toggled on/off. Targets are delimited by hyphens "-". For example, to run only Enrichment and Polyclonal parts of the pipeline, excluding Counts and AVARDA, set `plans="Enrichment-Polyclonal"`.   
+* `targs_to_clean` specifies targets of the `phipmake` plan to force to be rebuilt, even if `drake` thinks that that target is up-to-date. These targets are also delimited by hyphens "-". For example, to indicate that data pulled from annotation files must be updated, set `targs_to_clean="counts_annotations-enrichment_annotations"`. This will delete drake's cache for these two targets, and so these targets and all downstream dependencies should be rebuilt.
 
 
 # Types of Output Files
