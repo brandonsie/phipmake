@@ -31,4 +31,4 @@ A simplified version of the dependency graph is below. For a more complete & int
 More documentation will come soon to [phipmake's website](https://brandonsie.github.io/phipmake/).
 
 ### Acknowledgements
-* Daniel Monaco wrote the network filter used for polyclonal scoring.  
+* Daniel Monaco wrote the network filter used for polyclonal scoring, and AVARDA, used for deconvoluting viral proteome antibody specificitity data.  
