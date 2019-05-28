@@ -40,6 +40,7 @@ prepare_avarda_names <- function(data, annotations = NULL, metadata_path = NULL,
     annot_replace <- annot[, names(annot) == replacement_column]
 
     sub.data[,1] <- annot_replace[match(sub.data[,1], annot_orig)]
+    names(sub.data)[1] <- "ID"
 
     output_data[[i]] <- sub.data
   }
