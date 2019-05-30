@@ -55,6 +55,8 @@ reference:
       - '`prepare_blast_pairs`'
       - '`trimDictionary`'
       - '`write_data`'
+      - '`gather_samples`'
+      - '`prepare_avarda_names`'
 navbar:
   title: ~
   left:
