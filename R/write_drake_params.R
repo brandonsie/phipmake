@@ -43,5 +43,5 @@ write_drake_params <- function(dir,
                                  enrichment_type, enrichment_threshold,
                                  metadata_path, output_extension))
 
-  data.table::fwrite(param_df,paste0(dir,"/drake_params.tsv"))
+  data.table::fwrite(param_df,paste0(dir,"/drake_params.tsv"), sep = "\t")
 }
