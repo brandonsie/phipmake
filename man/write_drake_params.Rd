@@ -5,7 +5,9 @@
 \title{write_drake_params}
 \usage{
 write_drake_params(dir, screen_name, counts_filename = "counts.csv",
-  counts_type = "Counts", enrichment_filename = "enrichment.csv",
+  counts_type = "Counts", foldchange_filename = "fold_change.csv",
+  foldchange_type = "FoldChange",
+  enrichment_filename = "enrichment.csv",
   enrichment_type = "Enrichment", enrichment_threshold = 5,
   metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
   output_extension = ".tsv")
@@ -18,6 +20,10 @@ write_drake_params(dir, screen_name, counts_filename = "counts.csv",
 \item{counts_filename}{Name of demultiplexed, merged reads file in screen directory.}
 
 \item{counts_type}{Identifier for type of counts data to append in output file names.}
+
+\item{foldchange_filename}{Name of demultiplexed, merged foldchange file in screen directory.}
+
+\item{foldchange_type}{Identifier for type of counts data to append in output file names.}
 
 \item{enrichment_filename}{Name of demultiplexed, merged enrichment file in screen directory.}
 

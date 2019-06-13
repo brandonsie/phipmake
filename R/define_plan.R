@@ -3,6 +3,7 @@
 #' @param params_path Path to project parameters file that can be created using the write_drake_params function.
 #' @param runCounts Logical controlling whether or not to define counts targets.
 #' @param runPairwise Logical controlling whether or not to define pairwise targets.
+#' @param runFoldChange Logical controlling whether or not to define EdgeR fold change targets.
 #' @param runEnrichment Logical controlling whether or not to define enrichment targets.
 #' @param runPolyclonal Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
@@ -14,6 +15,7 @@ define_plan <- function(
   params_path = "drake_params.tsv",
   runCounts = TRUE,
   runPairwise = FALSE,
+  runFoldChange = TRUE,
   runEnrichment = TRUE,
   runPolyclonal = TRUE,
   runAVARDA = FALSE){
@@ -40,6 +42,8 @@ define_plan <- function(
   screen_name <- getparam(params, "screen_name")
   counts_filename <- getparam(params, "counts_filename")
   counts_type <- getparam(params, "counts_type")
+  foldchange_filename <- getparam(params, "foldchange_filename")
+  foldchange_type <- getparam(params, "foldchange_type")
   enrichment_filename <- getparam(params, "enrichment_filename")
   enrichment_type <- getparam(params, "enrichment_type")
   enrichment_threshold <- getparam(params, "enrichment_threshold") %>% as.numeric
@@ -105,7 +109,7 @@ define_plan <- function(
   sn.annot <- paste0("_annotated")
   sn.a.ext <- paste0(sn.annot, sn.ext)
 
-
+  # Enrichment
   sn.enrichment <- paste0(screen_name, "_", enrichment_type)
   names.enrichment.pan <- paste0(sn.enrichment, sn.ext)
   names.enrichment.pan.annot <- paste0(sn.enrichment, sn.a.ext)
@@ -113,6 +117,7 @@ define_plan <- function(
   names.enrichment.sub <- paste0(sn.enrichment.sub, sn.ext)
   names.enrichment.sub.annot <- paste0(sn.enrichment.sub, sn.a.ext)
 
+  # Promax
   sn.enrichment.promax <- paste0(sn.enrichment, "_promax")
   names.enrichment.promax.pan <- paste0(sn.enrichment.promax, sn.ext)
   names.enrichment.promax.pan.annot <- paste0(sn.enrichment.promax, sn.a.ext)
@@ -120,6 +125,7 @@ define_plan <- function(
   names.enrichment.promax.sub <- paste0(sn.enrichment.promax.sub, sn.ext)
   names.enrichment.promax.sub.annot <- paste0(sn.enrichment.promax.sub, sn.a.ext)
 
+  # Hits
   sn.hits <- paste0(sn.enrichment, "_hits")
   names.hits.pan <- paste0(sn.hits, sn.ext)
   names.hits.pan.annot <- paste0(sn.hits, sn.a.ext)
@@ -127,6 +133,7 @@ define_plan <- function(
   names.hits.sub <- paste0(sn.hits.sub, sn.ext)
   names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
+  # Polyclonal
   sn.polycl <- paste0(sn.enrichment, "_polyclonal")
   names.polycl.pan <- paste0(sn.polycl, sn.ext)
   names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
@@ -135,7 +142,7 @@ define_plan <- function(
   names.polycl.sub.annot <- paste0(sn.polycl.sub, sn.a.ext)
 
 
-
+  # Counts
   sn.counts <- paste0(screen_name, "_", counts_type)
   names.counts.pan <- paste0(sn.counts, sn.ext)
   names.counts.pan.annot <- paste0(sn.counts, sn.a.ext)
@@ -151,10 +158,18 @@ define_plan <- function(
   names.counts.prosum.sub.annot <- paste0(sn.counts.prosum.sub, sn.a.ext)
 
 
-
+  # AVARDA
   names.enrichment.avarda <- paste0(sn.enrichment.sub,
                                     "_avardanames", sn.ext)
 
+
+  # Fold Change
+  sn.foldchange <- paste0(screen_name, "_", foldchange_type)
+  names.foldchange.pan <- paste0(sn.foldchange, sn.ext)
+  names.foldchange.pan.annot <- paste0(sn.foldchange, sn.a.ext)
+  sn.foldchange.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", foldchange_type)
+  names.foldchange.sub <- paste0(sn.foldchange.sub, sn.ext)
+  names.foldchange.sub.annot <- paste0(sn.foldchange.sub, sn.a.ext)
 
   # ============================================================================
   # Plans
@@ -180,7 +195,6 @@ define_plan <- function(
     sublibrary_parallel = as.logical(getparam(params, "sublibrary_parallel"))
 
   )
-
 
   # --------------------------------------------------------------------------
   # Enrichment
@@ -338,6 +352,54 @@ define_plan <- function(
       )
     )
   }
+
+
+  # --------------------------------------------------------------------------
+  # Fold Change
+
+  if(runFoldChange){
+
+    foldchange_plan <- drake::drake_plan(
+      foldchange = target(
+        data.table::fread(file_in(!!foldchange_filename))
+      ), #10
+
+      write_foldchange = target(
+        write_data(foldchange, file_out(!!names.foldchange.pan))
+      ),
+
+      foldchange_sub = target(
+        split_data(foldchange)
+      ),
+
+      write_foldchange_sub = target(
+        write_data(foldchange_sub, file_out(!!names.foldchange.sub))
+      ),
+
+      foldchange_annotations = target(
+        read_annot_list(names(foldchange_sub), !!metadata_path)
+      ),
+
+      foldchange_sub_annot = target(
+        annotate_data(foldchange_sub, foldchange_annotations)
+      ),
+      write_foldchange_sub_annot = target(
+        write_data(foldchange_sub_annot,
+                   file_out(!!names.foldchange.sub.annot))
+      ),
+
+      foldchange_annot = target(
+        dplyr::bind_rows(foldchange_sub_annot)
+      ),
+
+      write_foldchange_annot = target(
+        write_data(foldchange_annot,
+                   file_out(!!names.foldchange.pan.annot))
+      )
+    )
+
+    }
+
     # --------------------------------------------------------------------------
     # Counts
   if(runCounts) {
