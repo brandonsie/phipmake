@@ -29,19 +29,21 @@ write_drake_params <- function(dir,
                                metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
                                output_extension = ".tsv"){
 
-  param_df <- data.frame(params = c("screen_name",
+  params = c("screen_name",
                                   "counts_filename", "counts_type",
                                   "foldchange_filename", "foldchange_type",
                                   "enrichment_filename", "enrichment_type",
                                   "enrichment_threshold",
-                                  "metadata_path", "output_extension"),
+                                  "metadata_path", "output_extension")
 
                        value = c(screen_name, counts_filename,
                                  counts_type,
                                  foldchange_filename, foldchange_type,
                                  enrichment_filename,
                                  enrichment_type, enrichment_threshold,
-                                 metadata_path, output_extension))
+                                 metadata_path, output_extension)
+
+  param_df <- dplyr::bind_cols(params, value)
 
   data.table::fwrite(param_df,paste0(dir,"/drake_params.tsv"), sep = "\t")
 }
