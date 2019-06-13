@@ -13,6 +13,8 @@
 #' @param enrichment_threshold Threshold enrichment value for determining hits.
 #' @param metadata_path Directory path string to metadata folder containing peptide files and intrapeptide blast alignment files.
 #' @param output_extension Extension for tab-separated output files.
+#'
+#' @export
 
 
 write_drake_params <- function(dir,
