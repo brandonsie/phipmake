@@ -542,6 +542,7 @@ define_plan <- function(
   # setup main plan based on input parameters runCounts runEnrichment runAVARDA
   main_plan <- params_plan
   if(runCounts){main_plan %<>% rbind(counts_plan)}
+  if(runFoldChange){main_plan %<>% rbind(foldchange_plan)}
   if(runEnrichment){main_plan %<>% rbind(enrichment_plan)}
   if(runPolyclonal){main_plan %<>% rbind(polyclonal_plan)}
   if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
