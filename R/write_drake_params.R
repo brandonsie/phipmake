@@ -27,7 +27,7 @@ write_drake_params <- function(dir,
                                enrichment_type = "Enrichment",
                                enrichment_threshold = 5,
                                metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
-                               output_extension = ".tsv"){
+                               output_extension = "tsv"){
 
   params <- c("screen_name",
               "counts_filename", "counts_type",

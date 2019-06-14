@@ -10,7 +10,7 @@ write_drake_params(dir, screen_name, counts_filename = "counts.csv",
   enrichment_filename = "enrichment.csv",
   enrichment_type = "Enrichment", enrichment_threshold = 5,
   metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
-  output_extension = ".tsv")
+  output_extension = "tsv")
 }
 \arguments{
 \item{dir}{PhIP-seq project directory.}
