@@ -43,7 +43,7 @@ write_drake_params <- function(dir,
                                  enrichment_type, enrichment_threshold,
                                  metadata_path, output_extension)
 
-  param_df <- dplyr::bind_cols(params, value)
+  param_df <- data.frame(params, value)
 
   data.table::fwrite(param_df,paste0(dir,"/drake_params.tsv"), sep = "\t")
 }
