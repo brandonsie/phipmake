@@ -511,6 +511,7 @@ define_plan <- function(
                ",pairwise=",!!avpairwise,
                ",blast=",!!avblast,
                ",out_path=",!!avout,
+               ",out_name=",paste0(!!screen_name,"_"),
                " ", !!avpath, "AVARDA_BMS.sh")
       ),
       write_command = target(
