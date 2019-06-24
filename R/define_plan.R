@@ -163,6 +163,8 @@ define_plan <- function(
   # AVARDA
   names.enrichment.avarda <- paste0(sn.enrichment.sub,
                                     "_avardanames", sn.ext)
+  names.hits.avarda <- paste0(sn.hits.sub,
+                                    "_avardanames", sn.ext)
 
 
   # Fold Change
@@ -503,7 +505,7 @@ define_plan <- function(
 
   if(runAVARDA){
     avpath <- "/data/hlarman1/PhIPdb/Software/AVARDA/"
-    avcase <- names.enrichment.avarda[grep("Virscan", names.enrichment.avarda)]
+    avcase <- names.hits.avarda[grep("Virscan", names.hits.avarda)]
     avdf <- paste0(avpath, "bin2/my_df.csv")
     avtotal <- paste0(avpath, "bin2/total_probability_xr2.csv")
     avpairwise <- paste0(avpath, "bin2/unique_probabilities3.csv")
@@ -514,17 +516,18 @@ define_plan <- function(
     if(!dir.exists(avout)) dir.create(avout)
 
     AVARDA_plan <- drake::drake_plan(
-      enrichment_sub_avardanames = target(
-        prepare_avarda_names(enrichment_sub, enrichment_annotations)
+      hits_sub_avardanames = target(
+        prepare_avarda_names(hits_sub, hits_annotations)
       ),
-      write_enrichment_sub_avardanames = target(
-        write_data(enrichment_sub_avardanames,
-                             file_out(!!names.enrichment.avarda))
+      write_hits_sub_avardanames = target(
+        write_data(hits_sub_avardanames,
+                             file_out(!!names.hits.avarda))
       ),
+
       command = target(
         paste0("sbatch --export=case=",!!avcase,
                # ",thresh=",!!enrichment_threshold,
-               ",thresh=", 1,
+               ",thresh=", "1",
                ",df=",!!avdf,
                ",total=",!!avtotal,
                ",pairwise=",!!avpairwise,
