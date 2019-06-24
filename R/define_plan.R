@@ -517,7 +517,7 @@ define_plan <- function(
 
     AVARDA_plan <- drake::drake_plan(
       hits_sub_avardanames = target(
-        prepare_avarda_names(hits_sub, hits_annotations)
+        prepare_avarda_names(hits_sub, enrichment_annotations)
       ),
       write_hits_sub_avardanames = target(
         write_data(hits_sub_avardanames,
@@ -541,7 +541,7 @@ define_plan <- function(
       ),
       runAVARDA = target(
         {
-          file_in(!!names.enrichment.avarda)
+          file_in(!!names.hits.avarda)
           system(command)
         }
       )
