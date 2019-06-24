@@ -288,7 +288,7 @@ define_plan <- function(
         if(file.exists(!!hits_filename)){
           data.table::fread(file_in(!!hits_filename))
         } else{
-            compute_hits(enrichment_sub, !!enrichment_threshold)
+            # compute_hits(enrichment_sub, !!enrichment_threshold)
         }
       ),
 
@@ -523,7 +523,8 @@ define_plan <- function(
       ),
       command = target(
         paste0("sbatch --export=case=",!!avcase,
-               ",thresh=",!!enrichment_threshold,
+               # ",thresh=",!!enrichment_threshold,
+               ",thresh=", 1,
                ",df=",!!avdf,
                ",total=",!!avtotal,
                ",pairwise=",!!avpairwise,
