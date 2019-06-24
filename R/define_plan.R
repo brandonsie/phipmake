@@ -308,9 +308,9 @@ define_plan <- function(
         write_data(hits_sub_annot, file_out(!!names.hits.sub.annot))
       ),
 
-      hits = target(
-        dplyr::bind_rows(hits_sub)
-      ),
+      # hits = target(
+      #   dplyr::bind_rows(hits_sub)
+      # ),
 
       write_hits = target(
         write_data(hits, file_out(!!names.hits.pan))
