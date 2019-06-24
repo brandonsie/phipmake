@@ -6,7 +6,7 @@
 \usage{
 define_plan(params_path = "drake_params.tsv", runCounts = TRUE,
   runPairwise = FALSE, runFoldChange = TRUE, runEnrichment = TRUE,
-  runPolyclonal = TRUE, runAVARDA = FALSE)
+  runHits = TRUE, runPolyclonal = TRUE, runAVARDA = FALSE)
 }
 \arguments{
 \item{params_path}{Path to project parameters file that can be created using the write_drake_params function.}

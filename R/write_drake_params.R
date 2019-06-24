@@ -33,14 +33,14 @@ write_drake_params <- function(dir,
               "counts_filename", "counts_type",
               "foldchange_filename", "foldchange_type",
               "enrichment_filename", "enrichment_type",
-              "enrichment_threshold",
+              "hits_filename",
               "metadata_path", "output_extension")
 
    value <- c(screen_name, counts_filename,
               counts_type,
               foldchange_filename, foldchange_type,
               enrichment_filename,
-              enrichment_type, enrichment_threshold,
+              enrichment_type, hits_filename,
               metadata_path, output_extension)
 
   param_df <- data.frame(params, value)

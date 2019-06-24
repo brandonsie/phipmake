@@ -285,16 +285,15 @@ define_plan <- function(
   if(runHits){
     hits_plan <- drake::drake_plan(
       hits = target(
-        data.table::fread(file_in(!!hits_filename))
+        if(file.exists(!!hits_filename)){
+          data.table::fread(file_in(!!hits_filename))
+        } else{
+            compute_hits(enrichment_sub, !!enrichment_threshold)
+        }
       ),
 
-      # hits_sub = target(
-      #   compute_hits(enrichment_sub, !!enrichment_threshold)
-      # ),
-      #
-
       hits_sub = target(
-        split_data(enrichment)
+        split_data(hits)
       ),
 
       write_hits_sub = target(

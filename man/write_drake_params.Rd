@@ -8,7 +8,7 @@ write_drake_params(dir, screen_name, counts_filename = "counts.csv",
   counts_type = "Counts", foldchange_filename = "fold_change.csv",
   foldchange_type = "FoldChange",
   enrichment_filename = "enrichment.csv",
-  enrichment_type = "Enrichment", enrichment_threshold = 5,
+  enrichment_type = "Enrichment", hits_filename = "Hits.csv",
   metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
   output_extension = "tsv")
 }
@@ -29,7 +29,7 @@ write_drake_params(dir, screen_name, counts_filename = "counts.csv",
 
 \item{enrichment_type}{Identifier for type of enrichment data to append in output file names.}
 
-\item{enrichment_threshold}{Threshold enrichment value for determining hits.}
+\item{hits_filename}{Name of demultiplexed, merged hits file in screen directory.}
 
 \item{metadata_path}{Directory path string to metadata folder containing peptide files and intrapeptide blast alignment files.}
 
