@@ -135,6 +135,27 @@ define_plan <- function(
   names.hits.sub <- paste0(sn.hits.sub, sn.ext)
   names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
+  sn.hits.foldchange.sub <- paste0(sn.hits.sub, "_foldchange")
+  names.hits.foldchange.sub <- paste0(sn.hits.foldchange.sub, sn.ext)
+  names.hits.foldchange.sub.annot <- paste0(sn.hits.foldchange.sub, sn.a.ext)
+  sn.hits.foldchange <- paste0(sn.hits, "_foldchange")
+  names.hits.foldchange.pan <- paste0(sn.hits.foldchange, sn.ext)
+  names.hits.foldchange.pan.annot <- paste0(sn.hits.foldchange, sn.a.ext)
+
+  sn.hits.enrichment.sub <- paste0(sn.hits.sub, "_enrichment")
+  names.hits.enrichment.sub <- paste0(sn.hits.enrichment.sub, sn.ext)
+  names.hits.enrichment.sub.annot <- paste0(sn.hits.enrichment.sub, sn.a.ext)
+  sn.hits.enrichment <- paste0(sn.hits, "_enrichment")
+  names.hits.enrichment.pan <- paste0(sn.hits.enrichment, sn.ext)
+  names.hits.enrichment.pan.annot <- paste0(sn.hits.enrichment, sn.a.ext)
+
+  sn.hits.counts.sub <- paste0(sn.hits.sub, "_counts")
+  names.hits.counts.sub <- paste0(sn.hits.counts.sub, sn.ext)
+  names.hits.counts.sub.annot <- paste0(sn.hits.counts.sub, sn.a.ext)
+  sn.hits.counts <- paste0(sn.hits, "_counts")
+  names.hits.counts.pan <- paste0(sn.hits.counts, sn.ext)
+  names.hits.counts.pan.annot <- paste0(sn.hits.counts, sn.a.ext)
+
   # Polyclonal
   sn.polycl <- paste0(sn.enrichment, "_polyclonal")
   names.polycl.pan <- paste0(sn.polycl, sn.ext)
@@ -324,9 +345,107 @@ define_plan <- function(
 
       write_hits_annot = target(
         write_data(hits_annot, file_out(!!names.hits.pan.annot))
-      ) #34
+      ), #34
 
 
+
+      # new output files (!) need function and filename
+      hits_sub_foldchange = target(
+        emphasize_hit_data_list(foldchange_sub, hits_sub, 1)
+      ),
+
+      write_hits_sub_foldchange = target(
+        write_data(hits_sub_foldchange, file_out(!!names.hits.foldchange.sub))
+      ),
+
+      hits_sub_foldchange_annot = target(
+        annotate_data(hits_sub_foldchange, enrichment_annotations)
+      ),
+
+      write_hits_sub_foldchange_annot = target(
+        write_data(hits_sub_foldchange_annot, file_out(!!names.hits.foldchange.sub.annot))
+      ),
+
+      hits_foldchange = target(
+        dplyr::bind_rows(hits_sub_foldchange)
+      ),
+
+      write_hits_foldchange = target(
+        write_data(hits_foldchange, file_out(!!names.hits.foldchange.pan))
+      ),
+
+      hits_foldchange_annot = target(
+        dplyr::bind_rows(hits_sub_foldchange_annot)
+      ),
+
+      write_hits_foldchange_annot = target(
+        write_data(hits_foldchange_annot, file_out(!!names.hits.foldchange.pan.annot))
+      ),
+
+      hits_sub_enrichment = target(
+        emphasize_hit_data_list(enrichment_sub, hits_sub, 0)
+
+      ),
+
+      write_hits_sub_enrichment = target(
+        write_data(hits_sub_enrichment, file_out(!!names.hits.enrichment.sub))
+      ),
+
+      hits_sub_enrichment_annot = target(
+        annotate_data(hits_sub_enrichment, enrichment_annotations)
+      ),
+
+      write_hits_sub_enrichment_annot = target(
+        write_data(hits_sub_enrichment_annot, file_out(!!names.hits.enrichment.sub.annot))
+      ),
+
+      hits_enrichment = target(
+        dplyr::bind_rows(hits_sub_enrichment)
+      ),
+
+      write_hits_enrichment = target(
+        write_data(hits_enrichment, file_out(!!names.hits.enrichment.pan))
+      ),
+
+      hits_enrichment_annot = target(
+        dplyr::bind_rows(hits_sub_enrichment_annot)
+      ),
+
+      write_hits_enrichment_annot = target(
+        write_data(hits_enrichment_annot, file_out(!!names.hits.enrichment.pan.annot))
+      ),
+
+      hits_sub_counts = target(
+        emphasize_hit_data_list(counts_sub, hits_sub, 0)
+      ),
+
+      write_hits_sub_counts = target(
+        write_data(hits_sub_counts, file_out(!!names.hits.counts.sub))
+      ),
+
+      hits_sub_counts_annot = target(
+        annotate_data(hits_sub_counts, enrichment_annotations)
+      ),
+
+      write_hits_sub_counts_annot = target(
+        write_data(hits_sub_counts_annot, file_out(!!names.hits.counts.sub.annot))
+      ),
+
+      hits_counts = target(
+        dplyr::bind_rows(hits_sub_counts)
+      ),
+
+      write_hits_counts = target(
+        write_data(hits_counts, file_out(!!names.hits.counts.pan))
+      ),
+
+      hits_counts_annot = target(
+        dplyr::bind_rows(hits_sub_counts_annot)
+      ),
+
+      write_hits_counts_annot = target(
+        write_data(hits_counts_annot, file_out(!!names.hits.counts.pan.annot))
+      )
 
     )
   }
