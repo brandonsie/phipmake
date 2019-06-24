@@ -17,6 +17,7 @@ define_plan <- function(
   runPairwise = FALSE,
   runFoldChange = TRUE,
   runEnrichment = TRUE,
+  runHits = TRUE,
   runPolyclonal = TRUE,
   runAVARDA = FALSE){
   options(stringsAsFactors = FALSE)
@@ -46,7 +47,8 @@ define_plan <- function(
   foldchange_type <- getparam(params, "foldchange_type")
   enrichment_filename <- getparam(params, "enrichment_filename")
   enrichment_type <- getparam(params, "enrichment_type")
-  enrichment_threshold <- getparam(params, "enrichment_threshold") %>% as.numeric
+  # enrichment_threshold <- getparam(params, "enrichment_threshold") %>% as.numeric
+  hits_filename <- getparam(params, "hits_filename")
   metadata_path <- getparam(params, "metadata_path")
   output_extension <- getparam(params, "output_extension")
   output_separator <- getparam(params, "output_separator")
@@ -188,7 +190,8 @@ define_plan <- function(
     counts_type = getparam(params, "counts_type"),
     enrichment_filename = getparam(params, "enrichment_filename"),
     enrichment_type = getparam(params, "enrichment_type"),
-    enrichment_threshold = getparam(params, "enrichment_threshold") %>% as.numeric,
+    # enrichment_threshold = getparam(params, "enrichment_threshold") %>% as.numeric,
+    hits_filename = getparam(params, "hits_filename"),
     metadata_path = getparam(params, "metadata_path"),
     output_extension = getparam(params, "output_extension"),
     output_separator = getparam(params, "output_separator"),
@@ -276,9 +279,22 @@ define_plan <- function(
                              file_out(!!names.enrichment.promax.pan.annot))
       ), #26
 
-      # Hits
+    )
+  }
+
+  if(runHits){
+    hits_plan <- drake::drake_plan(
+      hits = target(
+        data.table::fread(file_in(!!hits_filename))
+      ),
+
+      # hits_sub = target(
+      #   compute_hits(enrichment_sub, !!enrichment_threshold)
+      # ),
+      #
+
       hits_sub = target(
-        compute_hits(enrichment_sub, !!enrichment_threshold)
+        split_data(enrichment)
       ),
 
       write_hits_sub = target(
@@ -308,6 +324,9 @@ define_plan <- function(
       write_hits_annot = target(
         write_data(hits_annot, file_out(!!names.hits.pan.annot))
       ) #34
+
+
+
     )
   }
 
@@ -545,6 +564,7 @@ define_plan <- function(
   if(runCounts){main_plan %<>% rbind(counts_plan)}
   if(runFoldChange){main_plan %<>% rbind(foldchange_plan)}
   if(runEnrichment){main_plan %<>% rbind(enrichment_plan)}
+  if(runHits){main_plan %<>% rbind(hits_plan)}
   if(runPolyclonal){main_plan %<>% rbind(polyclonal_plan)}
   if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
 

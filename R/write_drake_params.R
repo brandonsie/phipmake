@@ -10,7 +10,7 @@
 #' @param foldchange_type Identifier for type of counts data to append in output file names.
 #' @param enrichment_filename Name of demultiplexed, merged enrichment file in screen directory.
 #' @param enrichment_type Identifier for type of enrichment data to append in output file names.
-#' @param enrichment_threshold Threshold enrichment value for determining hits.
+#' @param hits_filename Name of demultiplexed, merged hits file in screen directory.
 #' @param metadata_path Directory path string to metadata folder containing peptide files and intrapeptide blast alignment files.
 #' @param output_extension Extension for tab-separated output files.
 #'
@@ -25,7 +25,7 @@ write_drake_params <- function(dir,
                                foldchange_type = "FoldChange",
                                enrichment_filename = "enrichment.csv",
                                enrichment_type = "Enrichment",
-                               enrichment_threshold = 5,
+                               hits_filename = "Hits.csv",
                                metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
                                output_extension = "tsv"){
 
