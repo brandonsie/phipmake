@@ -4,7 +4,7 @@
 \alias{emphasize_hit_data_list}
 \title{emphasize_hit_data_list}
 \usage{
-emphasize_hit_data_list(data, hits, default)
+emphasize_hit_data_list(data, hits, default, parallel = FALSE)
 }
 \arguments{
 \item{data}{phiplist of raw data to use.}
@@ -12,6 +12,8 @@ emphasize_hit_data_list(data, hits, default)
 \item{hits}{phiplist of binary data with 1 for hits and 0 for non-hits.}
 
 \item{default}{Numeric value to replace non-hit values with.}
+
+\item{parallel}{Whether or not to parallelize libraries. Not yet implemented.}
 }
 \description{
 Set non-hit values to a default value.

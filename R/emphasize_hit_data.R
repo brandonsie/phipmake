@@ -5,12 +5,13 @@
 #' @param data phiplist of raw data to use.
 #' @param hits phiplist of binary data with 1 for hits and 0 for non-hits.
 #' @param default Numeric value to replace non-hit values with.
+#' @param parallel Whether or not to parallelize libraries. Not yet implemented.
 #'
 #' @export
 
 
 emphasize_hit_data_list <- function(
-  data, hits, default
+  data, hits, default, parallel = FALSE
 ){
   # check for proper data order
   if(mean(names(data) == names(hits)) < 1){
