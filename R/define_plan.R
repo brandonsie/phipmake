@@ -307,16 +307,15 @@ define_plan <- function(
 
   if(runHits){
     hits_plan <- drake::drake_plan(
+
+      # Hits
       hits = target(
-        if(file.exists(!!hits_filename)){
           data.table::fread(file_in(!!hits_filename))
-        } else{
-            # compute_hits(enrichment_sub, !!enrichment_threshold)
-        }
       ),
 
       hits_sub = target(
         split_data(hits)
+        # compute_hits(enrichment_sub, !!enrichment_threshold)
       ),
 
       write_hits_sub = target(
@@ -347,9 +346,43 @@ define_plan <- function(
         write_data(hits_annot, file_out(!!names.hits.pan.annot))
       ), #34
 
+      # Hits Prosum
+      hits_sub_prosum = target(
+        compute_prosum(hits_sub, enrichment_annotations)
+      ),
+
+      write_hits_sub_prosum = target(
+        write_data(hits_sub_prosum, file_out(!!names.hits.sub.prosum))
+      ),
+
+      hits_sub_prosum_annot = target(
+        annotate_data(hits_sub_prosum, enrichment_annotations)
+      ),
+
+      write_hits_sub_prosum_annot = target(
+        write_data(hits_sub_prosum_annot, file_out(!!names.hits.sub.prosum.annot))
+      ),
+
+      hits_prosum = target(
+        dplyr::bind_rows(hits_sub_prosum)
+      ),
+
+      write_hits_prosum = target(
+        write_data(hits_prosum, file_out(!!names.hits.pan.prosum))
+      ),
+
+      hits_prosum_annot = target(
+        dplyr::bind(rows(hits_sub_prosum_annot))
+      ),
+
+      write_hits_prosum_annot = target(
+        write_data(hits_prosum_annot, file_out(!!names.hits.pan.prosum.annot))
+      ),
 
 
-      # new output files (!) need function and filename
+      # New Hits-Filtered Data Files
+
+      # hits_foldchange
       hits_sub_foldchange = target(
         emphasize_hit_data_list(foldchange_sub, hits_sub, 1)
       ),
@@ -382,6 +415,43 @@ define_plan <- function(
         write_data(hits_foldchange_annot, file_out(!!names.hits.foldchange.pan.annot))
       ),
 
+      # hits_foldchange promax
+      hits_sub_foldchange_promax = target(
+        compute_promax(hits_sub_foldchange, enrichment_annotations)
+      ),
+
+      write_hits_sub_foldchange_promax = target(
+        write_data(hits_sub_foldchange_promax, file_out(!!names.hits.foldchange.sub.promax))
+      ),
+
+      hits_sub_foldchange_promax_annot = target(
+        annotate_data(hits_sub_foldchange_promax, enrichment_annotations)
+      ),
+
+      write_hits_sub_foldchange_promax_annot = target(
+        write_data(hits_sub_foldchange_promax_annot,
+                   file_out(!!names.hits.foldchange.sub.promax.annot))
+      ),
+
+      hits_foldchange_promax = target(
+        dplyr::bind_rows(hits_sub_foldchange_promax)
+      ),
+
+      write_hits_foldchange_promax = target(
+        write_data(hits_foldchange_promax, file_out(!!names.hits.foldchange.pan.promax))
+      ),
+
+      hits_foldchange_promax_annot = target(
+        dplyr::bind(rows(hits_sub_foldchange_promax_annot))
+      ),
+
+      write_hits_foldchange_promax_annot = target(
+        write_data(hits_foldchange_promax_annot,
+                   file_out(!!names.hits.foldchange.pan.promax.annot))
+      ),
+
+
+      # hits_enrichment
       hits_sub_enrichment = target(
         emphasize_hit_data_list(enrichment_sub, hits_sub, 0)
 
@@ -415,6 +485,43 @@ define_plan <- function(
         write_data(hits_enrichment_annot, file_out(!!names.hits.enrichment.pan.annot))
       ),
 
+      # hits_enrichment promax
+      hits_sub_enrichment_promax = target(
+        compute_promax(hits_sub_enrichment, enrichment_annotations)
+      ),
+
+      write_hits_sub_enrichment_promax = target(
+        write_data(hits_sub_enrichment_promax, file_out(!!names.hits.enrichment.sub.promax))
+      ),
+
+      hits_sub_enrichment_promax_annot = target(
+        annotate_data(hits_sub_enrichment_promax, enrichment_annotations)
+      ),
+
+      write_hits_sub_enrichment_promax_annot = target(
+        write_data(hits_sub_enrichment_promax_annot,
+                   file_out(!!names.hits.enrichment.sub.promax.annot))
+      ),
+
+      hits_enrichment_promax = target(
+        dplyr::bind_rows(hits_sub_enrichment_promax)
+      ),
+
+      write_hits_enrichment_promax = target(
+        write_data(hits_enrichment_promax, file_out(!!names.hits.enrichment.pan.promax))
+      ),
+
+      hits_enrichment_promax_annot = target(
+        dplyr::bind(rows(hits_sub_enrichment_promax_annot))
+      ),
+
+      write_hits_enrichment_promax_annot = target(
+        write_data(hits_enrichment_promax_annot,
+                   file_out(!!names.hits.enrichment.pan.promax.annot))
+      ),
+
+
+      # hits_counts
       hits_sub_counts = target(
         emphasize_hit_data_list(counts_sub, hits_sub, 0)
       ),
