@@ -128,10 +128,10 @@ define_plan <- function(
   names.enrichment.promax.sub.annot <- paste0(sn.enrichment.promax.sub, sn.a.ext)
 
   # Hits
-  sn.hits <- paste0(sn.enrichment, "_hits")
+  sn.hits <- paste0(screen_name, "_Hits")
   names.hits.pan <- paste0(sn.hits, sn.ext)
   names.hits.pan.annot <- paste0(sn.hits, sn.a.ext)
-  sn.hits.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_hits")
+  sn.hits.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_Hits")
   names.hits.sub <- paste0(sn.hits.sub, sn.ext)
   names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
@@ -157,10 +157,10 @@ define_plan <- function(
   names.hits.counts.pan.annot <- paste0(sn.hits.counts, sn.a.ext)
 
   # Polyclonal
-  sn.polycl <- paste0(sn.enrichment, "_polyclonal")
+  sn.polycl <- paste0(screen_name, "_Polyclonal")
   names.polycl.pan <- paste0(sn.polycl, sn.ext)
   names.polycl.pan.annot <- paste0(sn.polycl, sn.a.ext)
-  sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_", enrichment_type, "_polyclonal")
+  sn.polycl.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_Polyclonal")
   names.polycl.sub <- paste0(sn.polycl.sub, sn.ext)
   names.polycl.sub.annot <- paste0(sn.polycl.sub, sn.a.ext)
 
