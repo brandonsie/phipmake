@@ -394,7 +394,7 @@ define_plan <- function(
       ),
 
       hits_prosum_annot = target(
-        dplyr::bind(rows(hits_sub_prosum_annot))
+        dplyr::bind_rows(hits_sub_prosum_annot)
       ),
 
       write_hits_prosum_annot = target(
@@ -534,7 +534,7 @@ define_plan <- function(
       ),
 
       hits_enrichment_promax_annot = target(
-        dplyr::bind(rows(hits_sub_enrichment_promax_annot))
+        dplyr::bind_rows(hits_sub_enrichment_promax_annot)
       ),
 
       write_hits_enrichment_promax_annot = target(
