@@ -135,6 +135,13 @@ define_plan <- function(
   names.hits.sub <- paste0(sn.hits.sub, sn.ext)
   names.hits.sub.annot <- paste0(sn.hits.sub, sn.a.ext)
 
+  sn.hits.prosum <- paste0(sn.hits,"_prosum")
+  names.hits.pan.prosum <- paste0(sn.hits.prosum, sn.ext)
+  names.hits.pan.prosum.annot <- paste0(sn.hits.prosum, sn.a.ext)
+  sn.hits.prosum.sub <- paste0(sn.libdir.e, screen_name, sn.lib.e, "_Hits_prosum")
+  names.hits.sub.prosum  <- paste0(sn.hits.prosum.sub, sn.ext)
+  names.hits.sub.prosum.annot <- paste0(sn.hits.prosum.sub, sn.a.ext)
+
   sn.hits.foldchange.sub <- paste0(sn.hits.sub, "_foldchange")
   names.hits.foldchange.sub <- paste0(sn.hits.foldchange.sub, sn.ext)
   names.hits.foldchange.sub.annot <- paste0(sn.hits.foldchange.sub, sn.a.ext)
@@ -142,12 +149,27 @@ define_plan <- function(
   names.hits.foldchange.pan <- paste0(sn.hits.foldchange, sn.ext)
   names.hits.foldchange.pan.annot <- paste0(sn.hits.foldchange, sn.a.ext)
 
+  sn.hits.foldchange.promax <- paste0(sn.hits.foldchange, "_promax")
+  names.hits.foldchange.pan.promax <- paste0(sn.hits.foldchange.promax, sn.ext)
+  names.hits.foldchange.pan.promax.annot <- paste0(sn.hits.foldchange.promax, sn.a.ext)
+  sn.hits.foldchange.promax.sub <- paste0(sn.hits.foldchange.sub, "_promax")
+  names.hits.foldchange.sub.promax  <- paste0(sn.hits.foldchange.promax.sub, sn.ext)
+  names.hits.foldchange.sub.promax.annot <- paste0(sn.hits.foldchange.promax.sub, sn.a.ext)
+
+
   sn.hits.enrichment.sub <- paste0(sn.hits.sub, "_enrichment")
   names.hits.enrichment.sub <- paste0(sn.hits.enrichment.sub, sn.ext)
   names.hits.enrichment.sub.annot <- paste0(sn.hits.enrichment.sub, sn.a.ext)
   sn.hits.enrichment <- paste0(sn.hits, "_enrichment")
   names.hits.enrichment.pan <- paste0(sn.hits.enrichment, sn.ext)
   names.hits.enrichment.pan.annot <- paste0(sn.hits.enrichment, sn.a.ext)
+
+  sn.hits.enrichment.promax <- paste0(sn.hits.enrichment, "_promax")
+  names.hits.enrichment.pan.promax <- paste0(sn.hits.enrichment.promax, sn.ext)
+  names.hits.enrichment.pan.promax.annot <- paste0(sn.hits.enrichment.promax, sn.a.ext)
+  sn.hits.enrichment.promax.sub <- paste0(sn.hits.enrichment.sub, "_promax")
+  names.hits.enrichment.sub.promax  <- paste0(sn.hits.enrichment.promax.sub, sn.ext)
+  names.hits.enrichment.sub.promax.annot <- paste0(sn.hits.enrichment.promax.sub, sn.a.ext)
 
   sn.hits.counts.sub <- paste0(sn.hits.sub, "_counts")
   names.hits.counts.sub <- paste0(sn.hits.counts.sub, sn.ext)
