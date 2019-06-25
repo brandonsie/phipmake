@@ -464,7 +464,7 @@ define_plan <- function(
       ),
 
       hits_foldchange_promax_annot = target(
-        dplyr::bind(rows(hits_sub_foldchange_promax_annot))
+        dplyr::bind_rows(hits_sub_foldchange_promax_annot)
       ),
 
       write_hits_foldchange_promax_annot = target(
