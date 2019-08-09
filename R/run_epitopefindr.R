@@ -6,14 +6,13 @@
 run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
 
   for(i in 2:ncol(hits_foldchange)){
-    print(paste("column", i))
 
     pt_id <- colnames(hits_foldchange)[i]
     pt_hits_pep_ids <- hits_foldchange[,1][
       order(hits_foldchange[,i][hits_foldchange[,i] > 1])]
     pt_hits_pep_ids <- pt_hits_pep_ids %>% as.matrix %>% as.character
 
-    print(paste("length", length(pt_hits_pep_ids)))
+    print(paste("column", i, ", length", length(pt_hits_pep_ids)))
 
 
     # annotate pep_ids and get pep_aa
@@ -27,12 +26,10 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
         pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
       }
 
-      print(paste("class ", class(pt_hits_pep_ids)))
-      print(pt_hits_pep_ids)
 
       pt_hits_annot <- annotation_merged_df[
-        c("annotation", "pep_aa"),
-        match(pt_hits_pep_ids, annotation_merged_df$u_pep_id)] %>% as.character
+        match(pt_hits_pep_ids, annotation_merged_df$u_pep_id),
+        c("annotation", "pep_aa")] %>% as.character
       colnames(pt_hits_annot) <- c("ID", "Seq")
 
       fasta_path <- paste0("epitopefindr/temp/", pt_id, ".fasta")
