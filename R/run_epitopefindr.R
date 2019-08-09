@@ -26,10 +26,12 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
         pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
       }
 
+      print(paste("dim", dim(annotation_merged_df)))
+      print(paste("match", match(pt_hits_pep_ids, annotation_merged_df$u_pep_id)))
 
       pt_hits_annot <- annotation_merged_df[
         match(pt_hits_pep_ids, annotation_merged_df$u_pep_id),
-        c("annotation", "pep_aa")] %>% as.character
+        c("annotation", "pep_aa")]
       colnames(pt_hits_annot) <- c("ID", "Seq")
 
       fasta_path <- paste0("epitopefindr/temp/", pt_id, ".fasta")
