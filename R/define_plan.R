@@ -19,7 +19,8 @@ define_plan <- function(
   runEnrichment = TRUE,
   runHits = TRUE,
   runPolyclonal = TRUE,
-  runAVARDA = FALSE){
+  runAVARDA = FALSE,
+  runEpitopefindr = FALSE){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================
@@ -797,6 +798,66 @@ define_plan <- function(
   }
 
 
+  if(runEpitopefindr){
+
+    if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
+    if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
+
+    epitopefindr_plan <- drake::drake_plan(
+
+      # get panlibrary table of u_pep_id and pep_aa
+      annotation_merged_df = target(
+        {
+          a <- lapply(enrichment_annotations, function(x)
+            x[, c("u_pep_id", "gene_symbol", "pep_rank", "taxon_species", "pep_aa")])
+          a$annotation <- paste(a$gene_symbol, a$pep_rank, a$taxon_species, sep = "_")
+          a
+        }
+      ),
+
+      # for each patient assemble top 2k hits by foldchange
+      patient_hitlists = target(
+        for(i in 2:ncol(hits_foldchange)){
+          pt_id <- colnames(hits_foldchange)[i]
+          pt_hits_pep_ids <- hits_foldchange[,1][
+            order(hits_foldchange[,i][hits_foldchange[,i] > 1])]
+
+          if(length(pt_hits_pep_ids) > 2000){
+            pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
+          }
+
+          # annotate pep_ids and get pep_aa
+          # annotation default is gene name, tile, and species. 50 char limit.
+          # for each hits list, get pep_aa and start epitopefindr
+          # if no hits, don't write
+
+          if(length(pt_hits_pep_ids) > 0){
+            pt_hits_annot <- annotation_merged_df[
+              c("annotation", "pep_aa"),
+              match(pt_hits_pep_ids, annotation_merged_df$u_pep_id)]
+            colnames(pt_hits_annot) <- c("ID", "Seq")
+
+            fasta_path <- paste0("epitopefindr/temp/", pt_id, ".fasta")
+            output_path <- paste0("epitopefindr/", pt_id)
+            epitopefindr::writeFastaAA(pt_hits_annot, fasta_path)
+            epitopefindr::epfind(fasta_path, output_path)
+
+          }
+
+
+        }
+
+      )
+
+
+
+
+    )
+
+
+  }
+
+
   if(runPairwise){
 
 
@@ -818,6 +879,7 @@ define_plan <- function(
   if(runHits){main_plan %<>% rbind(hits_plan)}
   if(runPolyclonal){main_plan %<>% rbind(polyclonal_plan)}
   if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
+  if(runEpitopefindr){main_plan %<>% rbind(epitopefindr_plan)}
 
   return(main_plan)
 }
