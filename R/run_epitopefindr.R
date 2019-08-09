@@ -40,7 +40,9 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
 
       output_path <- paste0("epitopefindr/", pt_id)
       epitopefindr::writeFastaAA(pt_hits_annot, fasta_path)
-      epitopefindr::epfind(fasta_path, output_path)
+
+      e <- simpleError("epitopefindr error")
+      tryCatch(epitopefindr::epfind(fasta_path, output_path), error = function(e) e)
 
     }
 
