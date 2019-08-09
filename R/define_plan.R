@@ -806,21 +806,15 @@ define_plan <- function(
     epitopefindr_plan <- drake::drake_plan(
 
       # get panlibrary table of u_pep_id and pep_aa
-      annotation_merged_df = target(
-        {
-          a <- lapply(enrichment_annotations, function(x)
-            x[, c("u_pep_id", "gene_symbol", "pep_rank", "taxon_species", "pep_aa")])
-          a$annotation <- paste(a$gene_symbol, a$pep_rank, a$taxon_species, sep = "_")
-          a
-        }
-      ),
+      annotation_merged_df = target(merge_annotations(enrichment_annotations)),
 
       # for each patient assemble top 2k hits by foldchange
       patient_hitlists = target(
         for(i in 2:ncol(hits_foldchange)){
           pt_id <- colnames(hits_foldchange)[i]
           pt_hits_pep_ids <- hits_foldchange[,1][
-            order(hits_foldchange[,i][hits_foldchange[,i] > 1])]
+            order(hits_foldchange[,i][hits_foldchange[,i] > 1])] %>%
+            as.matrix %>% as.character
 
           if(length(pt_hits_pep_ids) > 2000){
             pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
