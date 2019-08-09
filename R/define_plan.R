@@ -800,13 +800,19 @@ define_plan <- function(
 
   if(runEpitopefindr){
 
+    print("start")
     if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
     if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
+    print("next")
     epitopefindr_plan <- drake::drake_plan(
+
+      test = target(print("firsttarg")),
 
       # get panlibrary table of u_pep_id and pep_aa
       annotation_merged_df = target(merge_annotations(enrichment_annotations)),
+
+      test2 = target(print("secondtarg")),
 
       # for each patient assemble top 2k hits by foldchange
       patient_hitlists = target(
