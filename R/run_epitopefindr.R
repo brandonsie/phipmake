@@ -27,6 +27,9 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
         pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
       }
 
+      print(paste("class ", class(pt_hits_pep_ids)))
+      print(pt_hits_pep_ids)
+
       pt_hits_annot <- annotation_merged_df[
         c("annotation", "pep_aa"),
         match(pt_hits_pep_ids, annotation_merged_df$u_pep_id)] %>% as.character
