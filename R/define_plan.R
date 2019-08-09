@@ -811,10 +811,12 @@ define_plan <- function(
       # for each patient assemble top 2k hits by foldchange
       patient_hitlists = target(
         for(i in 2:ncol(hits_foldchange)){
+          print(i)
+
           pt_id <- colnames(hits_foldchange)[i]
           pt_hits_pep_ids <- hits_foldchange[,1][
-            order(hits_foldchange[,i][hits_foldchange[,i] > 1])] %>%
-            as.matrix %>% as.character
+            order(hits_foldchange[,i][hits_foldchange[,i] > 1])]
+          pt_hits_pep_ids <- pt_hits_pep_ids %>% as.matrix %>% as.character
 
           if(length(pt_hits_pep_ids) > 2000){
             pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
