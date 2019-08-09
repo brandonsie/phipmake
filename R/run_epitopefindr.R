@@ -22,8 +22,9 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df){
 
     if(length(pt_hits_pep_ids) > 0){
 
-      if(length(pt_hits_pep_ids) > 2000){
-        pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
+      k = 500
+      if(length(pt_hits_pep_ids) > k){
+        pt_hits_pep_ids <- pt_hits_pep_ids[1:k]
       }
 
       pt_hits_annot <- annotation_merged_df[
