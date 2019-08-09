@@ -820,7 +820,8 @@ define_plan <- function(
         for(i in 2:ncol(hits_foldchange)){
           pt_id <- colnames(hits_foldchange)[i]
           pt_hits_pep_ids <- hits_foldchange[,1][
-            order(hits_foldchange[,i][hits_foldchange[,i] > 1])]
+            order(hits_foldchange[,i][hits_foldchange[,i] > 1])] %>%
+            as.matrix %>% as.character
 
           if(length(pt_hits_pep_ids) > 2000){
             pt_hits_pep_ids <- pt_hits_pep_ids[1:2000]
