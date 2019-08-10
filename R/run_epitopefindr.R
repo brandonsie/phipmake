@@ -31,6 +31,8 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
         run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...),
         error = function(e) e
       )
+
+      if(inherits(t, "error")) next
     }
 
   }
