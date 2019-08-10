@@ -50,15 +50,15 @@ run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df,
   # for each hits list, get pep_aa and start epitopefindr
   # if no hits, don't write
 
-  if(length(pt_hits_pep_ids) > 0){
+  if(length(pt_hits_pep_sorted) > 0){
 
     k = thresh
-    if(length(pt_hits_pep_ids) > k){
-      pt_hits_pep_ids <- pt_hits_pep_ids[1:k]
+    if(length(pt_hits_pep_sorted) > k){
+      pt_hits_pep_sorted <- pt_hits_pep_sorted[1:k]
     }
 
     pt_hits_annot <- annotation_merged_df[
-      match(pt_hits_pep_ids, annotation_merged_df$u_pep_id),
+      match(pt_hits_pep_sorted, annotation_merged_df$u_pep_id),
       c("annotation", "pep_aa")]
     colnames(pt_hits_annot) <- c("ID", "Seq")
 
