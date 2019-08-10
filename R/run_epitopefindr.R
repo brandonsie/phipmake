@@ -4,7 +4,7 @@
 #' @export
 #'
 
-run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = FALSE, ...){
+run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = TRUE, ...){
 
   hits_foldchange <- data.frame(hits_foldchange)
   annotation_merged_df <- data.frame(annotation_merged_df)
@@ -26,12 +26,12 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
     print("non-parallel")
 
     for(i in 2:ncol(hits_foldchange)){
-      e <- simpleError("epitopefindr error")
       t <- tryCatch(
         run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...),
         error = function(e) e
       )
 
+      print(t)
       if(inherits(t, "error")) next
     }
 
