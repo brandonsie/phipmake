@@ -4,7 +4,8 @@
 \alias{run_epitopefindr}
 \title{Assemble hit files and call epitopefindr}
 \usage{
-run_epitopefindr(hits_foldchange, annotation_merged_df, ...)
+run_epitopefindr(hits_foldchange, annotation_merged_df, parallel = TRUE,
+  ...)
 }
 \description{
 Assemble hit files and call epitopefindr
