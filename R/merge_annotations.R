@@ -16,7 +16,9 @@ merge_annotations <- function(enrichment_annotations){
   a <- dplyr::bind_rows(a,)
 
 
-  a$annotation <- paste(a$gene_symbol, a$pep_rank, a$taxon_species, sep = "_")
+  a$annotation <- paste(
+    substr(u_pep_id, 1, 10),
+    a$gene_symbol, a$pep_rank, a$taxon_species, sep = "_")
 
 
   return(a)
