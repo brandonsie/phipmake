@@ -26,7 +26,11 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
     print("non-parallel")
 
     for(i in 2:ncol(hits_foldchange)){
-      run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...)
+      e <- simpleError("epitopefindr error")
+      tryCatch(
+        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...),
+        error = function(e) e
+      )
     }
 
   }
@@ -71,8 +75,6 @@ run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df,
 
     msa_name <- paste0("msa_", pt_id, ".pdf")
 
-    e <- simpleError("epitopefindr error")
-    tryCatch(epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name),
-             error = function(e) e)
+    epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name)
   }
 }
