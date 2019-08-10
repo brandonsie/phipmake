@@ -13,11 +13,11 @@ Imports:
     data.table,
     magrittr,
   	dplyr,
-  	drake
+  	drake,
+    doParallel,
+    foreach
 Suggests: 
     knitr,
     rmarkdown,
     epitopefindr,
-    doParallel,
-    foreach
 VignetteBuilder: knitr
