@@ -1,7 +1,6 @@
 #' Assemble hit files and call epitopefindr
 #'
 #'
-#' @importFrom foreach %dopar%
 #' @export
 #'
 
@@ -15,9 +14,9 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = T
 
     print("parallel")
 
-    doParallel::registerDoParallel(parallel::detectCores())
+    registerDoParallel(detectCores())
 
-    foreach::foreach(i = 2:ncol(hits_foldchange)) %dopar%{
+    foreach(i = 2:ncol(hits_foldchange)) %dopar%{
       run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...)
     }
 
