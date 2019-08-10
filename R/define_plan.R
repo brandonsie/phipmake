@@ -800,8 +800,6 @@ define_plan <- function(
 
   if(runEpitopefindr){
 
-    if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
-    if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
 
     epitopefindr_plan <- drake::drake_plan(
@@ -812,8 +810,12 @@ define_plan <- function(
 
       # for each patient assemble top 2k hits by foldchange
       run_epitopefindr = target(
-        run_epitopefindr(hits_foldchange, annotation_merged_df)
-
+        {
+          if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
+          if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
+          run_epitopefindr(hits_foldchange, annotation_merged_df)
+          file_out("epitopefindr")
+        }
       )
 
     )
