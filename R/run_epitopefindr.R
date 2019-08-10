@@ -11,8 +11,8 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, ...){
   if(requireNamespace("doParallel") & requireNamespace("foreach")){
     # run Parallelized
 
-    library(doParallel)
-    library(foreach)
+    require(doParallel)
+    require(foreach)
 
     registerDoParallel(detectCores())
 
