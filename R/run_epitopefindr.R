@@ -10,7 +10,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, ...){
   hits_foldchange <- data.frame(hits_foldchange)
   annotation_merged_df <- data.frame(annotation_merged_df)
 
-  if(requireNamespace("doParallel") & requireNamespace("foreach")){
+  if(requireNamespace("doParallel", quietly = TRUE) & requireNamespace("foreach", quietly = TRUE)){
     # run Parallelized
 
     print("parallel")
