@@ -27,10 +27,10 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
 
     for(i in 2:ncol(hits_foldchange)){
       e <- simpleError("epitopefindr error")
-      # tryCatch(
-        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...)
-        # , error = function(e) e
-      # )
+      t <- tryCatch(
+        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...),
+        error = function(e) e
+      )
     }
 
   }
