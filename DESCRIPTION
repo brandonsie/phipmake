@@ -16,5 +16,8 @@ Imports:
   	drake
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    epitopefindr,
+    doParallel,
+    foreach
 VignetteBuilder: knitr
