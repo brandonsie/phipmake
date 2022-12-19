@@ -4,11 +4,15 @@
 \alias{annotate_data}
 \title{Add peptide/protein annotation to data file.}
 \usage{
-annotate_data(data, annotations = NULL, metadata_path = NULL,
-  fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa",
-  "taxon_genus", "taxon_species", "gene_symbol", "product"),
+annotate_data(
+  data,
+  annotations = NULL,
+  metadata_path = NULL,
+  fields = c("pep_id", "pos_start", "pos_end", "UniProt_acc", "pep_aa", "taxon_genus",
+    "taxon_species", "gene_symbol", "product"),
   pep_fields = c("pep_id", "pos_start", "pos_end", "pep_aa"),
-  parallel = FALSE)
+  parallel = FALSE
+)
 }
 \arguments{
 \item{data}{Phiplist of unannotated edata.}

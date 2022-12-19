@@ -5,8 +5,14 @@
 \title{For multilibrary hits data, identify libraries, and call library_polycl
 for each.}
 \usage{
-compute_polycl(data, annot, pairs, method = "independence_filter",
-  verbose = TRUE, parallel = FALSE)
+compute_polycl(
+  data,
+  annot,
+  pairs,
+  method = "independence_filter",
+  verbose = TRUE,
+  parallel = FALSE
+)
 }
 \arguments{
 \item{data}{List with first element a character vector of library names and

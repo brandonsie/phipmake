@@ -7,6 +7,8 @@
 #' @param runEnrichment Logical controlling whether or not to define enrichment targets.
 #' @param runPolyclonal Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
+#' @param runEpitopefindr Logical controlling whether or not to run epitopefindr analysis on hits.
+#' @param epitopefindr_latex Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.
 #'
 #' @export
 #'
@@ -20,7 +22,9 @@ define_plan <- function(
   runHits = TRUE,
   runPolyclonal = TRUE,
   runAVARDA = FALSE,
-  runEpitopefindr = FALSE){
+  runEpitopefindr = FALSE,
+  epitopefindr_latex = FALSE
+  ){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================
@@ -813,7 +817,8 @@ define_plan <- function(
         {
           if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
           if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
-          run_epitopefindr(hits_foldchange, annotation_merged_df)
+
+          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex)
           file_out("epitopefindr")
         }
       )

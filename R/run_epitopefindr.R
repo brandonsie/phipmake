@@ -4,7 +4,7 @@
 #' @export
 #'
 
-run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = FALSE, ...){
+run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = FALSE, epitopefindr_latex, ...){
 
   hits_foldchange <- data.frame(hits_foldchange)
   annotation_merged_df <- data.frame(annotation_merged_df)
@@ -14,10 +14,10 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
 
     print("parallel")
 
-    registerDoParallel(detectCores())
+    registerDoParallel(detectCores()-1)
 
     foreach(i = 2:ncol(hits_foldchange)) %dopar%{
-      run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...)
+      run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ...)
     }
 
   } else {
@@ -27,7 +27,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
 
     for(i in 2:ncol(hits_foldchange)){
       t <- tryCatch(
-        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, ...),
+        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ...),
         error = function(e) e
       )
 
@@ -40,7 +40,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = F
 } # end run_epitopefindr
 
 
-run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df,
+run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df, epitopefindr_latex,
                                     thresh = 500){
   # Function to be called by foreach and or linear for loop
 
@@ -77,6 +77,10 @@ run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df,
 
     msa_name <- paste0("msa_", pt_id, ".pdf")
 
-    epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name)
+    if(epitopefindr_latex){
+      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = TRUE)
+    } else{
+      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = FALSE)
+    }
   }
 }

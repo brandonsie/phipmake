@@ -3,7 +3,6 @@
 \docType{package}
 \name{phipmake}
 \alias{phipmake}
-\alias{phipmake-package}
 \title{phipmake: PhIP-seq Data Analysis Pipeline.}
 \description{
 PhIP-seq is an antibody profiling assay.

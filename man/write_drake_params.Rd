@@ -4,13 +4,19 @@
 \alias{write_drake_params}
 \title{write_drake_params}
 \usage{
-write_drake_params(dir, screen_name, counts_filename = "counts.csv",
-  counts_type = "Counts", foldchange_filename = "fold_change.csv",
+write_drake_params(
+  dir,
+  screen_name,
+  counts_filename = "counts.csv",
+  counts_type = "Counts",
+  foldchange_filename = "fold_change.csv",
   foldchange_type = "FoldChange",
   enrichment_filename = "enrichment.csv",
-  enrichment_type = "Enrichment", hits_filename = "Hits.csv",
+  enrichment_type = "Enrichment",
+  hits_filename = "Hits.csv",
   metadata_path = "/data/hlarman1/PhIPdb/Metadata/PeptideLibraries",
-  output_extension = "tsv")
+  output_extension = "tsv"
+)
 }
 \arguments{
 \item{dir}{PhIP-seq project directory.}
