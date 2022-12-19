@@ -5,8 +5,13 @@
 \title{For one peptide library, identify proteins from annotation file, and then
 call protein_polycl for each protein.}
 \usage{
-library_polycl(data, annot, pairs, method = "independence_filter",
-  verbose = TRUE)
+library_polycl(
+  data,
+  annot,
+  pairs,
+  method = "independence_filter",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{data}{Data frame with one library's hits data}

@@ -4,10 +4,18 @@
 \alias{define_plan}
 \title{Initialize and return drake_plan object. New for github drake 7.0+.}
 \usage{
-define_plan(params_path = "drake_params.tsv", runCounts = TRUE,
-  runPairwise = FALSE, runFoldChange = TRUE, runEnrichment = TRUE,
-  runHits = TRUE, runPolyclonal = TRUE, runAVARDA = FALSE,
-  runEpitopefindr = FALSE)
+define_plan(
+  params_path = "drake_params.tsv",
+  runCounts = TRUE,
+  runPairwise = FALSE,
+  runFoldChange = TRUE,
+  runEnrichment = TRUE,
+  runHits = TRUE,
+  runPolyclonal = TRUE,
+  runAVARDA = FALSE,
+  runEpitopefindr = FALSE,
+  epitopefindr_latex = FALSE
+)
 }
 \arguments{
 \item{params_path}{Path to project parameters file that can be created using the write_drake_params function.}
@@ -23,6 +31,10 @@ define_plan(params_path = "drake_params.tsv", runCounts = TRUE,
 \item{runPolyclonal}{Logical controlling whether or not to define enrichment targets.}
 
 \item{runAVARDA}{Logical controlling whether or not to define AVARDA targets.}
+
+\item{runEpitopefindr}{Logical controlling whether or not to run epitopefindr analysis on hits.}
+
+\item{epitopefindr_latex}{Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.}
 }
 \description{
 Initialize and return drake_plan object. New for github drake 7.0+.

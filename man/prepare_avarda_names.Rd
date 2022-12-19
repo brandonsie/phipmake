@@ -4,8 +4,12 @@
 \alias{prepare_avarda_names}
 \title{swap out u_pep_id names for older pep_id names to improve AVARDA speed}
 \usage{
-prepare_avarda_names(data, annotations = NULL, metadata_path = NULL,
-  replacement_column = "pep_id")
+prepare_avarda_names(
+  data,
+  annotations = NULL,
+  metadata_path = NULL,
+  replacement_column = "pep_id"
+)
 }
 \arguments{
 \item{data}{Phiplist of data to modify.}
