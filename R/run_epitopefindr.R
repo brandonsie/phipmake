@@ -4,7 +4,7 @@
 #' @export
 #'
 
-run_epitopefindr <- function(hits_foldchange, annotation_merged_df, parallel = FALSE, epitopefindr_latex, ...){
+run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefindr_latex, parallel = FALSE, ...){
 
   hits_foldchange <- data.frame(hits_foldchange)
   annotation_merged_df <- data.frame(annotation_merged_df)

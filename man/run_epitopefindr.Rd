@@ -7,8 +7,8 @@
 run_epitopefindr(
   hits_foldchange,
   annotation_merged_df,
-  parallel = FALSE,
   epitopefindr_latex,
+  parallel = FALSE,
   ...
 )
 }
