@@ -8,7 +8,8 @@
 #' @param runPolyclonal Logical controlling whether or not to define enrichment targets.
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #' @param runEpitopefindr Logical controlling whether or not to run epitopefindr analysis on hits.
-#' @param epitopefindr_latex Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.
+#' @param runEpitopefindr_nolatex Logical controlling whether or not to run epitopefindr analysis on hits without latex (replaces epitopefindr_latex).
+#' @param epitopefindr_latex (no longer used) Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.
 #'
 #' @export
 #'
@@ -23,7 +24,8 @@ define_plan <- function(
   runPolyclonal = TRUE,
   runAVARDA = FALSE,
   runEpitopefindr = FALSE,
-  epitopefindr_latex = FALSE
+  runEpitopefindr_nolatex = FALSE
+  # epitopefindr_latex = FALSE
   ){
   options(stringsAsFactors = FALSE)
 
@@ -804,7 +806,28 @@ define_plan <- function(
 
   if(runEpitopefindr){
 
+    epitopefindr_plan <- drake::drake_plan(
 
+
+      # get panlibrary table of u_pep_id and pep_aa
+      annotation_merged_df = target(merge_annotations(enrichment_annotations)),
+
+      # for each patient assemble top 2k hits by foldchange
+      run_epitopefindr = target(
+        {
+          if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
+          if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
+
+          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = TRUE)
+
+          file_out("epitopefindr")
+        }
+      )
+
+    )
+
+  }
+  if(runEpitopefindr_nolatex){
 
     epitopefindr_plan <- drake::drake_plan(
 
@@ -818,7 +841,8 @@ define_plan <- function(
           if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
           if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
-          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex)
+          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = FALSE)
+
           file_out("epitopefindr")
         }
       )
@@ -826,7 +850,6 @@ define_plan <- function(
     )
 
   }
-
 
   if(runPairwise){
 
@@ -850,6 +873,7 @@ define_plan <- function(
   if(runPolyclonal){main_plan %<>% rbind(polyclonal_plan)}
   if(runAVARDA){main_plan %<>% rbind(AVARDA_plan)}
   if(runEpitopefindr){main_plan %<>% rbind(epitopefindr_plan)}
+  if(runEpitopefindr_nolatex){main_plan %<>% rbind(epitopefindr_plan)}
 
   return(main_plan)
 }

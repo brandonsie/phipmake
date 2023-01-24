@@ -57,8 +57,18 @@ emphasize_hit_data <- function(
   data, hits, default
 ){
 
+  # output_data <- data
+  # output_data[,-1][hits[,-1] == 0] <- default
+
+
   output_data <- data
-  output_data[,-1][hits[,-1] == 0] <- default
+  output_data_m <- output_data[,-1] %>% as.matrix()
+  hits_m <- hits[,-1] %>% as.matrix()
+  output_data_m[hits_m == 0] <- default
+
+  output_data_d <- output_data_m %>% data.table::as.data.table()
+  output_data <- dplyr::bind_cols(output_data["u_pep_id"], output_data_d)
+
 
   return(output_data)
 

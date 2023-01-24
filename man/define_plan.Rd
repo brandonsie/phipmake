@@ -14,7 +14,7 @@ define_plan(
   runPolyclonal = TRUE,
   runAVARDA = FALSE,
   runEpitopefindr = FALSE,
-  epitopefindr_latex = FALSE
+  runEpitopefindr_nolatex = FALSE
 )
 }
 \arguments{
@@ -34,7 +34,9 @@ define_plan(
 
 \item{runEpitopefindr}{Logical controlling whether or not to run epitopefindr analysis on hits.}
 
-\item{epitopefindr_latex}{Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.}
+\item{runEpitopefindr_nolatex}{Logical controlling whether or not to run epitopefindr analysis on hits without latex (replaces epitopefindr_latex).}
+
+\item{epitopefindr_latex}{(no longer used) Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.}
 }
 \description{
 Initialize and return drake_plan object. New for github drake 7.0+.
