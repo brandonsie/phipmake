@@ -813,16 +813,21 @@ define_plan <- function(
       annotation_merged_df = target(merge_annotations(enrichment_annotations)),
 
       # for each patient assemble top 2k hits by foldchange
-      run_epitopefindr = target(
-        {
-          if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
-          if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
+      tryCatch(
+        run_epitopefindr = target(
+          {
+            if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
+            if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
-          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = TRUE)
+            run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = TRUE)
 
-          file_out("epitopefindr")
-        }
+            file_out("epitopefindr")
+          }
+        ),
+        error = function(e) print(e)
+
       )
+
 
     )
 
