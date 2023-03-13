@@ -9,7 +9,7 @@
 #' @param runAVARDA Logical controlling whether or not to define AVARDA targets.
 #' @param runEpitopefindr Logical controlling whether or not to run epitopefindr analysis on hits.
 #' @param runEpitopefindr_nolatex Logical controlling whether or not to run epitopefindr analysis on hits without latex (replaces epitopefindr_latex).
-#' @param epitopefindr_latex (no longer used) Logical controlling whether to generate LaTeX from epitopefindr multiple sequence alignments.
+#' @param e_thresh E value threshold for epitopefindr pairwise peptide sequence alignments. default 0.1.
 #'
 #' @export
 #'
@@ -24,13 +24,15 @@ define_plan <- function(
   runPolyclonal = TRUE,
   runAVARDA = FALSE,
   runEpitopefindr = FALSE,
-  runEpitopefindr_nolatex = FALSE
+  runEpitopefindr_nolatex = FALSE,
+  e_thresh = 0.01
   # epitopefindr_latex = FALSE
   ){
   options(stringsAsFactors = FALSE)
 
   # ============================================================================
   # Settings
+
 
   if(!file.exists(params_path)){
     stop(paste("Params file missing.",
@@ -86,6 +88,7 @@ define_plan <- function(
                   counts_filename, "in directory:", getwd()))
     }
   }
+
 
   if(file.exists(enrichment_filename)){
     temp.enrich <- data.table::fread(enrichment_filename)
@@ -231,6 +234,8 @@ define_plan <- function(
   # --------------------------------------------------------------------------
   # Parameters
   # --------------------------------------------------------------------------
+
+
 
   params_plan <- drake::drake_plan(
 
@@ -808,7 +813,6 @@ define_plan <- function(
 
     epitopefindr_plan <- drake::drake_plan(
 
-
       # get panlibrary table of u_pep_id and pep_aa
       annotation_merged_df = target(merge_annotations(enrichment_annotations)),
 
@@ -819,7 +823,7 @@ define_plan <- function(
             if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
             if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
-            run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = TRUE)
+            run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = TRUE, eth = e_t)
 
             file_out("epitopefindr")
           }
@@ -833,11 +837,13 @@ define_plan <- function(
 
   }
   if(runEpitopefindr_nolatex){
+    writeLines(as.character(e_thresh), "e_thresh.txt")
 
     epitopefindr_plan <- drake::drake_plan(
-
+      e_t = as.numeric(readLines("e_thresh.txt")),
 
       # get panlibrary table of u_pep_id and pep_aa
+
       annotation_merged_df = target(merge_annotations(enrichment_annotations)),
 
       # for each patient assemble top 2k hits by foldchange
@@ -846,7 +852,7 @@ define_plan <- function(
           if(!dir.exists("epitopefindr")) dir.create("epitopefindr")
           if(!dir.exists("epitopefindr/temp")) dir.create("epitopefindr/temp")
 
-          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = FALSE)
+          run_epitopefindr(hits_foldchange, annotation_merged_df, epitopefindr_latex = FALSE, eth = e_t)
 
           file_out("epitopefindr")
         }

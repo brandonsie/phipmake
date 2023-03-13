@@ -4,7 +4,7 @@
 #' @export
 #'
 
-run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefindr_latex, parallel = FALSE, ...){
+run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefindr_latex, parallel = FALSE, eth = 0.01, ...){
 
   hits_foldchange <- data.frame(hits_foldchange)
   annotation_merged_df <- data.frame(annotation_merged_df)
@@ -17,7 +17,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefind
     registerDoParallel(detectCores()-1)
 
     foreach(i = 2:ncol(hits_foldchange)) %dopar%{
-      run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ...)
+      run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ethr = eth, ...)
     }
 
   } else {
@@ -27,7 +27,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefind
 
     for(i in 2:ncol(hits_foldchange)){
       t <- tryCatch(
-        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ...),
+        run_single_epitopefindr(i, hits_foldchange, annotation_merged_df, epitopefindr_latex, ethr = eth, ...),
         error = function(e) e
       )
 
@@ -41,7 +41,7 @@ run_epitopefindr <- function(hits_foldchange, annotation_merged_df,  epitopefind
 
 
 run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df, epitopefindr_latex,
-                                    thresh = 500){
+                                    thresh = 500, ethr = 0.01){
   # Function to be called by foreach and or linear for loop
 
   pt_id <- colnames(hits_foldchange)[i]
@@ -78,9 +78,9 @@ run_single_epitopefindr <- function(i, hits_foldchange, annotation_merged_df, ep
     msa_name <- paste0("msa_", pt_id, ".pdf")
 
     if(epitopefindr_latex){
-      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = TRUE)
+      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = TRUE, e.thresh = ethr)
     } else{
-      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = FALSE)
+      epitopefindr::epfind(fasta_path, output_path, name.msa = msa_name, pdflatex = FALSE, e.thresh = ethr)
     }
   }
 }
